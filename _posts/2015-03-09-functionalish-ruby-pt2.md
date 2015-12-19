@@ -2,7 +2,7 @@
 title: Functional-ish Ruby, Part 2&#58; Functional Objects
 ---
 
-In a [previous blog post](http://blog.8thlight.com/kevin-buchanan/2014/08/20/functional-ish-ruby.html)
+In a [previous blog post](/posts/functionalish-ruby)
 I discussed a few ways to think about writing Ruby methods from a functional perspective. But in Ruby,
 or any other object oriented language, we don't just write functions, we write objects. Does that mean
 we either have to live without the principles we like from functional programming, or fundamentally

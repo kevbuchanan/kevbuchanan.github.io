@@ -25,6 +25,26 @@
     <lastmod>2014-05-20T00:00:00-05:00</lastmod>
   </url>
   <url>
+    <loc>/posts/package-cohesion-and-coupling</loc>
+    <lastmod>2014-02-21T00:00:00-06:00</lastmod>
+  </url>
+  <url>
+    <loc>/posts/stable-abstraction-principle</loc>
+    <lastmod>2014-02-10T00:00:00-06:00</lastmod>
+  </url>
+  <url>
+    <loc>/posts/code-smells</loc>
+    <lastmod>2014-02-07T00:00:00-06:00</lastmod>
+  </url>
+  <url>
+    <loc>/posts/what-is-it-we-want-to-get-out-of-code</loc>
+    <lastmod>2013-12-11T00:00:00-06:00</lastmod>
+  </url>
+  <url>
+    <loc>/posts/clojure-macros</loc>
+    <lastmod>2013-12-10T00:00:00-06:00</lastmod>
+  </url>
+  <url>
     <loc>/404</loc>
   </url>
   <url>
@@ -33,6 +53,21 @@
   <url>
     <loc>/</loc>
   </url>
+    <url>
+      <loc>/posts/clojure-macros</loc>
+    </url>
+    <url>
+      <loc>/posts/what-is-it-we-want-to-get-out-of-code</loc>
+    </url>
+    <url>
+      <loc>/posts/code-smells</loc>
+    </url>
+    <url>
+      <loc>/posts/stable-abstraction-principle</loc>
+    </url>
+    <url>
+      <loc>/posts/package-cohesion-and-coupling</loc>
+    </url>
     <url>
       <loc>/posts/be-empirical</loc>
     </url>
