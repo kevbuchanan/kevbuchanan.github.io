@@ -1,3 +1,7 @@
+.name {
+  color: #888;
+  margin: 0.5em;
+}
 body {
   font-family: 'Fira Sans', sans-serif;
   padding: 20px;
@@ -132,7 +136,7 @@ span[data-note] {
     box-sizing: border-box;
     &:hover,
     &:focus {
-      background: #2980B9;
+      background: #468966;
     }
     &:hover + .logo-prompt,
     &:focus + .logo-prompt {
