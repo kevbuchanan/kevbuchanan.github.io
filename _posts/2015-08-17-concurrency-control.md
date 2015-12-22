@@ -440,10 +440,9 @@ specific problem you're trying to solve. Each of these strategies present
 different tradeoffs that should be taken into account. To sum up, here's what
 you get with each:
 
-#### Pessimistic/Locking:
+#### Pessimistic/Locking
 
 **Benefits:**
-
 - Exclusive access
 - Possible stronger guarantee of integrity
 
@@ -453,7 +452,7 @@ you get with each:
 - Records are possibly completely inaccesible by other processes depending on
   implementation
 
-#### Optimistic/Lock-Free:
+#### Optimistic/Lock-Free
 
 **Benefits:**
 
@@ -465,7 +464,7 @@ you get with each:
 - Deciding how to handle collisions or stale data
 - Possibility of retrying operations with side-effects
 
-#### MVCC/Hybrid:
+#### MVCC/Hybrid
 
 **Benefits:**
 

@@ -44,6 +44,3 @@ DEPENDENCIES
   jekyll-sitemap
   pygments.rb
   redcarpet
-
-BUNDLED WITH
-   1.10.6
