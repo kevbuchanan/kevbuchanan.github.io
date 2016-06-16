@@ -1,0 +1,87 @@
+#!/usr/bin/env ruby
+
+require 'date'
+
+class Reading
+  attr_reader :title, :author, :url, :point
+
+  def initialize(title, author, url)
+    @title = title
+    @author = author
+    @url = url
+    @point = 1
+  end
+
+  def heading
+    "\n### [#{title} - #{author}](#{url})\n"
+  end
+
+  def new_point(content)
+    text = "\n#{point}. #{content}\n"
+    text
+  end
+
+  def next
+    @point += 1
+  end
+end
+
+def todays_post
+  week_start = Date.today
+  until week_start.sunday?
+    week_start = week_start.prev_day
+  end
+  week_end = week_start + 6
+
+  post = "_posts/#{week_end}-what-im-reading-#{week_end}.md"
+
+  if File.exist?(post)
+    file = File.open(post, 'a+')
+    file
+  else
+    template = <<-post
+---
+title: What I'm Reading | #{week_start} - #{week_end}
+---
+post
+    file = File.open(post, 'a+')
+    file << template
+    file
+  end
+end
+
+def new_reading(file)
+  puts "Title:"
+  title = gets.chomp
+  puts "Author:"
+  author = gets.chomp
+  puts "URL:"
+  url = gets.chomp
+
+  reading = Reading.new(title, author, url)
+  file << reading.heading
+  puts "\nReading: #{reading.title}\n"
+  reading
+end
+
+def add_to_reading(reading, input, file)
+  text = reading.new_point(input)
+  file << text
+  puts "Added ##{reading.point}\n\n"
+  reading.next
+end
+
+done = ->(_) { puts "\nOk see ya"; exit(0) }
+Signal.trap("INT", done)
+
+file = todays_post
+current_reading = new_reading(file)
+loop do
+  input = gets.chomp
+  case input
+  when "new"
+    new_reading(file)
+  else
+    add_to_reading(current_reading, input, file)
+  end
+end
