@@ -33,7 +33,7 @@ def todays_post
   end
   week_end = week_start + 6
 
-  post = "_posts/#{week_end}-what-im-reading-#{week_end}.md"
+  post = "_posts/#{week_start}-what-im-reading-#{week_start}.md"
 
   if File.exist?(post)
     file = File.open(post, 'a+')
