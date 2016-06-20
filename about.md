@@ -9,4 +9,8 @@ I'm a software developer at [8th Light](https://8thlight.com).
 I live in Chicago. I like writing code and reading books.
 This is my blog.
 
-You can also find me on [Twitter](https://twitter.com/kevinbuch_) and [GitHub](https://github.com/kevinbuch).
+You can also find me at these places:
+
+- [Twitter](https://twitter.com/kevinbuch_)
+- [GitHub](https://github.com/kevinbuch)
+- [Goodreads](https://www.goodreads.com/user/show/52962114-kevin-buchanan)
