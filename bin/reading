@@ -50,13 +50,19 @@ post
   end
 end
 
+def read_input
+  input = ""
+  input += STDIN.getc while input[-2..-1] != "\n\n"
+  input.gsub("\n", " ").strip
+end
+
 def new_reading(file)
   puts "Title:"
-  title = gets.chomp
+  title = read_input
   puts "Author:"
-  author = gets.chomp
+  author = read_input
   puts "URL:"
-  url = gets.chomp
+  url = read_input
 
   reading = Reading.new(title, author, url)
   file << reading.heading
@@ -77,7 +83,7 @@ Signal.trap("INT", done)
 file = todays_post
 current_reading = new_reading(file)
 loop do
-  input = gets.chomp
+  input = read_input
   case input
   when "new"
     new_reading(file)
