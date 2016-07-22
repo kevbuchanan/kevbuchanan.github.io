@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>/posts/what-im-reading-2016-07-17</loc>
+    <lastmod>2016-07-17T00:00:00-05:00</lastmod>
+  </url>
+  <url>
+    <loc>/posts/what-im-reading-2016-06-26</loc>
+    <lastmod>2016-06-26T00:00:00-05:00</lastmod>
+  </url>
+  <url>
     <loc>/posts/what-im-reading-2016-06-12</loc>
     <lastmod>2016-06-12T00:00:00-05:00</lastmod>
   </url>
@@ -99,5 +107,11 @@
     </url>
     <url>
       <loc>/posts/what-im-reading-2016-06-12</loc>
+    </url>
+    <url>
+      <loc>/posts/what-im-reading-2016-06-26</loc>
+    </url>
+    <url>
+      <loc>/posts/what-im-reading-2016-07-17</loc>
     </url>
 </urlset>
