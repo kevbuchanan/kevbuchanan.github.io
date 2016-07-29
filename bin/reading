@@ -86,7 +86,7 @@ loop do
   input = read_input
   case input
   when "new"
-    new_reading(file)
+    current_reading = new_reading(file)
   else
     add_to_reading(current_reading, input, file)
   end
