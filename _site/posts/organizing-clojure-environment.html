@@ -70,8 +70,11 @@
 	<p>Coming from a Rails environment, one of the things I took for granted was a nice logging setup in which
 all logs were written to a log file for each environment name. Another was easily setting environment variables
 through lines like:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;RAILS_ENV&quot;</span><span class="o">]</span> <span class="o">||=</span> <span class="s2">&quot;test&quot;</span>
-</code></pre></div>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="no">ENV</span><span class="p">[</span><span class="s2">"RAILS_ENV"</span><span class="p">]</span> <span class="o">||=</span> <span class="s2">"test"</span>
+</code></pre>
+</div>
+
 <p>While working on a Clojure project recently, I began to feel
 the pain of not knowing where exactly my logs were being written, and not having my test environment automatically loaded
 when running tests. But, by using just a few libraries we can create a nice environment for our
@@ -79,113 +82,167 @@ Clojure app that allows us to set logging, database, or any other configurations
 
 <h3 id="no-logging">No Logging</h3>
 
-<p>Let&rsquo;s start with a basic app with no logging or environment-specific settings:</p>
-<div class="highlight"><pre><code class="language-clj" data-lang="clj"><span class="p">(</span><span class="kd">defn </span><span class="nv">-main</span> <span class="p">[</span><span class="o">&amp;</span> <span class="nv">args</span><span class="p">]</span>
-  <span class="p">(</span><span class="nb">println </span><span class="s">&quot;Hello, World!&quot;</span><span class="p">))</span>
-</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>lein run
+<p>Let’s start with a basic app with no logging or environment-specific settings:</p>
+
+<div class="language-clj highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">-main</span><span class="w"> </span><span class="p">[</span><span class="o">&amp;</span><span class="w"> </span><span class="n">args</span><span class="p">]</span><span class="w">
+  </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"Hello, World!"</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>lein run
 Hello World!
-</code></pre></div>
+</code></pre>
+</div>
+
 <h3 id="add-some-logging">Add Some Logging</h3>
 
 <p>We can add some basic logging with <a href="https://github.com/clojure/tools.logging">clojure/tools.logging</a>. We just add the
-dependency to our <code>project.clj</code>, require it in our app, and log some info:</p>
-<div class="highlight"><pre><code class="language-clj" data-lang="clj"><span class="ss">:dependencies</span> <span class="p">[[</span><span class="nv">org.clojure/clojure</span> <span class="s">&quot;1.5.1&quot;</span><span class="p">]</span>
-               <span class="p">[</span><span class="nv">org.clojure/tools.logging</span> <span class="s">&quot;0.3.1&quot;</span><span class="p">]]</span>
-</code></pre></div><div class="highlight"><pre><code class="language-clj" data-lang="clj"><span class="p">(</span><span class="kd">ns </span><span class="nv">env-setup.core</span>
-  <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">clojure.tools.logging</span> <span class="ss">:as</span> <span class="nv">log</span><span class="p">]))</span>
+dependency to our <code class="highlighter-rouge">project.clj</code>, require it in our app, and log some info:</p>
 
-<span class="p">(</span><span class="kd">defn </span><span class="nv">-main</span> <span class="p">[</span><span class="o">&amp;</span> <span class="nv">args</span><span class="p">]</span>
-  <span class="p">(</span><span class="nf">log/info</span> <span class="s">&quot;Starting the app&quot;</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">println </span><span class="s">&quot;Hello, World!&quot;</span><span class="p">))</span>
-</code></pre></div>
+<div class="language-clj highlighter-rouge"><pre class="highlight"><code><span class="no">:dependencies</span><span class="w"> </span><span class="p">[[</span><span class="n">org.clojure/clojure</span><span class="w"> </span><span class="s">"1.5.1"</span><span class="p">]</span><span class="w">
+               </span><span class="p">[</span><span class="n">org.clojure/tools.logging</span><span class="w"> </span><span class="s">"0.3.1"</span><span class="p">]]</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-clj highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="nf">ns</span><span class="w"> </span><span class="n">env-setup.core</span><span class="w">
+  </span><span class="p">(</span><span class="no">:require</span><span class="w"> </span><span class="p">[</span><span class="n">clojure.tools.logging</span><span class="w"> </span><span class="no">:as</span><span class="w"> </span><span class="n">log</span><span class="p">]))</span><span class="w">
+
+</span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">-main</span><span class="w"> </span><span class="p">[</span><span class="o">&amp;</span><span class="w"> </span><span class="n">args</span><span class="p">]</span><span class="w">
+  </span><span class="p">(</span><span class="nf">log/info</span><span class="w"> </span><span class="s">"Starting the app"</span><span class="p">)</span><span class="w">
+  </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"Hello, World!"</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
 <p>Now when we run our app, we see some logs:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>lein run
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>lein run
 INFO: Starting the app
 Hello World!
-</code></pre></div>
-<p>This isn&rsquo;t very convenient though, because we&rsquo;re only writing our logs to the console. It would be nicer to write to a file.
+</code></pre>
+</div>
+
+<p>This isn’t very convenient though, because we’re only writing our logs to the console. It would be nicer to write to a file.
 We can do that by using <a href="http://logging.apache.org/log4j/1.2/">log4j</a>.</p>
 
 <h3 id="log-to-a-file">Log to a File</h3>
 
-<p>First, we&rsquo;ll need to add the log4j dependency to our <code>project.clj</code>. We&rsquo;ll want to exclude the log4j dependencies that
-we don&rsquo;t need:</p>
-<div class="highlight"><pre><code class="language-clj" data-lang="clj"><span class="ss">:dependencies</span> <span class="p">[[</span><span class="nv">org.clojure/clojure</span> <span class="s">&quot;1.5.1&quot;</span><span class="p">]</span>
-               <span class="p">[</span><span class="nv">org.clojure/tools.logging</span> <span class="s">&quot;0.3.1&quot;</span><span class="p">]</span>
-               <span class="p">[</span><span class="nv">log4j/log4j</span> <span class="s">&quot;1.2.17&quot;</span> <span class="ss">:exclusions</span> <span class="p">[</span><span class="nv">javax.mail/mail</span>
-                                                  <span class="nv">javax.jms/jms</span>
-                                                  <span class="nv">com.sun.jdmk/jmxtools</span>
-                                                  <span class="nv">com.sun.jmx/jmxri</span><span class="p">]]]</span>
-</code></pre></div>
-<p>Then, we&rsquo;ll need to add a <code>log4j.properties</code> file. I put this in the <code>resources</code> directory of my project.
-The <code>log4j.properties</code> file configures our logger through log4j:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">log4j.rootLogger=INFO, A1
+<p>First, we’ll need to add the log4j dependency to our <code class="highlighter-rouge">project.clj</code>. We’ll want to exclude the log4j dependencies that
+we don’t need:</p>
+
+<div class="language-clj highlighter-rouge"><pre class="highlight"><code><span class="no">:dependencies</span><span class="w"> </span><span class="p">[[</span><span class="n">org.clojure/clojure</span><span class="w"> </span><span class="s">"1.5.1"</span><span class="p">]</span><span class="w">
+               </span><span class="p">[</span><span class="n">org.clojure/tools.logging</span><span class="w"> </span><span class="s">"0.3.1"</span><span class="p">]</span><span class="w">
+               </span><span class="p">[</span><span class="n">log4j/log4j</span><span class="w"> </span><span class="s">"1.2.17"</span><span class="w"> </span><span class="no">:exclusions</span><span class="w"> </span><span class="p">[</span><span class="n">javax.mail/mail</span><span class="w">
+                                                  </span><span class="n">javax.jms/jms</span><span class="w">
+                                                  </span><span class="n">com.sun.jdmk/jmxtools</span><span class="w">
+                                                  </span><span class="n">com.sun.jmx/jmxri</span><span class="p">]]]</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Then, we’ll need to add a <code class="highlighter-rouge">log4j.properties</code> file. I put this in the <code class="highlighter-rouge">resources</code> directory of my project.
+The <code class="highlighter-rouge">log4j.properties</code> file configures our logger through log4j:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>log4j.rootLogger=INFO, A1
 log4j.appender.A1=org.apache.log4j.RollingFileAppender
 log4j.appender.A1.File=log/app.log
 log4j.appender.A1.MaxFileSize=500MB
 log4j.appender.A1.MaxBackupIndex=2
 log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 log4j.appender.A1.layout.ConversionPattern=%d [%t] %-5p%c - %m%n
-</code></pre></div>
-<p>The first line of the property file above sets the <code>rootLogger</code> level to <code>INFO</code> and adds a logging
+</code></pre>
+</div>
+
+<p>The first line of the property file above sets the <code class="highlighter-rouge">rootLogger</code> level to <code class="highlighter-rouge">INFO</code> and adds a logging
 output destination, called an appender, named A1. Then the properties file configures our appender by making
 it a <a href="https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/RollingFileAppender.html">file appender</a>,
 setting the file to log to, and the <a href="http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html">logging pattern</a>
 for our logs.</p>
 
-<p>Our logs now go to our <code>app.log</code> file and are formatted as we specified in the properties file:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>lein run
+<p>Our logs now go to our <code class="highlighter-rouge">app.log</code> file and are formatted as we specified in the properties file:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>lein run
 Hello World!
-</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>cat log/app.log
-2014-12-05 09:36:38,174 <span class="o">[</span>main<span class="o">]</span> INFO env-setup.core - Starting the app
-</code></pre></div>
+</code></pre>
+</div>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cat log/app.log
+2014-12-05 09:36:38,174 <span class="o">[</span>main] INFO env-setup.core - Starting the app
+</code></pre>
+</div>
+
 <h3 id="use-environment-variables">Use Environment Variables</h3>
 
-<p>To further improve our app environment, we&rsquo;ll probably want to use some environment variables. We can access
-system environment variables through <code>System/getenv</code>, which returns a map to reference:</p>
-<div class="highlight"><pre><code class="language-clj" data-lang="clj"><span class="p">(</span><span class="kd">defn </span><span class="nv">-main</span> <span class="p">[</span><span class="o">&amp;</span> <span class="nv">args</span><span class="p">]</span>
-  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">env</span> <span class="p">(</span><span class="nb">get </span><span class="p">(</span><span class="nf">System/getenv</span><span class="p">)</span> <span class="s">&quot;CLJ_ENV&quot;</span> <span class="s">&quot;development&quot;</span><span class="p">)]</span>
-    <span class="p">(</span><span class="nf">log/info</span> <span class="p">(</span><span class="nf">format</span> <span class="s">&quot;Starting the app with %s environment&quot;</span> <span class="nv">env</span><span class="p">))</span>
-    <span class="p">(</span><span class="nb">println </span><span class="s">&quot;Hello, World!&quot;</span><span class="p">)))</span>
-</code></pre></div>
-<p>So now our app will use our <code>CLJ_ENV</code> variable that we set when starting the app, or default to &ldquo;development&rdquo;:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ CLJ_ENV</span><span class="o">=</span>production lein run
+<p>To further improve our app environment, we’ll probably want to use some environment variables. We can access
+system environment variables through <code class="highlighter-rouge">System/getenv</code>, which returns a map to reference:</p>
+
+<div class="language-clj highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">-main</span><span class="w"> </span><span class="p">[</span><span class="o">&amp;</span><span class="w"> </span><span class="n">args</span><span class="p">]</span><span class="w">
+  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">env</span><span class="w"> </span><span class="p">(</span><span class="nb">get</span><span class="w"> </span><span class="p">(</span><span class="nf">System/getenv</span><span class="p">)</span><span class="w"> </span><span class="s">"CLJ_ENV"</span><span class="w"> </span><span class="s">"development"</span><span class="p">)]</span><span class="w">
+    </span><span class="p">(</span><span class="nf">log/info</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">"Starting the app with %s environment"</span><span class="w"> </span><span class="n">env</span><span class="p">))</span><span class="w">
+    </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"Hello, World!"</span><span class="p">)))</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>So now our app will use our <code class="highlighter-rouge">CLJ_ENV</code> variable that we set when starting the app, or default to “development”:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nv">CLJ_ENV</span><span class="o">=</span>production lein run
 Hello World!
-</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>cat log/app.log
-2014-12-05 09:36:38,174 <span class="o">[</span>main<span class="o">]</span> INFO env-setup.core - Starting the app with production environment
-</code></pre></div>
+</code></pre>
+</div>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cat log/app.log
+2014-12-05 09:36:38,174 <span class="o">[</span>main] INFO env-setup.core - Starting the app with production environment
+</code></pre>
+</div>
+
 <p>Obviously, we would want to use these environment for any type of configurations that would change from enviroment to
 environment, like database setup, passwords, or remote service urls.</p>
 
 <h3 id="log-to-environment-specific-log-file">Log to Environment Specific Log File</h3>
 
 <p>Back to solving the problem of our log files being in one place for all environments. It would be nice to have the logs
-written to a file named for the environment. The problem with our current setup is that our <code>log4j.properties</code> file
-can&rsquo;t access the system environment variables we are using in our app. The best way that I&rsquo;ve found to inject
+written to a file named for the environment. The problem with our current setup is that our <code class="highlighter-rouge">log4j.properties</code> file
+can’t access the system environment variables we are using in our app. The best way that I’ve found to inject
 a variable to our log4j setup is through setting a jvm option in the lein profile. We can accomplish this pretty
 easily by having a profile for each environment that sets the desired log file name through the jvm option:</p>
-<div class="highlight"><pre><code class="language-clj" data-lang="clj"><span class="ss">:profiles</span> <span class="p">{</span><span class="ss">:dev</span>        <span class="p">{</span><span class="ss">:jvm-opts</span> <span class="p">[</span><span class="s">&quot;-Dlogfile.path=development&quot;</span><span class="p">]}</span>
-           <span class="ss">:test</span>       <span class="p">{</span><span class="ss">:jvm-opts</span> <span class="p">[</span><span class="s">&quot;-Dlogfile.path=test&quot;</span><span class="p">]}</span>
-           <span class="ss">:production</span> <span class="p">{</span><span class="ss">:jvm-opts</span> <span class="p">[</span><span class="s">&quot;-Dlogfile.path=production&quot;</span><span class="p">]}}</span>
-</code></pre></div>
-<p>Now we just change the file setting on the appender in the properties file to reference the <code>logfile.path</code> jvm option:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">log4j.appender.A1.File=log/${logfile.path}.log
-</code></pre></div>
-<p>The logs now get written to the environment-specific file, which will default to whatever is specified in the <code>:dev</code> lein
+
+<div class="language-clj highlighter-rouge"><pre class="highlight"><code><span class="no">:profiles</span><span class="w"> </span><span class="p">{</span><span class="no">:dev</span><span class="w">        </span><span class="p">{</span><span class="no">:jvm-opts</span><span class="w"> </span><span class="p">[</span><span class="s">"-Dlogfile.path=development"</span><span class="p">]}</span><span class="w">
+           </span><span class="no">:test</span><span class="w">       </span><span class="p">{</span><span class="no">:jvm-opts</span><span class="w"> </span><span class="p">[</span><span class="s">"-Dlogfile.path=test"</span><span class="p">]}</span><span class="w">
+           </span><span class="no">:production</span><span class="w"> </span><span class="p">{</span><span class="no">:jvm-opts</span><span class="w"> </span><span class="p">[</span><span class="s">"-Dlogfile.path=production"</span><span class="p">]}}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Now we just change the file setting on the appender in the properties file to reference the <code class="highlighter-rouge">logfile.path</code> jvm option:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>log4j.appender.A1.File=log/${logfile.path}.log
+</code></pre>
+</div>
+
+<p>The logs now get written to the environment-specific file, which will default to whatever is specified in the <code class="highlighter-rouge">:dev</code> lein
 profile.</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>lein run
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>lein run
 Hello World!
-</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>cat log/development.log
-2014-12-05 09:36:38,174 <span class="o">[</span>main<span class="o">]</span> INFO env-setup.core - Starting the app with development environment
-</code></pre></div>
-<p>Or, we can use Leiningen&rsquo;s <code>with-profile</code> to specify a profile to use:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>lein with-profile production run
+</code></pre>
+</div>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cat log/development.log
+2014-12-05 09:36:38,174 <span class="o">[</span>main] INFO env-setup.core - Starting the app with development environment
+</code></pre>
+</div>
+
+<p>Or, we can use Leiningen’s <code class="highlighter-rouge">with-profile</code> to specify a profile to use:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>lein with-profile production run
 Hello World!
-</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>cat log/production.log
-2014-12-05 09:36:38,174 <span class="o">[</span>main<span class="o">]</span> INFO env-setup.core - Starting the app with development environment
-</code></pre></div>
-<p>But, wait! You&rsquo;ll notice that we&rsquo;re no longer setting the system environment variable, so our log
-in <code>production.log</code> shows that our app is still using the development environment. Rather than setting
+</code></pre>
+</div>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cat log/production.log
+2014-12-05 09:36:38,174 <span class="o">[</span>main] INFO env-setup.core - Starting the app with development environment
+</code></pre>
+</div>
+
+<p>But, wait! You’ll notice that we’re no longer setting the system environment variable, so our log
+in <code class="highlighter-rouge">production.log</code> shows that our app is still using the development environment. Rather than setting
 environment settings through both jvm options and system environment variables, it would be nice
 to unify these through Leiningen.</p>
 
@@ -193,68 +250,95 @@ to unify these through Leiningen.</p>
 
 <p>We can do this pretty easily with <a href="https://github.com/weavejester/environ">environ</a>, which allows you to specify profile-specific
 variables that would normally be set through system environment variables. Once we have the environ
-dependency and plugin added to our <code>project.clj</code>, we can set the <code>:clj-env</code> variable
+dependency and plugin added to our <code class="highlighter-rouge">project.clj</code>, we can set the <code class="highlighter-rouge">:clj-env</code> variable
 in the environment-specific profiles that we already have:</p>
-<div class="highlight"><pre><code class="language-clj" data-lang="clj"><span class="ss">:dependencies</span> <span class="p">[[</span><span class="nv">org.clojure/clojure</span> <span class="s">&quot;1.5.1&quot;</span><span class="p">]</span>
-               <span class="p">[</span><span class="nv">org.clojure/tools.logging</span> <span class="s">&quot;0.3.1&quot;</span><span class="p">]</span>
-               <span class="p">[</span><span class="nv">log4j/log4j</span> <span class="s">&quot;1.2.17&quot;</span> <span class="ss">:exclusions</span> <span class="p">[</span><span class="nv">javax.mail/mail</span>
-                                                  <span class="nv">javax.jms/jms</span>
-                                                  <span class="nv">com.sun.jdmk/jmxtools</span>
-                                                  <span class="nv">com.sun.jmx/jmxri</span><span class="p">]]</span>
-               <span class="p">[</span><span class="nv">environ</span> <span class="s">&quot;1.0.0&quot;</span><span class="p">]]</span>
-<span class="ss">:plugins</span> <span class="p">[[</span><span class="nv">lein-environ</span> <span class="s">&quot;1.0.0&quot;</span><span class="p">]]</span>
-<span class="ss">:profiles</span> <span class="p">{</span><span class="ss">:dev</span>        <span class="p">{</span><span class="ss">:jvm-opts</span> <span class="p">[</span><span class="s">&quot;-Dlogfile.path=development&quot;</span><span class="p">]</span>
-                        <span class="ss">:env</span> <span class="p">{</span><span class="ss">:clj-env</span> <span class="ss">:development</span><span class="p">}}</span>
-           <span class="ss">:test</span>       <span class="p">{</span><span class="ss">:jvm-opts</span> <span class="p">[</span><span class="s">&quot;-Dlogfile.path=test&quot;</span><span class="p">]</span>
-                        <span class="ss">:env</span> <span class="p">{</span><span class="ss">:clj-env</span> <span class="ss">:test</span><span class="p">}}</span>
-           <span class="ss">:production</span> <span class="p">{</span><span class="ss">:jvm-opts</span> <span class="p">[</span><span class="s">&quot;-Dlogfile.path=production&quot;</span><span class="p">]</span>
-                        <span class="ss">:env</span> <span class="p">{</span><span class="ss">:clj-env</span> <span class="ss">:production</span><span class="p">}}}</span>
-</code></pre></div>
-<p>Then, we require environ in our app, and use the <code>:clj-env</code> key, rather than the <code>CLJ_ENV</code> from <code>System/getenv</code>:</p>
-<div class="highlight"><pre><code class="language-clj" data-lang="clj"><span class="p">(</span><span class="kd">ns </span><span class="nv">env-setup.core</span>
-  <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">clojure.tools.logging</span> <span class="ss">:as</span> <span class="nv">log</span><span class="p">]</span>
-            <span class="p">[</span><span class="nv">environ.core</span> <span class="ss">:as</span> <span class="nv">environ</span><span class="p">]))</span>
 
-<span class="p">(</span><span class="kd">defn </span><span class="nv">-main</span> <span class="p">[</span><span class="o">&amp;</span> <span class="nv">args</span><span class="p">]</span>
-  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">env</span> <span class="p">(</span><span class="nf">environ/env</span> <span class="ss">:clj-env</span><span class="p">)]</span>
-    <span class="p">(</span><span class="nf">log/info</span> <span class="p">(</span><span class="nf">format</span> <span class="s">&quot;Starting the app with %s environment&quot;</span> <span class="p">(</span><span class="nb">name </span><span class="nv">env</span><span class="p">)))</span>
-    <span class="p">(</span><span class="nb">println </span><span class="s">&quot;Hello, World!&quot;</span><span class="p">)))</span>
-</code></pre></div>
+<div class="language-clj highlighter-rouge"><pre class="highlight"><code><span class="no">:dependencies</span><span class="w"> </span><span class="p">[[</span><span class="n">org.clojure/clojure</span><span class="w"> </span><span class="s">"1.5.1"</span><span class="p">]</span><span class="w">
+               </span><span class="p">[</span><span class="n">org.clojure/tools.logging</span><span class="w"> </span><span class="s">"0.3.1"</span><span class="p">]</span><span class="w">
+               </span><span class="p">[</span><span class="n">log4j/log4j</span><span class="w"> </span><span class="s">"1.2.17"</span><span class="w"> </span><span class="no">:exclusions</span><span class="w"> </span><span class="p">[</span><span class="n">javax.mail/mail</span><span class="w">
+                                                  </span><span class="n">javax.jms/jms</span><span class="w">
+                                                  </span><span class="n">com.sun.jdmk/jmxtools</span><span class="w">
+                                                  </span><span class="n">com.sun.jmx/jmxri</span><span class="p">]]</span><span class="w">
+               </span><span class="p">[</span><span class="n">environ</span><span class="w"> </span><span class="s">"1.0.0"</span><span class="p">]]</span><span class="w">
+</span><span class="no">:plugins</span><span class="w"> </span><span class="p">[[</span><span class="n">lein-environ</span><span class="w"> </span><span class="s">"1.0.0"</span><span class="p">]]</span><span class="w">
+</span><span class="no">:profiles</span><span class="w"> </span><span class="p">{</span><span class="no">:dev</span><span class="w">        </span><span class="p">{</span><span class="no">:jvm-opts</span><span class="w"> </span><span class="p">[</span><span class="s">"-Dlogfile.path=development"</span><span class="p">]</span><span class="w">
+                        </span><span class="no">:env</span><span class="w"> </span><span class="p">{</span><span class="no">:clj-env</span><span class="w"> </span><span class="no">:development</span><span class="p">}}</span><span class="w">
+           </span><span class="no">:test</span><span class="w">       </span><span class="p">{</span><span class="no">:jvm-opts</span><span class="w"> </span><span class="p">[</span><span class="s">"-Dlogfile.path=test"</span><span class="p">]</span><span class="w">
+                        </span><span class="no">:env</span><span class="w"> </span><span class="p">{</span><span class="no">:clj-env</span><span class="w"> </span><span class="no">:test</span><span class="p">}}</span><span class="w">
+           </span><span class="no">:production</span><span class="w"> </span><span class="p">{</span><span class="no">:jvm-opts</span><span class="w"> </span><span class="p">[</span><span class="s">"-Dlogfile.path=production"</span><span class="p">]</span><span class="w">
+                        </span><span class="no">:env</span><span class="w"> </span><span class="p">{</span><span class="no">:clj-env</span><span class="w"> </span><span class="no">:production</span><span class="p">}}}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Then, we require environ in our app, and use the <code class="highlighter-rouge">:clj-env</code> key, rather than the <code class="highlighter-rouge">CLJ_ENV</code> from <code class="highlighter-rouge">System/getenv</code>:</p>
+
+<div class="language-clj highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="nf">ns</span><span class="w"> </span><span class="n">env-setup.core</span><span class="w">
+  </span><span class="p">(</span><span class="no">:require</span><span class="w"> </span><span class="p">[</span><span class="n">clojure.tools.logging</span><span class="w"> </span><span class="no">:as</span><span class="w"> </span><span class="n">log</span><span class="p">]</span><span class="w">
+            </span><span class="p">[</span><span class="n">environ.core</span><span class="w"> </span><span class="no">:as</span><span class="w"> </span><span class="n">environ</span><span class="p">]))</span><span class="w">
+
+</span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">-main</span><span class="w"> </span><span class="p">[</span><span class="o">&amp;</span><span class="w"> </span><span class="n">args</span><span class="p">]</span><span class="w">
+  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">env</span><span class="w"> </span><span class="p">(</span><span class="nf">environ/env</span><span class="w"> </span><span class="no">:clj-env</span><span class="p">)]</span><span class="w">
+    </span><span class="p">(</span><span class="nf">log/info</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">"Starting the app with %s environment"</span><span class="w"> </span><span class="p">(</span><span class="nb">name</span><span class="w"> </span><span class="n">env</span><span class="p">)))</span><span class="w">
+    </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"Hello, World!"</span><span class="p">)))</span><span class="w">
+</span></code></pre>
+</div>
+
 <p>Our lein profiles now configure the logs and the app environment from one place:</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>lein run
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>lein run
 Hello World!
-</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>cat log/development.log
-2014-12-05 09:36:38,174 <span class="o">[</span>main<span class="o">]</span> INFO env-setup.core - Starting the app with development environment
-</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>lein with-profile <span class="nb">test </span>run
+</code></pre>
+</div>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cat log/development.log
+2014-12-05 09:36:38,174 <span class="o">[</span>main] INFO env-setup.core - Starting the app with development environment
+</code></pre>
+</div>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>lein with-profile <span class="nb">test </span>run
 Hello World!
-</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>cat log/test.log
-2014-12-05 09:36:38,174 <span class="o">[</span>main<span class="o">]</span> INFO env-setup.core - Starting the app with <span class="nb">test </span>environment
-</code></pre></div>
+</code></pre>
+</div>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cat log/test.log
+2014-12-05 09:36:38,174 <span class="o">[</span>main] INFO env-setup.core - Starting the app with <span class="nb">test </span>environment
+</code></pre>
+</div>
+
 <h3 id="use-the-environment">Use the Environment</h3>
 
 <p>The final step is to use the environment setup to run the app cleanly in different environments
-and read environment-specific configuration. One nice way to do this would be to have <code>lein test</code>
-automatically use the test database. <code>lein test</code> will load the test profile by default, so we
-just need to have a test database config to read. This could go in the <code>:env</code> map in the
+and read environment-specific configuration. One nice way to do this would be to have <code class="highlighter-rouge">lein test</code>
+automatically use the test database. <code class="highlighter-rouge">lein test</code> will load the test profile by default, so we
+just need to have a test database config to read. This could go in the <code class="highlighter-rouge">:env</code> map in the
 lein profiles, or in a separate config file:</p>
-<div class="highlight"><pre><code class="language-clj" data-lang="clj"><span class="p">(</span><span class="kd">ns </span><span class="nv">env-setup.core</span>
-  <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">clojure.tools.logging</span> <span class="ss">:as</span> <span class="nv">log</span><span class="p">]</span>
-            <span class="p">[</span><span class="nv">environ.core</span> <span class="ss">:as</span> <span class="nv">environ</span><span class="p">]</span>
-            <span class="p">[</span><span class="nv">env-setup.config</span> <span class="ss">:refer</span> <span class="p">[</span><span class="nv">config</span><span class="p">]]</span>
-            <span class="p">[</span><span class="nv">env-setup.db</span> <span class="ss">:as</span> <span class="nv">db</span><span class="p">]))</span>
 
-<span class="p">(</span><span class="k">def </span><span class="nv">db-connection</span>
-  <span class="p">(</span><span class="nf">delay</span>
-    <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">env</span> <span class="p">(</span><span class="nf">environ/env</span> <span class="ss">:clj-env</span><span class="p">)]</span>
-      <span class="p">(</span><span class="nb">-&gt; </span><span class="nv">config</span> <span class="nv">env</span> <span class="ss">:db</span> <span class="nv">db/connect!</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">log/info</span> <span class="p">(</span><span class="nf">format</span> <span class="s">&quot;Using %s database&quot;</span> <span class="p">(</span><span class="nb">name </span><span class="nv">env</span><span class="p">))))))</span>
-</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>lein <span class="nb">test</span>
-</code></pre></div><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>cat log/test.log
-2014-12-05 09:36:38,174 <span class="o">[</span>main<span class="o">]</span> INFO env-setup.core - Using <span class="nb">test </span>database
-</code></pre></div>
-<p>Logging and environment setup isn&rsquo;t the most interesting or fun task to pursue in your code,
-but when it&rsquo;s done well it makes everything else a lot easier. There are many ways to configure
-a Clojure app, but this method has worked well for me. I&rsquo;d be interested to hear about other
+<div class="language-clj highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="nf">ns</span><span class="w"> </span><span class="n">env-setup.core</span><span class="w">
+  </span><span class="p">(</span><span class="no">:require</span><span class="w"> </span><span class="p">[</span><span class="n">clojure.tools.logging</span><span class="w"> </span><span class="no">:as</span><span class="w"> </span><span class="n">log</span><span class="p">]</span><span class="w">
+            </span><span class="p">[</span><span class="n">environ.core</span><span class="w"> </span><span class="no">:as</span><span class="w"> </span><span class="n">environ</span><span class="p">]</span><span class="w">
+            </span><span class="p">[</span><span class="n">env-setup.config</span><span class="w"> </span><span class="no">:refer</span><span class="w"> </span><span class="p">[</span><span class="n">config</span><span class="p">]]</span><span class="w">
+            </span><span class="p">[</span><span class="n">env-setup.db</span><span class="w"> </span><span class="no">:as</span><span class="w"> </span><span class="n">db</span><span class="p">]))</span><span class="w">
+
+</span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">db-connection</span><span class="w">
+  </span><span class="p">(</span><span class="nf">delay</span><span class="w">
+    </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">env</span><span class="w"> </span><span class="p">(</span><span class="nf">environ/env</span><span class="w"> </span><span class="no">:clj-env</span><span class="p">)]</span><span class="w">
+      </span><span class="p">(</span><span class="nb">-&gt;</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="no">:db</span><span class="w"> </span><span class="n">db/connect!</span><span class="p">)</span><span class="w">
+      </span><span class="p">(</span><span class="nf">log/info</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">"Using %s database"</span><span class="w"> </span><span class="p">(</span><span class="nb">name</span><span class="w"> </span><span class="n">env</span><span class="p">))))))</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>lein <span class="nb">test</span>
+</code></pre>
+</div>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cat log/test.log
+2014-12-05 09:36:38,174 <span class="o">[</span>main] INFO env-setup.core - Using <span class="nb">test </span>database
+</code></pre>
+</div>
+
+<p>Logging and environment setup isn’t the most interesting or fun task to pursue in your code,
+but when it’s done well it makes everything else a lot easier. There are many ways to configure
+a Clojure app, but this method has worked well for me. I’d be interested to hear about other
 or better ways that you manage environment setup through Leiningen. You can check out the entire
 example app <a href="https://github.com/kevinbuch/clj-environment">here</a>.</p>
 

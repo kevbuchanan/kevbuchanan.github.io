@@ -17,10 +17,10 @@ permalink:          /posts/:title # Post permalink
 timezone:           America/Chicago # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 # Site Build
-highlighter:        pygments
-markdown:           redcarpet
-redcarpet:
-  extensions: ["smart", "tables", "no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript", "with_toc_data"]
+highlighter:        rouge
+markdown:           kramdown
+kramdown:
+  input: GFM
 sass:
     style:          :compressed
 
