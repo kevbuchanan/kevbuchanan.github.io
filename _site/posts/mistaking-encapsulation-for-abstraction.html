@@ -13,9 +13,9 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@kevinbuch_" />
 <meta name="twitter:title" content="Mistaking Encapsulation for Abstraction" />
-<meta name="twitter:description" content="&ldquo;Abstract&rdquo; is a commonly used word in software. I hear it a few times every day.&ldquo;Can we make an abstraction around this?&rdquo; &ldquo;Let&rsquo;s move this method out to abstract...">
+<meta name="twitter:description" content="“Abstract” is a commonly used word in software. I hear it a few times every day.“Can we make an abstraction around this?” “Let’s move this method out to abstract it away.”But, what are we really do...">
 
-<meta name="description" content="&ldquo;Abstract&rdquo; is a commonly used word in software. I hear it a few times every day.&ldquo;Can we make an abstraction around this?&rdquo; &ldquo;Let&...">
+<meta name="description" content="“Abstract” is a commonly used word in software. I hear it a few times every day.“Can we make an abstraction around this?” “Let’s move this method out to abst...">
 
 
 
@@ -67,41 +67,45 @@
 	<div class="divider"></div>
 
   <div class="content">
-	<p>&ldquo;Abstract&rdquo; is a commonly used word in software. I hear it a few times every day.
-<em>&ldquo;Can we make an abstraction around this?&rdquo; &ldquo;Let&rsquo;s move this method out to abstract it away.&rdquo;</em>
-But, what are we really doing when we create an &ldquo;abstraction&rdquo; or when we &ldquo;abstract&rdquo;?
-Are we actually doing what we think we&rsquo;re doing? What do these terms actually
+	<p>“Abstract” is a commonly used word in software. I hear it a few times every day.
+<em>“Can we make an abstraction around this?” “Let’s move this method out to abstract it away.”</em>
+But, what are we really doing when we create an “abstraction” or when we “abstract”?
+Are we actually doing what we think we’re doing? What do these terms actually
 mean, and are we using them correctly?</p>
 
-<p>I&rsquo;d argue we, including myself, use them too often, and often incorrectly. To create an abstraction, as explained
+<p>I’d argue we, including myself, use them too often, and often incorrectly. To create an abstraction, as explained
 by <a href="http://www.infoq.com/presentations/Simple-Made-Easy">Rich Hickey</a>, means to draw away,
 pull apart, or, to use his signature term, decomplect. To truly abstract things away in our
 programs is an act that disentangles the complexity of our software, and further separates the
 <em>who</em> from the <em>what</em>, <em>when</em>, <em>where</em>, and <em>why</em>. Abstraction should not be confused with code
-organization and a mere hiding of complexity. Abstraction&rsquo;s goal is simplicity, not ease of use.</p>
+organization and a mere hiding of complexity. Abstraction’s goal is simplicity, not ease of use.</p>
 
 <p>Hindering that goal is the fact that abstraction is commonly confused with encapsulation. If we come upon a complicated
-class, we frequently just move some logic out, hide it in another class, and call it &ldquo;abstracted.&rdquo;
-However, this usually doesn&rsquo;t result in us taking any steps to reduce the complexity of these
+class, we frequently just move some logic out, hide it in another class, and call it “abstracted.”
+However, this usually doesn’t result in us taking any steps to reduce the complexity of these
 two classes that we now have. Changing the way some code is encapsulated might be a great way to hide behavior or make it easier
 to use or re-use, but moving this code around has only hidden the complexity in a different place rather than
 contributing to its simplicity.</p>
 
 <p>For example, consider a simple method in a Rails app:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">PostController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">PostController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
   <span class="k">def</span> <span class="nf">top_comments</span>
-    <span class="n">comments</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">post_id</span><span class="p">)</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="n">comments</span> <span class="o">=</span> <span class="no">Post</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">post_id</span><span class="p">).</span><span class="nf">comments</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span>
       <span class="c1"># complex sql</span>
     <span class="p">)</span>
-    <span class="n">render</span> <span class="ss">:show_comments</span><span class="p">,</span> <span class="ss">locals</span><span class="p">:</span> <span class="p">{</span> <span class="ss">comments</span><span class="p">:</span> <span class="n">comments</span> <span class="p">}</span>
+    <span class="n">render</span> <span class="ss">:show_comments</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">comments: </span><span class="n">comments</span> <span class="p">}</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre></div>
-<p>One might stumble upon this in an existing codebase and say, &ldquo;Let&rsquo;s abstract away that query
-logic from the controller.&rdquo; So you may end up with something like this:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</code></pre>
+</div>
+
+<p>One might stumble upon this in an existing codebase and say, “Let’s abstract away that query
+logic from the controller.” So you may end up with something like this:</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
   <span class="k">def</span> <span class="nf">most_recent_upvoted_comments</span>
-    <span class="n">comments</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="n">comments</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span>
       <span class="c1"># complex sql</span>
     <span class="p">)</span>
   <span class="k">end</span>
@@ -109,17 +113,20 @@ logic from the controller.&rdquo; So you may end up with something like this:</p
 
 <span class="k">class</span> <span class="nc">PostController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
   <span class="k">def</span> <span class="nf">top_comments</span>
-    <span class="n">comments</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">post_id</span><span class="p">)</span><span class="o">.</span><span class="n">most_recent_upvoted_comments</span>
-    <span class="n">render</span> <span class="ss">:show_comments</span><span class="p">,</span> <span class="ss">locals</span><span class="p">:</span> <span class="p">{</span> <span class="ss">comments</span><span class="p">:</span> <span class="n">comments</span> <span class="p">}</span>
+    <span class="n">comments</span> <span class="o">=</span> <span class="no">Post</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">post_id</span><span class="p">).</span><span class="nf">most_recent_upvoted_comments</span>
+    <span class="n">render</span> <span class="ss">:show_comments</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">comments: </span><span class="n">comments</span> <span class="p">}</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre></div>
-<p>Voila! We&rsquo;ve abstracted our query to the <code>most_recent_upvoted_comments</code> method. Or, so we think.
-Later, someone else comes along and says, &ldquo;Why does the model have so many queries? Let&rsquo;s abstract the
-query logic away from the model.&rdquo; So our query now moves somewhere else:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">CommentQuery</span>
+</code></pre>
+</div>
+
+<p>Voila! We’ve abstracted our query to the <code class="highlighter-rouge">most_recent_upvoted_comments</code> method. Or, so we think.
+Later, someone else comes along and says, “Why does the model have so many queries? Let’s abstract the
+query logic away from the model.” So our query now moves somewhere else:</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CommentQuery</span>
   <span class="k">def</span> <span class="nf">most_recent_upvoted_comments_for_post</span><span class="p">(</span><span class="n">post_id</span><span class="p">)</span>
-    <span class="no">Comment</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="no">Comment</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span>
       <span class="c1"># complex sql</span>
     <span class="p">)</span>
   <span class="k">end</span>
@@ -127,100 +134,109 @@ query logic away from the model.&rdquo; So our query now moves somewhere else:</
 
 <span class="k">class</span> <span class="nc">PostController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
   <span class="k">def</span> <span class="nf">top_comments</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="no">CommentQuery</span><span class="o">.</span><span class="n">new</span>
-    <span class="n">comments</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">most_recent_upvoted_comments_for_post</span><span class="p">(</span><span class="n">post_id</span><span class="p">)</span>
-    <span class="n">render</span> <span class="ss">:show_comments</span><span class="p">,</span> <span class="ss">locals</span><span class="p">:</span> <span class="p">{</span> <span class="ss">comments</span><span class="p">:</span> <span class="n">comments</span> <span class="p">}</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="no">CommentQuery</span><span class="p">.</span><span class="nf">new</span>
+    <span class="n">comments</span> <span class="o">=</span> <span class="n">query</span><span class="p">.</span><span class="nf">most_recent_upvoted_comments_for_post</span><span class="p">(</span><span class="n">post_id</span><span class="p">)</span>
+    <span class="n">render</span> <span class="ss">:show_comments</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">comments: </span><span class="n">comments</span> <span class="p">}</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>So much abstraction going on! This codebase must be awesome!
-Well, let&rsquo;s take a look at whether what we&rsquo;re doing is actually abstraction. Have either of these refactorings
-simplified the complexity of our software? I don&rsquo;t think so. Rather, this just shifted the encapsulation of this
-logic from one class to another. We&rsquo;ve simply moved a complex problem&mdash;the conflating of our domain model Comment
-with our database and SQL logic&mdash;from place to place. This change in encapsulation might still be beneficial
-from an ease of use standpoint, but we haven&rsquo;t solved our complexity problem. The real abstraction to be made
-here is separating the <em>what</em>&mdash;our domain object, a Comment&mdash;from <em>how</em> it is stored and found. In this
-specific example, when we&rsquo;re working with ActiveRecord, this combination is just a reality that we&rsquo;ve come to accept.</p>
+Well, let’s take a look at whether what we’re doing is actually abstraction. Have either of these refactorings
+simplified the complexity of our software? I don’t think so. Rather, this just shifted the encapsulation of this
+logic from one class to another. We’ve simply moved a complex problem—the conflating of our domain model Comment
+with our database and SQL logic—from place to place. This change in encapsulation might still be beneficial
+from an ease of use standpoint, but we haven’t solved our complexity problem. The real abstraction to be made
+here is separating the <em>what</em>—our domain object, a Comment—from <em>how</em> it is stored and found. In this
+specific example, when we’re working with ActiveRecord, this combination is just a reality that we’ve come to accept.</p>
 
 <p>So, what might an actual abstraction around this problem look like? Well, to borrow another heuristic from
-Hickey, making things simpler usually necessitates more things&mdash;more classes, or modules, or namespaces that each
-do one simple thing. We want to &ldquo;decomplect&rdquo; our codebase by abstracting complex operations to smaller, simpler,
+Hickey, making things simpler usually necessitates more things—more classes, or modules, or namespaces that each
+do one simple thing. We want to “decomplect” our codebase by abstracting complex operations to smaller, simpler,
 more composable pieces. In our example, we can start by separating how a Comment is represented in our code
 from how it is stored:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Comment</span>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Comment</span>
   <span class="kp">attr_reader</span> <span class="ss">:post_id</span> <span class="ss">:text</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
-    <span class="vi">@post_id</span> <span class="o">=</span> <span class="n">attributes</span><span class="o">[</span><span class="ss">:post_id</span><span class="o">]</span>
-    <span class="vi">@text</span> <span class="o">=</span> <span class="n">attributes</span><span class="o">[</span><span class="ss">:text</span><span class="o">]</span>
+    <span class="vi">@post_id</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="ss">:post_id</span><span class="p">]</span>
+    <span class="vi">@text</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="ss">:text</span><span class="p">]</span>
   <span class="k">end</span>
 <span class="k">end</span>
 
 <span class="k">class</span> <span class="nc">CommentRepository</span>
   <span class="k">def</span> <span class="nf">most_recent_upvoted</span><span class="p">(</span><span class="n">filter</span> <span class="o">=</span> <span class="p">{})</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">db_connection</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="ss">:post_id</span><span class="p">,</span> <span class="ss">:text</span><span class="p">)</span>
-                           <span class="o">.</span><span class="n">from</span><span class="p">(</span><span class="ss">:comments</span><span class="p">)</span>
-                           <span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">db_connection</span><span class="p">.</span><span class="nf">select</span><span class="p">(</span><span class="ss">:post_id</span><span class="p">,</span> <span class="ss">:text</span><span class="p">)</span>
+                           <span class="p">.</span><span class="nf">from</span><span class="p">(</span><span class="ss">:comments</span><span class="p">)</span>
+                           <span class="p">.</span><span class="nf">where</span><span class="p">(</span>
       <span class="c1"># complex sql</span>
     <span class="p">)</span>
-    <span class="n">results</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">result</span><span class="o">|</span> <span class="no">Comment</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">}</span>
+    <span class="n">results</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">result</span><span class="o">|</span> <span class="no">Comment</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">}</span>
   <span class="k">end</span>
 <span class="k">end</span>
 
 <span class="k">class</span> <span class="nc">PostController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
   <span class="k">def</span> <span class="nf">top_comments</span>
-    <span class="n">repository</span> <span class="o">=</span> <span class="no">CommentRepository</span><span class="o">.</span><span class="n">new</span>
-    <span class="n">comments</span> <span class="o">=</span> <span class="n">repository</span><span class="o">.</span><span class="n">most_recent_upvoted</span><span class="p">(</span><span class="ss">post_id</span><span class="p">:</span> <span class="n">post_id</span><span class="p">)</span>
-    <span class="n">render</span> <span class="ss">:show_comments</span><span class="p">,</span> <span class="ss">locals</span><span class="p">:</span> <span class="p">{</span> <span class="ss">comments</span><span class="p">:</span> <span class="n">comments</span> <span class="p">}</span>
+    <span class="n">repository</span> <span class="o">=</span> <span class="no">CommentRepository</span><span class="p">.</span><span class="nf">new</span>
+    <span class="n">comments</span> <span class="o">=</span> <span class="n">repository</span><span class="p">.</span><span class="nf">most_recent_upvoted</span><span class="p">(</span><span class="ss">post_id: </span><span class="n">post_id</span><span class="p">)</span>
+    <span class="n">render</span> <span class="ss">:show_comments</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">comments: </span><span class="n">comments</span> <span class="p">}</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre></div>
-<p>Now, we&rsquo;ve eliminated the back and forth debate of, &ldquo;Should this query go in the controller, or the model,
-or a query object?&rdquo; The answer is now, clearly, none of the above. SQL and database logic for a Comment should
+</code></pre>
+</div>
+
+<p>Now, we’ve eliminated the back and forth debate of, “Should this query go in the controller, or the model,
+or a query object?” The answer is now, clearly, none of the above. SQL and database logic for a Comment should
 be completely disentwined from the rest of our program.</p>
 
 <p>After this abstraction, a Comment can just be a structure for our comment data, our controller can just
 ask the correct repository to give it some Comments, and the repository can truly abstract away our query logic.
 The repository is an abstraction on top of our data store that the controller can depend on to return
-Comment objects&mdash;<em>what</em> it needs&mdash;without anything else having to worry about <em>how</em> to get Comment objects.
+Comment objects—<em>what</em> it needs—without anything else having to worry about <em>how</em> to get Comment objects.
 Contrast this with the previous examples, where anything wanting to get Comment objects also had to know
 the details of <em>how</em> to get Comments. Now, the only way to get <em>what</em> we want is to go through the
 repository, and the <em>how</em> is simply the method defined on the repository. The details of <em>how</em> could change
-without anything else caring about not being able to get Comments. We&rsquo;ve disentangled the two
+without anything else caring about not being able to get Comments. We’ve disentangled the two
 knotted threads of a controller and model into three straight threads of controller, model, and data storage.</p>
 
-<p>To further demonstrate some abstraction of the PostController, what if it also had a <code>create_comment</code>
+<p>To further demonstrate some abstraction of the PostController, what if it also had a <code class="highlighter-rouge">create_comment</code>
 method that used the CommentRepository:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Comment</span>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Comment</span>
   <span class="kp">attr_reader</span> <span class="ss">:post_id</span> <span class="ss">:text</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
-    <span class="vi">@post_id</span> <span class="o">=</span> <span class="n">attributes</span><span class="o">[</span><span class="ss">:post_id</span><span class="o">]</span>
-    <span class="vi">@text</span> <span class="o">=</span> <span class="n">attributes</span><span class="o">[</span><span class="ss">:text</span><span class="o">]</span>
+    <span class="vi">@post_id</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="ss">:post_id</span><span class="p">]</span>
+    <span class="vi">@text</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="ss">:text</span><span class="p">]</span>
   <span class="k">end</span>
 
   <span class="k">def</span> <span class="nf">valid?</span>
-    <span class="n">text</span> <span class="o">&amp;&amp;</span> <span class="n">text</span><span class="o">.</span><span class="n">length</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">&amp;&amp;</span> <span class="n">text</span><span class="p">.</span><span class="nf">length</span><span class="p">.</span><span class="nf">between</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
   <span class="k">end</span>
 <span class="k">end</span>
 
 <span class="k">class</span> <span class="nc">PostController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
   <span class="k">def</span> <span class="nf">create_comment</span>
-    <span class="n">commment</span> <span class="o">=</span> <span class="no">Comment</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">comment_params</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">comment</span><span class="o">.</span><span class="n">valid?</span>
-      <span class="n">repository</span> <span class="o">=</span> <span class="no">CommentRepository</span><span class="o">.</span><span class="n">new</span>
-      <span class="n">repository</span><span class="o">.</span><span class="n">save_comment</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+    <span class="n">commment</span> <span class="o">=</span> <span class="no">Comment</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">comment_params</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">comment</span><span class="p">.</span><span class="nf">valid?</span>
+      <span class="n">repository</span> <span class="o">=</span> <span class="no">CommentRepository</span><span class="p">.</span><span class="nf">new</span>
+      <span class="n">repository</span><span class="p">.</span><span class="nf">save_comment</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
       <span class="n">redirect_to</span> <span class="n">comment</span>
     <span class="k">else</span>
-      <span class="n">render</span> <span class="ss">:new</span><span class="p">,</span> <span class="ss">locals</span><span class="p">:</span> <span class="p">{</span> <span class="ss">error</span><span class="p">:</span> <span class="s2">&quot;Invalid comment&quot;</span> <span class="p">}</span>
+      <span class="n">render</span> <span class="ss">:new</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">error: </span><span class="s2">"Invalid comment"</span> <span class="p">}</span>
     <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>We may want to move our specific validation logic into some validation modules to hide the specifics
 of any validations on the Comment and to reduce the duplication between other models that use
 the same validations.</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Comment</span>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Comment</span>
   <span class="kp">include</span> <span class="no">Validatable</span>
   <span class="kp">extend</span> <span class="no">Validations</span>
   <span class="n">validate_length</span> <span class="ss">:text</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span>
@@ -228,21 +244,24 @@ the same validations.</p>
   <span class="kp">attr_reader</span> <span class="ss">:post_id</span> <span class="ss">:text</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
-    <span class="vi">@post_id</span> <span class="o">=</span> <span class="n">attributes</span><span class="o">[</span><span class="ss">:post_id</span><span class="o">]</span>
-    <span class="vi">@text</span> <span class="o">=</span> <span class="n">attributes</span><span class="o">[</span><span class="ss">:text</span><span class="o">]</span>
+    <span class="vi">@post_id</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="ss">:post_id</span><span class="p">]</span>
+    <span class="vi">@text</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="ss">:text</span><span class="p">]</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre></div>
-<p>This is a great way to encapsulate our common validations. It&rsquo;s really easy to share this
+</code></pre>
+</div>
+
+<p>This is a great way to encapsulate our common validations. It’s really easy to share this
 logic between any other models in our code. But, we should be asking ourselves how we
 can abstract <em>why</em> a Comment may not be valid from the model itself. Again, this requires
 more pieces:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Comment</span>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Comment</span>
   <span class="kp">attr_reader</span> <span class="ss">:post_id</span> <span class="ss">:text</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
-    <span class="vi">@post_id</span> <span class="o">=</span> <span class="n">attributes</span><span class="o">[</span><span class="ss">:post_id</span><span class="o">]</span>
-    <span class="vi">@text</span> <span class="o">=</span> <span class="n">attributes</span><span class="o">[</span><span class="ss">:text</span><span class="o">]</span>
+    <span class="vi">@post_id</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="ss">:post_id</span><span class="p">]</span>
+    <span class="vi">@text</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="ss">:text</span><span class="p">]</span>
   <span class="k">end</span>
 <span class="k">end</span>
 
@@ -253,55 +272,59 @@ more pieces:</p>
 
   <span class="k">def</span> <span class="nf">data</span>
     <span class="p">{</span>
-      <span class="ss">text</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:text</span><span class="o">]</span><span class="p">,</span>
-      <span class="ss">post_id</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:post_id</span><span class="o">]</span>
+      <span class="ss">text: </span><span class="n">params</span><span class="p">[</span><span class="ss">:text</span><span class="p">],</span>
+      <span class="ss">post_id: </span><span class="n">params</span><span class="p">[</span><span class="ss">:post_id</span><span class="p">]</span>
     <span class="p">}</span>
   <span class="k">end</span>
 
   <span class="k">def</span> <span class="nf">valid?</span>
-    <span class="n">params</span><span class="o">[</span><span class="ss">:text</span><span class="o">]</span> <span class="o">&amp;&amp;</span>
-      <span class="n">params</span><span class="o">[</span><span class="ss">:text</span><span class="o">].</span><span class="n">length</span><span class="o">.</span><span class="n">between?</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">params</span><span class="p">[</span><span class="ss">:text</span><span class="p">]</span> <span class="o">&amp;&amp;</span>
+      <span class="n">params</span><span class="p">[</span><span class="ss">:text</span><span class="p">].</span><span class="nf">length</span><span class="p">.</span><span class="nf">between?</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
   <span class="k">end</span>
 <span class="k">end</span>
 
 <span class="k">class</span> <span class="nc">PostController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
   <span class="k">def</span> <span class="nf">create_comment</span>
-    <span class="n">form</span> <span class="o">=</span> <span class="no">CommentForm</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">comment_params</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">valid?</span>
-      <span class="n">repository</span> <span class="o">=</span> <span class="no">CommentRepository</span><span class="o">.</span><span class="n">new</span>
-      <span class="n">comment</span> <span class="o">=</span> <span class="n">repository</span><span class="o">.</span><span class="n">create_comment</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="no">CommentForm</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">comment_params</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">form</span><span class="p">.</span><span class="nf">valid?</span>
+      <span class="n">repository</span> <span class="o">=</span> <span class="no">CommentRepository</span><span class="p">.</span><span class="nf">new</span>
+      <span class="n">comment</span> <span class="o">=</span> <span class="n">repository</span><span class="p">.</span><span class="nf">create_comment</span><span class="p">(</span><span class="n">form</span><span class="p">.</span><span class="nf">data</span><span class="p">)</span>
       <span class="n">redirect_to</span> <span class="n">comment</span>
     <span class="k">else</span>
-      <span class="n">render</span> <span class="ss">:new</span><span class="p">,</span> <span class="ss">locals</span><span class="p">:</span> <span class="p">{</span> <span class="ss">error</span><span class="p">:</span> <span class="s2">&quot;Invalid comment&quot;</span> <span class="p">}</span>
+      <span class="n">render</span> <span class="ss">:new</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">error: </span><span class="s2">"Invalid comment"</span> <span class="p">}</span>
     <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>Now neither the Comment nor the PostController knows <em>why</em> a comment is valid or invalid.
 The <em>why</em> is the responsibility of the form object.
-Is this as easy to use as the first example? Probably not&mdash;we have more objects now.
-But each piece is much simpler and can be composed in our <code>create_comment</code> method
+Is this as easy to use as the first example? Probably not—we have more objects now.
+But each piece is much simpler and can be composed in our <code class="highlighter-rouge">create_comment</code> method
 in a way that does the same thing in a much less complected way. We could still encapsulate
 some shared validations to use in the CommentForm to make validation in other form objects
-easier, but it won&rsquo;t be abstracting the <em>why</em> any further from the form object.</p>
+easier, but it won’t be abstracting the <em>why</em> any further from the form object.</p>
 
 <h3 id="reduce-incidental-complexity">Reduce Incidental Complexity</h3>
 
 <blockquote>
-<p><em>Einstein repeatedly argued that there must be simplified explanations of nature, because God is not
+  <p><em>Einstein repeatedly argued that there must be simplified explanations of nature, because God is not
 capricious or arbitrary. No such faith comforts the software engineer. Much of the complexity he must
 master is arbitrary complexity, forced without rhyme or reason by the many human institutions and systems
 to which his interfaces must conform. These differ from interface to interface, and from time to time,
 not because of necessity but only because they were designed by different people, rather than by God.</em></p>
-
-<p><em>&mdash; Frederick P. Brooks, The Mythical Man-Month</em></p>
 </blockquote>
 
-<p>Next time you or I start to utter the &ldquo;a&rdquo; word, we should stop and think about whether we&rsquo;re talking
+<blockquote>
+  <p><em>— Frederick P. Brooks, The Mythical Man-Month</em></p>
+</blockquote>
+
+<p>Next time you or I start to utter the “a” word, we should stop and think about whether we’re talking
 about separating our <em>whats</em> and <em>whens</em> from our <em>hows</em> and <em>whys</em>, or just shifting the encapsulation
-to make incidental complexity easier to manage. As Brooks wrote, we don&rsquo;t have a software god to continuously untangle our
-messes, so let&rsquo;s take care to use both of our tools&mdash;abstraction and encapsulation&mdash;appropriately for reducing
-complexity when we can, and making things easier while we can&rsquo;t.</p>
+to make incidental complexity easier to manage. As Brooks wrote, we don’t have a software god to continuously untangle our
+messes, so let’s take care to use both of our tools—abstraction and encapsulation—appropriately for reducing
+complexity when we can, and making things easier while we can’t.</p>
 
   </div>
 

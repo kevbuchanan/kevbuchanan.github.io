@@ -1,117 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/posts/what-im-reading-2016-07-17</loc>
-    <lastmod>2016-07-17T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/posts/what-im-reading-2016-06-26</loc>
-    <lastmod>2016-06-26T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/posts/what-im-reading-2016-06-12</loc>
-    <lastmod>2016-06-12T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/posts/what-im-reading-2016-06-05</loc>
-    <lastmod>2016-06-05T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/posts/concurrency-control</loc>
-    <lastmod>2015-08-17T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/posts/functionalish-ruby-pt2</loc>
-    <lastmod>2015-03-09T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/posts/organizing-clojure-environment</loc>
-    <lastmod>2014-12-08T00:00:00-06:00</lastmod>
-  </url>
-  <url>
-    <loc>/posts/mistaking-encapsulation-for-abstraction</loc>
-    <lastmod>2014-11-04T00:00:00-06:00</lastmod>
-  </url>
-  <url>
-    <loc>/posts/functionalish-ruby</loc>
-    <lastmod>2014-08-20T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/posts/be-empirical</loc>
-    <lastmod>2014-05-20T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/posts/package-cohesion-and-coupling</loc>
-    <lastmod>2014-02-21T00:00:00-06:00</lastmod>
-  </url>
-  <url>
-    <loc>/posts/stable-abstraction-principle</loc>
-    <lastmod>2014-02-10T00:00:00-06:00</lastmod>
-  </url>
-  <url>
-    <loc>/posts/code-smells</loc>
-    <lastmod>2014-02-07T00:00:00-06:00</lastmod>
-  </url>
-  <url>
-    <loc>/posts/what-is-it-we-want-to-get-out-of-code</loc>
-    <lastmod>2013-12-11T00:00:00-06:00</lastmod>
-  </url>
-  <url>
-    <loc>/posts/clojure-macros</loc>
-    <lastmod>2013-12-10T00:00:00-06:00</lastmod>
-  </url>
-  <url>
-    <loc>/404</loc>
-  </url>
-  <url>
-    <loc>/about</loc>
-  </url>
-  <url>
-    <loc>/</loc>
-  </url>
-    <url>
-      <loc>/posts/clojure-macros</loc>
-    </url>
-    <url>
-      <loc>/posts/what-is-it-we-want-to-get-out-of-code</loc>
-    </url>
-    <url>
-      <loc>/posts/code-smells</loc>
-    </url>
-    <url>
-      <loc>/posts/stable-abstraction-principle</loc>
-    </url>
-    <url>
-      <loc>/posts/package-cohesion-and-coupling</loc>
-    </url>
-    <url>
-      <loc>/posts/be-empirical</loc>
-    </url>
-    <url>
-      <loc>/posts/functionalish-ruby</loc>
-    </url>
-    <url>
-      <loc>/posts/mistaking-encapsulation-for-abstraction</loc>
-    </url>
-    <url>
-      <loc>/posts/organizing-clojure-environment</loc>
-    </url>
-    <url>
-      <loc>/posts/functionalish-ruby-pt2</loc>
-    </url>
-    <url>
-      <loc>/posts/concurrency-control</loc>
-    </url>
-    <url>
-      <loc>/posts/what-im-reading-2016-06-05</loc>
-    </url>
-    <url>
-      <loc>/posts/what-im-reading-2016-06-12</loc>
-    </url>
-    <url>
-      <loc>/posts/what-im-reading-2016-06-26</loc>
-    </url>
-    <url>
-      <loc>/posts/what-im-reading-2016-07-17</loc>
-    </url>
+<url>
+<loc>/posts/what-im-reading-2016-07-31</loc>
+<lastmod>2016-07-31T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>/posts/what-im-reading-2016-07-24</loc>
+<lastmod>2016-07-24T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>/posts/what-im-reading-2016-07-17</loc>
+<lastmod>2016-07-17T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>/posts/what-im-reading-2016-06-26</loc>
+<lastmod>2016-06-26T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>/posts/what-im-reading-2016-06-12</loc>
+<lastmod>2016-06-12T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>/posts/what-im-reading-2016-06-05</loc>
+<lastmod>2016-06-05T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>/posts/concurrency-control</loc>
+<lastmod>2015-08-17T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>/posts/functionalish-ruby-pt2</loc>
+<lastmod>2015-03-09T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>/posts/organizing-clojure-environment</loc>
+<lastmod>2014-12-08T00:00:00-06:00</lastmod>
+</url>
+<url>
+<loc>/posts/mistaking-encapsulation-for-abstraction</loc>
+<lastmod>2014-11-04T00:00:00-06:00</lastmod>
+</url>
+<url>
+<loc>/posts/functionalish-ruby</loc>
+<lastmod>2014-08-20T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>/posts/be-empirical</loc>
+<lastmod>2014-05-20T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>/posts/package-cohesion-and-coupling</loc>
+<lastmod>2014-02-21T00:00:00-06:00</lastmod>
+</url>
+<url>
+<loc>/posts/stable-abstraction-principle</loc>
+<lastmod>2014-02-10T00:00:00-06:00</lastmod>
+</url>
+<url>
+<loc>/posts/code-smells</loc>
+<lastmod>2014-02-07T00:00:00-06:00</lastmod>
+</url>
+<url>
+<loc>/posts/what-is-it-we-want-to-get-out-of-code</loc>
+<lastmod>2013-12-11T00:00:00-06:00</lastmod>
+</url>
+<url>
+<loc>/posts/clojure-macros</loc>
+<lastmod>2013-12-10T00:00:00-06:00</lastmod>
+</url>
+<url>
+<loc>/404</loc>
+</url>
+<url>
+<loc>/about</loc>
+</url>
+<url>
+<loc>/</loc>
+</url>
 </urlset>

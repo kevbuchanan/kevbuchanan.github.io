@@ -15,21 +15,21 @@ How do you typically start out with a new language or tool? Do you read about it
 
 You may be familiar with this concept if you've read any of Zed Shaw's [Learn Code the Hard Way series](http://learncodethehardway.org/). He commonly gives you ways to break the code you just learned, and see what happens. Why? Well, if all you do is follow the directions, you may be able to remember how to do something similar in a future project, but chances are you'll start off with something that's broken, or a failing test, and you'll need to fix it. You can trust that he told you the one and only way to do something, or you can break it and find out yourself. You shouldn't hesitate to take code that you normally execute like this:
 
-{% highlight ruby %}
+```ruby
 numbers.each_with_index do |x, i|
   collection << [x, i]
 end
 
 return collection
-{% endhighlight %}
+```
 
 and try something different, that you think might work, like this:
 
-{% highlight ruby %}
+```ruby
 numbers.map_with_index do |x, i|
   [x, i]
 end
-{% endhighlight %}
+```
 
 Because you'll immediately find out if it works or not (I'm close, but I'll need to try again on that last one). This is being empirical at its finest.
 
@@ -39,7 +39,7 @@ I feel bad for error messages. They're so undeservedly vilified. Everyone makes 
 
 Part of being empirical involves not just seeing what doesn't work, but paying attention to the why when it presents itself. When I work with novice programmers, the biggest weakness I usually see is a lack of care in reading error messages. Your code is trying to tell you where you went wrong, even telling you what line and method invocation. For instance, if I think about what this error means:
 
-{% highlight bash %}
+```bash
 src/player.c:5:9: error: conflicting types for 'create_player'
 Player* create_player(char* piece, MoveHandler move_fn) {
         ^
@@ -53,7 +53,7 @@ src/player.c:7:17: warning: incompatible pointer to integer conversion
                 ^ ~~~~~
                   *
 1 warning and 1 error generated.
-{% endhighlight %}
+```
 
 I should now know a little bit more about the language I'm using, namely that pointers to chars and chars are not the same thing, that you dereference with *, and that the compiler checks the types declared in my header file with definitions in my source.
 

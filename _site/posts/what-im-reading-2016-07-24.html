@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+	<title>What I'm Reading | 2016-07-24 - 2016-07-30</title>
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@kevinbuch_" />
+<meta name="twitter:title" content="What I'm Reading | 2016-07-24 - 2016-07-30" />
+<meta name="twitter:description" content="Why Uber Engineering Switched from Postgres to MySQL - Evan Klitzke">
+
+<meta name="description" content="Why Uber Engineering Switched from Postgres to MySQL - Evan Klitzke">
+
+
+
+<link rel="icon" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/touch-icon.png">
+<link href='https://fonts.googleapis.com/css?family=Fira+Sans' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/core.css">
+<link rel="canonical" href="/posts/what-im-reading-2016-07-24">
+<link rel="alternate" type="application/atom+xml" title="Kevin Buchanan" href="/feed.xml" />
+
+
+
+  </head>
+
+  <body>
+
+    <aside class="logo">
+
+	
+
+	<a href="/">
+		<img src="http://www.gravatar.com/avatar/6cc41965c8245134140fc2af7e6b250e.png?s=80" class="gravatar">
+	</a>
+  <p class="name">Kevin Buchanan</p>
+	<span class="logo-prompt">Back to Home</span>
+
+</aside>
+
+
+    <main>
+      <noscript>
+	<style>
+
+		article .footnotes {
+			display: block;
+		}
+
+	</style>
+</noscript>
+
+<article>
+
+	<div class="center">
+		<h1>What I'm Reading | 2016-07-24 - 2016-07-30</h1>
+		<time>July 24, 2016</time>
+	</div>
+
+	<div class="divider"></div>
+
+  <div class="content">
+	<h3 id="why-uber-engineering-switched-from-postgres-to-mysql---evan-klitzkehttpsengubercommysql-migration"><a href="https://eng.uber.com/mysql-migration/">Why Uber Engineering Switched from Postgres to MySQL - Evan Klitzke</a></h3>
+
+<ol>
+  <li>
+    <p>The first problem with Postgres’s design is known in other contexts as write amplification. Typically, write amplification refers to a problem with writing data to SSD disks: a small logical update (say, writing a few bytes) becomes a much larger, costlier update when translated to the physical layer. The same issue arises in Postgres.</p>
+  </li>
+  <li>
+    <p>This write amplification issue naturally translates into the replication layer as well because replication occurs at the level of on-disk changes. Instead of replicating a small logical record, such as “Change the birth year for ctid D to now be 770,” the database instead writes out WAL entries for all four of the writes we just described, and all four of these WAL entries propagate over the network.</p>
+  </li>
+  <li>
+    <p>During a routine master database promotion to increase database capacity, we ran into a Postgres 9.2 bug. Replicas followed timeline switches incorrectly, causing some of them to misapply some WAL records. Because of this bug, some records that should have been marked as inactive by the versioning mechanism weren’t actually marked inactive.</p>
+  </li>
+  <li>
+    <p>The most important architectural difference is that while Postgres directly maps index records to on-disk locations, InnoDB maintains a secondary structure. Instead of holding a pointer to the on-disk row location (like the ctid does in Postgres), InnoDB secondary index records hold a pointer to the primary key value.</p>
+  </li>
+  <li>
+    <p>MySQL implements concurrent connections by spawning a thread-per-connection.</p>
+  </li>
+  <li>
+    <p>Postgres, however, use a process-per-connection design. This is significantly more expensive than a thread-per-connection design for a number of reasons. Forking a new process occupies more memory than spawning a new thread. Additionally, IPC is much more expensive between processes than between threads.</p>
+  </li>
+</ol>
+
+<h3 id="munich-nice-turkey-brexit-trump-its-all-connected---mark-mackinnonhttpwwwtheglobeandmailcomnewsworldmunich-nice-turkey-brexit-trump-its-all-connectedarticle31084101"><a href="http://www.theglobeandmail.com/news/world/munich-nice-turkey-brexit-trump-its-all-connected/article31084101/">Munich, Nice, Turkey, Brexit, Trump: It’s all connected - Mark MacKinnon</a></h3>
+
+<ol>
+  <li>
+    <p>Our societies are fracturing into tribes. In the U.K., it’s Leavers versus Remainers. In Turkey, the failed coup has cleaved society into Erdoganites and Gulenists (after the movement accused of supporting the failed putsch). Almost everywhere, lines are being drawn between immigrants and the native-born. Black and white. Us and them.</p>
+  </li>
+  <li>
+    <p>Future historians, she said, may look at the “period of instability” as beginning with the Sept. 11, 2001 attacks on the U.S., and the subsequent launching of the global “war on terror,” including the fateful U.S.-British decision to invade Iraq. The accelerant, Prof. MacMillan, said was the 2008 financial crisis.</p>
+  </li>
+  <li>
+    <p>“The world seems to have reached a critical point in terms of creating a large enough pool of ‘losers’ – those who lost out on globalization, who lost out on technology, who lost out on free trade – to create the undercurrents of this instability.”</p>
+  </li>
+  <li>
+    <p>“In troubled times, there’s a tendency to turn inwards and say ‘at least we understand our own people.’ There’s also a tendency, which is very unfortunate, to demonize others for whatever reason. It happened in Germany in the late 1920s and 1930s, and it happened in other times in other places,” said Prof. MacMillan, whose most recent book is The War That Ended Peace: The Road to 1914.</p>
+  </li>
+</ol>
+
+<h3 id="the-oppressive-gospel-of-minimalism---kyle-chaykahttpwwwnytimescom20160731magazinethe-oppressive-gospel-of-minimalismhtml"><a href="http://www.nytimes.com/2016/07/31/magazine/the-oppressive-gospel-of-minimalism.html">The Oppressive Gospel of ‘Minimalism’ - Kyle Chayka</a></h3>
+
+<ol>
+  <li>
+    <p>Part pop philosophy and part aesthetic, minimalism presents a cure-all for a certain sense of capitalist overindulgence.</p>
+  </li>
+  <li>
+    <p>Today’s minimalism, by contrast, is visually oppressive; it comes with an inherent pressure to conform to its precepts. Whiteness, in a literal sense, is good. Mess, heterogeneity, is bad — the opposite impulse of artistic minimalism. It is anxiety-inducing in a manner indistinguishable from other forms of consumerism, not revolutionary at all. Do I own the right things? Have I jettisoned enough of the wrong ones?</p>
+  </li>
+  <li>
+    <p>Minimalism is now conflated with self-optimization, the trend that also resulted in fitness trackers and Soylent (truly a minimalist food — it looks like nothing, but inspires thoughts of everything else). Often driven by technol­ogy, this optimization is expensive and exclusively branded by and for the elite.</p>
+  </li>
+  <li>
+    <p>But it takes a lot to be minimalist: social capital, a safety net and access to the internet. The technology we call minimalist might fit in our pockets, but it depends on a vast infrastructure of grim, air-conditioned server farms and even grimmer Chinese factories.</p>
+  </li>
+</ol>
+
+<h3 id="reading-a-postgres-explain-analyze-query-plan---caleb-thompsonhttpsrobotsthoughtbotcomreading-an-explain-analyze-query-plan"><a href="https://robots.thoughtbot.com/reading-an-explain-analyze-query-plan">Reading a Postgres EXPLAIN ANALYZE Query Plan - Caleb Thompson</a></h3>
+
+<ol>
+  <li>
+    <p>The cost estimate (cost=0.00..5.04 rows=101 width=0) means that Postgres expects that it will “cost” 5.04 of an arbitrary unit of computation to find these values. The 0.00 is the cost at which this node can begin working (in this case, just startup time for the query). rows is the estimated number of rows this Index Scan will return, and width is the estimated size in bytes of the returned rows (0 because we only care about the location, not the content of the rows).</p>
+  </li>
+  <li>
+    <p>Because we ran EXPLAIN with the ANALYZE option, the query was actually executed and timing information was captured. (actual time=0.049..0.049 rows=100 loops=1) means that the index scan was executed 1 time (the loops value), that it returned 100 rows, and that the actual time was 0..</p>
+  </li>
+  <li>
+    <p>The combination of Bitmap Index Scan and Bitmap Heap Scan is much more expensive than reading the rows sequentially from the table (a Seq Scan), but because relatively few rows need to be visited in this case the two step process ends up being faster.</p>
+  </li>
+</ol>
+
+<h3 id="breast-feeding-the-microbiome---ed-yonghttpwwwnewyorkercomtechelementsbreast-feeding-the-microbiome"><a href="http://www.newyorker.com/tech/elements/breast-feeding-the-microbiome">Breast-Feeding the Microbiome - Ed Yong</a></h3>
+
+<ol>
+  <li>
+    <p>Every mammal mother produces complex sugars called oligosaccharides, but human moth­ers, for some reason, churn out an exceptional variety: so far, scientists have identified more than two hundred human milk oligosaccharides, or H.M.O.s. They are the third-most plentiful ingredient in human milk, after lactose and fats, and their structure ought to make them a rich source of energy for growing babies—but babies cannot digest them. When German first learned this, he was gobsmacked.</p>
+  </li>
+  <li>
+    <p>H.M.O.s pass through the stom­ach and the small intestine unharmed, landing in the large intestine, where most of our bacteria live. What if they aren’t food for babies at all? What if they are food for microbes?</p>
+  </li>
+  <li>
+    <p>Through direct contact, B. infantis also encourages gut cells to make adhesive proteins that seal the gaps between them, keeping microbes out of the bloodstream, and anti-inflam­matory molecules that calibrate the immune system.</p>
+  </li>
+  <li>
+    <p>H.M.O.s may even be able to obstruct H.I.V., which might explain why more than half of infants who suckle from infected mothers don’t get infected, despite drinking virus-loaded milk for months. Every time scientists have pitted a pathogen against cultured cells in the presence of H.M.O.s, the cells have come out smil­ing.</p>
+  </li>
+  <li>
+    <p>Many doctors have tried to prevent nec by giving probiotics to premature babies, with some success. But Underwood, after talking to people like German and Mills, thinks that he can do better by infusing the infants with a combination of B. infantis and breast milk.</p>
+  </li>
+</ol>
+
+<h3 id="is-the-internet-good-or-bad-yes---zeynep-tufekcihttpsmediumcommatteris-the-internet-good-or-bad-yes-76d9913c6011"><a href="https://medium.com/matter/is-the-internet-good-or-bad-yes-76d9913c6011">Is The Internet Good or Bad? Yes. - Zeynep Tufekci</a></h3>
+
+<ol>
+  <li>
+    <p>Resistance and surveillance: The design of today’s digital tools makes the two inseparable. And how to think about this is a real challenge. It’s said that generals always fight the last war. If so, we’re like those generals. Our understanding of the dangers of surveillance is filtered by our thinking about previous threats to our freedoms.</p>
+  </li>
+  <li>
+    <p>The resistance, coordinated solely through social media and word of mouth, had gotten so large and tumultuous that CNN International began to cover it live. At the exact same moment, CNN Turkey was broadcasting a documentary about penguins.</p>
+  </li>
+  <li>
+    <p>“It’s just a tool.” I had heard this many times before. It contains a modicum of truth, but buries technology’s impacts on our lives, which are never neutral. Often, I asked the person who said it if they thought nuclear weapons were “just a tool.” Humans have always fought, but few would say it doesn’t matter if we fight with sticks, knives, guns, or nuclear weapons.</p>
+  </li>
+  <li>
+    <p>Companies want to use this power to make us buy products. For political parties, the aim is to attract support based on a tailored presentation of that party’s politicians and policies. Both want us to click, willingly, on a choice that has been engineered for us. Diplomats call this soft power. It may be soft but it’s not weak. It doesn’t generate resistance, as totalitarianism does, so it’s actually stronger.</p>
+  </li>
+</ol>
+
+  </div>
+
+</article>
+
+<div class="back">
+	<a href="/">Back</a>
+</div>
+
+    </main>
+
+    
+
+      
+
+    
+
+  </body>
+
+</html>
