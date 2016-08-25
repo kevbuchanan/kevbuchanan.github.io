@@ -12,6 +12,6 @@ This is my blog and sometimes I write things [here](/).
 You can also find me at these places:
 
 - [Twitter](https://twitter.com/kevinbuch_)
-- [GitHub](https://github.com/kevinbuch)
+- [GitHub](https://github.com/kevbuchanan)
 - [Goodreads](https://www.goodreads.com/user/show/52962114-kevin-buchanan)
 - [LinkedIn](https://www.linkedin.com/in/buchanankevin)

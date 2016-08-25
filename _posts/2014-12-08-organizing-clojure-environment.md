@@ -275,4 +275,4 @@ Logging and environment setup isn't the most interesting or fun task to pursue i
 but when it's done well it makes everything else a lot easier. There are many ways to configure
 a Clojure app, but this method has worked well for me. I'd be interested to hear about other
 or better ways that you manage environment setup through Leiningen. You can check out the entire
-example app [here](https://github.com/kevinbuch/clj-environment).
+example app [here](https://github.com/kevbuchanan/clj-environment).
