@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+	<title>Chronic and Acute Problems in Software</title>
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@kevinbuch_" />
+<meta name="twitter:title" content="Chronic and Acute Problems in Software" />
+<meta name="twitter:description" content="Identifying the Illness">
+
+<meta name="description" content="Identifying the Illness">
+
+
+
+<link rel="icon" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/touch-icon.png">
+<link href='https://fonts.googleapis.com/css?family=Fira+Sans' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/assets/core.css">
+<link rel="canonical" href="/posts/chronic-and-acute-problems-in-software">
+<link rel="alternate" type="application/atom+xml" title="Kevin Buchanan" href="/feed.xml" />
+
+
+
+  </head>
+
+  <body>
+
+    <aside class="logo">
+
+	
+
+	<a href="/">
+		<img src="http://www.gravatar.com/avatar/6cc41965c8245134140fc2af7e6b250e.png?s=80" class="gravatar">
+	</a>
+  <p class="name">Kevin Buchanan</p>
+	<span class="logo-prompt">Back to Home</span>
+
+</aside>
+
+
+    <main>
+      <noscript>
+	<style>
+
+		article .footnotes {
+			display: block;
+		}
+
+	</style>
+</noscript>
+
+<article>
+
+	<div class="center">
+		<h1>Chronic and Acute Problems in Software</h1>
+		<time>October 4, 2016</time>
+	</div>
+
+	<div class="divider"></div>
+
+  <div class="content">
+	<h2 id="identifying-the-illness">Identifying the Illness</h2>
+
+<p>Medicine clearly distinguishes between chronic and acute conditions. Acute
+conditions have a clear and relatively sudden onset, affect a clearly
+defined component of the system, and respond quickly to treatment. Chronic
+conditions develop gradually, affect multiple parts of the system, and respond
+uncertainly to treatment.</p>
+
+<p>Due to these differences, treatment for acute conditions differs greatly from
+treatment for chronic conditions in methods and efficacy. Chronic illness
+is the leading cause of death and disability in the US, while medicine has
+drastically improved at treating acute conditions. The current success rate for
+heart bypass surgery is 95 to 98 percent. Meanwhile, chronic heart disease
+remains the leading cause of death in the US. Medicine is good at treating
+acute conditions, but due to the more complex nature of chronic conditions, has
+not been able to achieve the same level of success with treating chronic
+conditions.</p>
+
+<p>Compare this with certain kinds of problems we try to solve as developers,
+project managers, and business owners in software projects:</p>
+
+<ul>
+  <li>There’s a bug in the ordering system, so we track it down and fix it.</li>
+  <li>The business needs a new feature added, so we write a story, and add the
+feature.</li>
+  <li>Our response time has degraded, so we do some diagnostics, rewrite a few
+things, and speed it up.</li>
+  <li>Our developers have decided that we’d be more productive writing our app in
+React, rather than Angular, so we rewrite it in React.</li>
+</ul>
+
+<p>These are all acute problems. There are clear pain points, symptoms, and
+solutions for these problems. We like solving these problems because there’s a
+sense of urgency, a knowable place to start, and quick feedback once we’ve
+destroyed the sickness. And we’re good at solving these problems.</p>
+
+<p>But there are other kinds of problems we encounter in software that lack these
+characteristics:</p>
+
+<ul>
+  <li>We’ve overrun many deadlines, so we try to estimate better, and write
+clearer stories, but we still frequently miss our estimates.</li>
+  <li>We chose to rewrite our app, but the development team failed to finish in
+time, now we’re scrapping the project.</li>
+  <li>The last project failed, so now the business doesn’t trust the development
+team, and now developers feel like they’re being micromanaged.</li>
+</ul>
+
+<p>These are harder problems to solve. How do we become productive again? How do
+we restore the business’s trust in the engineering team? How do we ensure
+business owners are clearly communicating feature requirements to
+developers? These problems are more akin to chronic conditions, affecting
+multiple parts of our team in different ways, with an uncertain root cause, and
+developing gradually.</p>
+
+<h2 id="a-systems-perspective">A Systems Perspective</h2>
+
+<p>We can’t treat these problems the same way we pursued our acute problems.
+Rewriting our Ruby app in Go is not going to prevent the dev team from ever
+missing another deadline. Switching from incremental to fibonacci estimates
+isn’t going to make you and the business argue about estimates less frequently.
+Using Jira instead of Pivotal Tracker isn’t going to better prioritize your
+work. Asking your Ops team to be faster is not going to get you that database
+sooner. Asking the business owners to prioritize giving you information on how
+to implement the next feature over planning and rehashing the entirety of
+the project isn’t going to get the project done sooner.</p>
+
+<p>These kinds of chronic problems stem from conditions that
+exist across the system and manifest themselves in specific ways, some of
+which we end up seeing firsthand. To solve chronic problems on our
+software teams, we need to approach these problems from a systems perspective.</p>
+
+<p>As Donella H. Meadows explains in “Thinking in Systems,” a system is “an
+interconnected set of elements that is coherently organized in a way that
+achieves something.” The connections and flows in a system manifest as stocks.
+Stocks are things that we can see, feel, and measure. On our teams we have
+stocks of things like knowledge, technical debt, pressure, money, time,
+happiness, and power at different places throughout our organization. Changes
+to one stock create changes in other stocks through various feedback loops that
+act based on a set of decisions, rules, or physical laws.</p>
+
+<p>For example, you have a feedback loop that assesses your job satisfaction. The
+flows of both pay and workload into your stocks of money and stress initiate
+this loop. When your stress stock changes, the feedback loop involves you
+reassessing your job satisfaction. You might meet with your employer to discuss
+changing the flow of pay to your money stock or workload affecting your stress
+stock.</p>
+
+<p><img src="/assets/money.png" alt="money system" /></p>
+
+<p>Of course, systems are more complex than we can model in one diagram. This is a
+simplification of the system focusing only on the two things we’re discussing
+in this scenario, as any diagram of any system would be a simplification. The
+important part of a system diagram like this is to identify the components
+of our system relevant to the problem we are trying to solve.</p>
+
+<h2 id="human-software-systems">Human Software Systems</h2>
+
+<p>Once we start identifying the flows, stocks, and feedback loops of the
+system facing a chronic problem, we can then figure out where to add, remove,
+or modify certain feedback loops to bring our stores into proper levels
+over time.</p>
+
+<p>For example, if we need to build more knowledge of business requirements
+in our dev team’s store of knowledge, we need to build up the feedback loop
+that asks for more information and adjusts that flow. That probably sounds
+simpler than it is though, because it requires effort from multiple parts of
+our team—developers taking the time to ask questions and business owners
+being available and taking the time to answer questions (and vice-versa).
+It may involve adding new people to the team to facilitate this loop, or
+maybe moving others to new roles if their current position inhibits the
+feedback loop.</p>
+
+<p>Problems of trust—territorialism; animosity between the dev team, project
+managers, and business owners; aversion to change; excessive planning and
+process—often arise due to a system condition that Meadows calls “seeking the
+wrong goal.” In these systems, “behavior is particularly sensitive to the
+goals of feedback loops. If the goals—the indicators of satisfaction of the
+rules—are defined inaccurately or incompletely, the system may obediently
+work to produce a result that is not really intended or wanted.”</p>
+
+<p>In this case, developers may have a feedback loop that tells them to continue
+writing code, but no feedback loop exists to tell them whether the code they’re
+writing is buggy or whether people actually like what they’re building. Managers may
+have a feedback loop that determines whether they’ve had the right
+meetings, but no feedback loop that tells them what pain points their reports
+would actually like to discuss. Business owners may have a feedback loop that
+tells them whether they’ve outlined everything they think the developers
+should know about their needs, but no feedback loop that adequately tells them
+what the developers really need to know <em>right now</em>.</p>
+
+<p><img src="/assets/loop1.png" alt="feedback loop 1" /></p>
+
+<p>In this system, everyone has a feedback loop that seeks to satisfy their own
+goals and the system ends up slowly producing some software that works, but
+there are lots of bugs and nobody is particularly happy. The system is missing
+feedback loops that address the real welfare of the system—that of creating
+high-quality software that the business loves to use.</p>
+
+<p><img src="/assets/loop2.png" alt="feedback loop 2" /></p>
+
+<p>XP, Agile, Kanban, all strive to explicitly drive out these important feedback
+loops and turn them into habits. What you call the process doesn’t actually
+matter once you can clearly say that your process provides the necessary
+feedback loops for your system to seek the right goal.</p>
+
+<h2 id="changing-habit">Changing Habit</h2>
+
+<p>The hardest part of fixing any of these chronic, system-wide problems is that
+they involve changing people’s habits. Changing habit is hard, specifically because
+the entire point of a habit is to allow us to reduce the amount of effort we put
+forward in doing certain things:</p>
+
+<blockquote>
+  <p><em>When a habit emerges, the brain stops fully participating in decision making.
+It stops working so hard, or diverts focus to other tasks. So unless you
+deliberately fight a habit—unless you find new routines—the pattern will unfold
+automatically.</em></p>
+</blockquote>
+
+<blockquote>
+  <p><em>— Charles Duhigg, The Power of Habit</em></p>
+</blockquote>
+
+<p>In fact, you could say that organization-wide problems in software resemble
+chronic illness because they are brought about by habit, which itself resembles
+a chronic illness. Habit, too, develops gradually, is long-lasting, and
+responds uncertainly to treatment. But, we know we <em>can</em> change our habits. It
+just takes time and awareness of the habit and the conditions that led to it.</p>
+
+<p>Software developers and participants in the software development process love
+to solve problems. But we can’t approach every problem the same way. Our
+biggest failure in solving certain chronic problems would be to look for clear
+root causes and expect quick results once our clear-cut solution is
+implemented—as if we can solve these complex problems the same way we’ve
+solved acute problems on our teams. By acknowledging the complexity of chronic
+problems, we can give ourselves and our team members a more accurate assessment
+of the multi-faceted, long-term, uncertain, and habit-changing approach that we
+need to take to solve the problem. That way we can approach the problem with
+the tact and patience it deserves while reducing discouragement and frustration
+for ourselves and our team members when our simple solutions don’t fix things
+right away.</p>
+
+<h2 id="references">References</h2>
+<ul>
+  <li><a href="http://www.cdc.gov/chronicdisease/overview/index.htm">CDC</a></li>
+  <li><a href="http://www.chelseagreen.com/thinking-in-systems">Thinking In Systems</a></li>
+  <li><a href="http://charlesduhigg.com/the-power-of-habit/">The Power Of Habit</a></li>
+</ul>
+
+  </div>
+
+</article>
+
+<div class="back">
+	<a href="/">Back</a>
+</div>
+
+    </main>
+
+    
+
+      
+
+    
+
+  </body>
+
+</html>
