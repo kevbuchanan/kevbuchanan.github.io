@@ -1,5 +1,5 @@
 # Site Info
-title:              "Kevin Buchanan"
+title:              "Blog"
 description:        "Kevin's Blog"
 google_verify:      ~ # Put your Google Verification here
 google_analytics:   ~ # Put your Google Analytics code
@@ -7,7 +7,6 @@ google_analytics:   ~ # Put your Google Analytics code
 # Author Info
 author_name:        "Kevin Buchanan"
 author_email:       kevaustinbuch@gmail.com
-author_gravatar:    6cc41965c8245134140fc2af7e6b250e
 
 twitter_username:   kevinbuch_
 
@@ -27,7 +26,7 @@ sass:
 # Other Params
 include:            [ "robots.txt" ]
 exclude:            [ "LICENSE", "README.md", "CNAME", "vendor", "Gemfile", "bin" ]
-gems:
+plugins:
   - jekyll-sitemap
 
 compress_html:

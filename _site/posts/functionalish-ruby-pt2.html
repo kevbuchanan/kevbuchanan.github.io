@@ -7,67 +7,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-	<title>Functional-ish Ruby, Part 2&#58; Functional Objects</title>
+  <title>Functional-ish Ruby, Part 2&#58; Functional Objects | KB</title>
 
-
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:site" content="@kevinbuch_" />
-<meta name="twitter:title" content="Functional-ish Ruby, Part 2&#58; Functional Objects" />
-<meta name="twitter:description" content="In a previous blog postI discussed a few ways to think about writing Ruby methods from a functional perspective. But in Ruby,or any other object oriented language, we don’t just write functions, we...">
 
 <meta name="description" content="In a previous blog postI discussed a few ways to think about writing Ruby methods from a functional perspective. But in Ruby,or any other object oriented lan...">
 
-
-
-<link rel="icon" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/touch-icon.png">
-<link href='https://fonts.googleapis.com/css?family=Fira+Sans' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Libre+Franklin" rel="stylesheet">
 <link rel="stylesheet" href="/assets/core.css">
 <link rel="canonical" href="/posts/functionalish-ruby-pt2">
-<link rel="alternate" type="application/atom+xml" title="Kevin Buchanan" href="/feed.xml" />
-
-
+<link rel="alternate" type="application/atom+xml" title="Blog" href="/feed.xml" />
 
   </head>
 
   <body>
 
-    <aside class="logo">
+    <header>
+  
 
-	
+  <img src="/assets/photo.jpg">
 
-	<a href="/">
-		<img src="http://www.gravatar.com/avatar/6cc41965c8245134140fc2af7e6b250e.png?s=80" class="gravatar">
-	</a>
-  <p class="name">Kevin Buchanan</p>
-	<span class="logo-prompt">Back to Home</span>
+  <h4>Kevin Buchanan</h4>
 
-</aside>
+  <a href="/">
+    Posts
+  </a>
+
+</header>
 
 
     <main>
-      <noscript>
-	<style>
+      <article>
+  <section class="title">
+    <h1>Functional-ish Ruby, Part 2&#58; Functional Objects</h1>
+    <time>March 9, 2015</time>
+  </section>
 
-		article .footnotes {
-			display: block;
-		}
-
-	</style>
-</noscript>
-
-<article>
-
-	<div class="center">
-		<h1>Functional-ish Ruby, Part 2&#58; Functional Objects</h1>
-		<time>March 9, 2015</time>
-	</div>
-
-	<div class="divider"></div>
-
-  <div class="content">
-	<p>In a <a href="/posts/functionalish-ruby">previous blog post</a>
+  <section class="content">
+    <p>In a <a href="/posts/functionalish-ruby">previous blog post</a>
 I discussed a few ways to think about writing Ruby methods from a functional perspective. But in Ruby,
 or any other object oriented language, we don’t just write functions, we write objects. Does that mean
 we either have to live without the principles we like from functional programming, or fundamentally
@@ -89,8 +66,8 @@ fine while adhering to our favorite functional principles. Here are some example
 
 <p>Take the following object:</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MutableObject</span>
-  <span class="kp">attr_accessor</span> <span class="ss">:mutable_attrs</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MutableObject</span>
+  <span class="nb">attr_accessor</span> <span class="ss">:mutable_attrs</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{})</span>
     <span class="vi">@mutable_attrs</span> <span class="o">=</span> <span class="n">attrs</span>
@@ -105,8 +82,7 @@ fine while adhering to our favorite functional principles. Here are some example
 <span class="n">object</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="ss">:some_key</span><span class="p">,</span> <span class="ss">:new_value</span><span class="p">)</span>
 <span class="c1"># or</span>
 <span class="n">object</span><span class="p">.</span><span class="nf">mutable_attrs</span><span class="p">[</span><span class="ss">:some_key</span><span class="p">]</span> <span class="o">=</span> <span class="ss">:new_value</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>In this class, not only does the <code class="highlighter-rouge">update</code> method change the state
 of the object, but we’ve exposed our <code class="highlighter-rouge">attrs</code> hash through a public
@@ -121,7 +97,7 @@ need to be mindful of when we actually should mutate state. If we decide that
 mutating state causes unnecessary complexity, we could refactor
 this class to look more like this:</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyObject</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyObject</span>
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{})</span>
     <span class="vi">@attrs</span> <span class="o">=</span> <span class="n">attrs</span>
   <span class="k">end</span>
@@ -132,13 +108,12 @@ this class to look more like this:</p>
 
   <span class="kp">private</span>
 
-  <span class="kp">attr_reader</span> <span class="ss">:attrs</span>
+  <span class="nb">attr_reader</span> <span class="ss">:attrs</span>
 <span class="k">end</span>
 
 <span class="n">object</span> <span class="o">=</span> <span class="no">MyObject</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">new_object</span> <span class="o">=</span> <span class="n">object</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="ss">:some_key</span><span class="p">,</span> <span class="ss">:new_value</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Now when we update an object we return a new instance. That way we know
 that once we have an object, it won’t change.</p>
@@ -146,26 +121,24 @@ that once we have an object, it won’t change.</p>
 <p>The nice thing about a functional language like Clojure is that we get
 this for free.</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">my-map</span><span class="w"> </span><span class="p">{</span><span class="no">:number</span><span class="w"> </span><span class="mi">1</span><span class="p">})</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">my-map</span><span class="w"> </span><span class="p">{</span><span class="no">:number</span><span class="w"> </span><span class="mi">1</span><span class="p">})</span><span class="w">
 
 </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">my-new-map</span><span class="w"> </span><span class="p">(</span><span class="nb">assoc</span><span class="w"> </span><span class="n">my-map</span><span class="w"> </span><span class="no">:number</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w">
 
-</span><span class="p">(</span><span class="no">:number</span><span class="w"> </span><span class="n">my-new-map</span><span class="p">)</span><span class="w"> </span><span class="c1">; =&gt; 2
-</span><span class="p">(</span><span class="no">:number</span><span class="w"> </span><span class="n">my-map</span><span class="p">)</span><span class="w"> </span><span class="c1">; =&gt; 1
-</span></code></pre>
-</div>
+</span><span class="p">(</span><span class="no">:number</span><span class="w"> </span><span class="n">my-new-map</span><span class="p">)</span><span class="w"> </span><span class="c1">; =&gt; 2</span><span class="w">
+</span><span class="p">(</span><span class="no">:number</span><span class="w"> </span><span class="n">my-map</span><span class="p">)</span><span class="w"> </span><span class="c1">; =&gt; 1</span><span class="w">
+</span></code></pre></div></div>
 
 <p>But, as explained before, sometimes mutation is ok, even better, if it’s localized.
 And even Clojure admits this by allowing a data structure to explicity be declared
 as transient:</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">vec-range</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">vec-range</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w">
   </span><span class="p">(</span><span class="nb">loop</span><span class="w"> </span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="p">(</span><span class="nf">transient</span><span class="w"> </span><span class="p">[])]</span><span class="w">
     </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w">
       </span><span class="p">(</span><span class="nf">recur</span><span class="w"> </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">conj!</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="n">i</span><span class="p">))</span><span class="w">
       </span><span class="p">(</span><span class="nf">persistent!</span><span class="w"> </span><span class="n">v</span><span class="p">))))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>State and mutability themselves aren’t the problem. The problem is mutating across boundaries. And
 we can address that by being aware of when we are mutating state, or hiding our objects’ state
@@ -177,7 +150,7 @@ behind method calls rather than exposing public accessors.</p>
 only returns an enumerable for the original collection. So, it can only have an
 effect by changing state somewhere else and cannot be referentially transparent.</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ThingFilter</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ThingFilter</span>
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">things</span><span class="p">)</span>
     <span class="vi">@things</span> <span class="o">=</span> <span class="n">things</span>
   <span class="k">end</span>
@@ -190,30 +163,27 @@ effect by changing state somewhere else and cannot be referentially transparent.
     <span class="vi">@things</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Consider using <code class="highlighter-rouge">map</code> or <code class="highlighter-rouge">reduce</code>, and if you can’t, it’s a sign that the operation
 is mutating state, and is not referentially transparent or a pure function.</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">call</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">call</span>
   <span class="vi">@things</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">thing</span><span class="o">|</span>
     <span class="n">slightly_transform</span><span class="p">(</span><span class="n">thing</span><span class="p">)</span>
   <span class="k">end</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">thing</span><span class="o">|</span>
     <span class="n">change_some_more</span><span class="p">(</span><span class="n">thing</span><span class="p">)</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">call</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">call</span>
   <span class="vi">@things</span><span class="p">.</span><span class="nf">reduce</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">name_hash</span><span class="p">,</span> <span class="n">thing</span><span class="o">|</span>
     <span class="n">name_hash</span><span class="p">[</span><span class="n">thing</span><span class="p">.</span><span class="nf">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">thing</span><span class="p">.</span><span class="nf">name</span>
     <span class="n">name_hash</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="currying-closure-and-function-instantiation">Currying, Closure, and Function Instantiation</h2>
 
@@ -224,21 +194,20 @@ To start, consider a class method that takes three arguments, and does
 something immediately with the three arguments. It’s clearly just a function
 attached to a class namespace.</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Foo</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Foo</span>
   <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">a_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
     <span class="no">DoSomething</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>
   <span class="k">end</span>
 <span class="k">end</span>
 
 <span class="no">Foo</span><span class="p">.</span><span class="nf">a_function</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>But, what if we just want to bind two arguments and return a new function to be
 called later? Well, then we instantiate a new object with two of our arguments,
 which returns a new function to be called with one argument later on.</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Foo</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Foo</span>
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
     <span class="vi">@a</span> <span class="o">=</span> <span class="n">a</span>
     <span class="vi">@b</span> <span class="o">=</span> <span class="n">b</span>
@@ -251,14 +220,13 @@ which returns a new function to be called with one argument later on.</p>
 
 <span class="n">foo_fn</span> <span class="o">=</span> <span class="no">Foo</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
 <span class="n">foo_fn</span><span class="p">.</span><span class="nf">a_function</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>In functional languages we do this through just returning a function, from a function.
 Or, in Clojure, if we want to just return a function that takes one argument, we can use
 the <code class="highlighter-rouge">partial</code> function.</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="p">]</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="p">]</span><span class="w">
   </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="w">
     </span><span class="p">(</span><span class="nf">do-the-thing</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="p">))))</span><span class="w">
 
@@ -268,8 +236,7 @@ the <code class="highlighter-rouge">partial</code> function.</p>
   </span><span class="p">(</span><span class="nf">do-the-thing</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="p">)))</span><span class="w">
 
 </span><span class="p">((</span><span class="nb">partial</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>To underscore the fact that functions are just objects with one method, Clojure’s
 functions are implemented in Java as an interface with one function, <code class="highlighter-rouge">invoke</code>.</p>
@@ -280,7 +247,7 @@ functions are implemented in Java as an interface with one function, <code class
 
 <h3 id="composition">Composition</h3>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">OperationManager</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">OperationManager</span>
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">thing_doer</span><span class="p">)</span>
     <span class="vi">@thing_doer</span> <span class="o">=</span> <span class="n">thing_doer</span>
   <span class="k">end</span>
@@ -294,15 +261,14 @@ functions are implemented in Java as an interface with one function, <code class
 <span class="n">operation</span> <span class="o">=</span> <span class="no">OperationManager</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">ThingDoer</span><span class="p">.</span><span class="nf">new</span><span class="p">)</span>
 <span class="n">presenter</span> <span class="o">=</span> <span class="n">operation</span><span class="p">.</span><span class="nf">get_presenter</span><span class="p">(</span><span class="n">my_thing</span><span class="p">)</span>
 <span class="n">presenter</span><span class="p">.</span><span class="nf">show_result</span><span class="p">(</span><span class="vg">$stdout</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Here, we can look at the class <code class="highlighter-rouge">OperationManager</code> as a function that takes a <code class="highlighter-rouge">thing_doer</code> function,
 then returns a new function that takes a <code class="highlighter-rouge">thing</code> argument. When <code class="highlighter-rouge">get_presenter</code> is called
 with a <code class="highlighter-rouge">thing</code>, it returns a function that can be called with an output stream to finally show
 the result. In Erlang, this pattern might look like this:</p>
 
-<div class="language-erlang highlighter-rouge"><pre class="highlight"><code><span class="nf">manage</span><span class="p">(</span><span class="nv">Doer</span><span class="p">)</span> <span class="o">-&gt;</span>
+<div class="language-erlang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">manage</span><span class="p">(</span><span class="nv">Doer</span><span class="p">)</span> <span class="o">-&gt;</span>
     <span class="k">fun</span><span class="p">(</span><span class="nv">Thing</span><span class="p">)</span> <span class="o">-&gt;</span>
         <span class="nv">Result</span> <span class="o">=</span> <span class="nv">Doer</span><span class="p">(</span><span class="nv">Thing</span><span class="p">),</span>
         <span class="k">fun</span><span class="p">(</span><span class="nv">Out</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nf">write_out</span><span class="p">(</span><span class="nv">Out</span><span class="p">,</span> <span class="nv">Result</span><span class="p">)</span> <span class="k">end</span>
@@ -312,8 +278,7 @@ the result. In Erlang, this pattern might look like this:</p>
     <span class="nv">ActionFn</span> <span class="o">=</span> <span class="nf">manage</span><span class="p">(</span><span class="k">fun</span> <span class="n">my_doer_fn</span><span class="o">/</span><span class="mi">1</span><span class="p">),</span>
     <span class="nv">PresenterFn</span> <span class="o">=</span> <span class="nv">ActionFn</span><span class="p">(</span><span class="nv">MyThing</span><span class="p">),</span>
     <span class="nv">PresenterFn</span><span class="p">(</span><span class="s">"output.txt"</span><span class="p">).</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>What’s the benefit of this over one function that does everything at once? One, we’ve
 made the object more composable by allowing how the thing gets done to be passed to it.
@@ -329,8 +294,8 @@ just a function that allows us to perform a connected series of operations
 on an object. Consider the common “maybe” monad, which connects a series of
 operations on a value that may or may not be present.</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Maybe</span>
-  <span class="kp">attr_reader</span> <span class="ss">:value</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Maybe</span>
+  <span class="nb">attr_reader</span> <span class="ss">:value</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="vi">@value</span> <span class="o">=</span> <span class="n">value</span>
@@ -348,8 +313,7 @@ operations on a value that may or may not be present.</p>
 
 <span class="n">maybe</span> <span class="o">=</span> <span class="no">Maybe</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">:foo</span><span class="p">)</span>
 <span class="n">value</span> <span class="o">=</span> <span class="n">maybe</span><span class="p">.</span><span class="nf">try</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="p">.</span><span class="nf">to_s</span> <span class="p">}.</span><span class="nf">try</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="kp">nil</span> <span class="p">}.</span><span class="nf">try</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">}.</span><span class="nf">value</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The value here would be nil, but notice that there would not be an exception when trying to perform
 <code class="highlighter-rouge">x + 1</code> when x is nil.</p>
@@ -357,24 +321,23 @@ operations on a value that may or may not be present.</p>
 <p>In languages like Haskell or <a href="http://blog.8thlight.com/felipe-sere/2015/03/02/porting-selecta.html">Rust</a>,
 we get something like this for free. In Clojure, a rudimentary maybe monad might look like this:</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">maybe</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">maybe</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w">
   </span><span class="p">(</span><span class="k">fn</span><span class="w">
     </span><span class="p">([</span><span class="n">op</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">nil?</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">maybe</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">maybe</span><span class="w"> </span><span class="p">(</span><span class="nf">op</span><span class="w"> </span><span class="n">x</span><span class="p">))))</span><span class="w">
     </span><span class="p">([]</span><span class="w"> </span><span class="n">x</span><span class="p">)))</span><span class="w">
 
 </span><span class="p">(((((</span><span class="nf">maybe</span><span class="w"> </span><span class="no">:foo</span><span class="p">)</span><span class="w"> </span><span class="nb">str</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="n">nil</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">x</span><span class="p">))))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>Lately, I’ve been experimenting with a result monad, which is useful for eliminating nil checks
 or abstracting event statuses or reasons for failure. It’s not much different than the maybe
 monad, the only difference is that we check for matching statuses, rather than nil.</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Result</span>
-  <span class="kp">attr_reader</span> <span class="ss">:result</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Result</span>
+  <span class="nb">attr_reader</span> <span class="ss">:result</span>
 
   <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">status</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
-    <span class="kp">new</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+    <span class="n">new</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
   <span class="k">end</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
@@ -399,8 +362,7 @@ monad, the only difference is that we check for matching statuses, rather than n
 <span class="k">end</span><span class="p">.</span><span class="nf">on_status</span><span class="p">(</span><span class="ss">:not_found</span><span class="p">)</span> <span class="k">do</span>
   <span class="s2">"Title not found"</span>
 <span class="k">end</span><span class="p">.</span><span class="nf">result</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="conclusion">Conclusion</h2>
 
@@ -414,21 +376,14 @@ makes our code more complex. But, if you see value in using immutable state, or 
 order functions, or a monad, then use it. Take the pieces you like when they fit, and find the
 alternative best option when they don’t.</p>
 
-  </div>
-
+  </section>
 </article>
 
-<div class="back">
-	<a href="/">Back</a>
-</div>
+<footer>
+  <a href="/">Back</a>
+</footer>
 
     </main>
-
-    
-
-      
-
-    
 
   </body>
 

@@ -7,67 +7,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-	<title>Concurrency Control Strategies for Secret Agents</title>
+  <title>Concurrency Control Strategies for Secret Agents | KB</title>
 
-
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:site" content="@kevinbuch_" />
-<meta name="twitter:title" content="Concurrency Control Strategies for Secret Agents" />
-<meta name="twitter:description" content="In the 1963 movie “Dr. No,” the first in the James Bond series, Bond travels toJamaica for a case, and he knows that his enemies are watching his every move.He knows his enemies are smart, but he’s...">
 
 <meta name="description" content="In the 1963 movie “Dr. No,” the first in the James Bond series, Bond travels toJamaica for a case, and he knows that his enemies are watching his every move....">
 
-
-
-<link rel="icon" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/touch-icon.png">
-<link href='https://fonts.googleapis.com/css?family=Fira+Sans' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Libre+Franklin" rel="stylesheet">
 <link rel="stylesheet" href="/assets/core.css">
 <link rel="canonical" href="/posts/concurrency-control">
-<link rel="alternate" type="application/atom+xml" title="Kevin Buchanan" href="/feed.xml" />
-
-
+<link rel="alternate" type="application/atom+xml" title="Blog" href="/feed.xml" />
 
   </head>
 
   <body>
 
-    <aside class="logo">
+    <header>
+  
 
-	
+  <img src="/assets/photo.jpg">
 
-	<a href="/">
-		<img src="http://www.gravatar.com/avatar/6cc41965c8245134140fc2af7e6b250e.png?s=80" class="gravatar">
-	</a>
-  <p class="name">Kevin Buchanan</p>
-	<span class="logo-prompt">Back to Home</span>
+  <h4>Kevin Buchanan</h4>
 
-</aside>
+  <a href="/">
+    Posts
+  </a>
+
+</header>
 
 
     <main>
-      <noscript>
-	<style>
+      <article>
+  <section class="title">
+    <h1>Concurrency Control Strategies for Secret Agents</h1>
+    <time>August 17, 2015</time>
+  </section>
 
-		article .footnotes {
-			display: block;
-		}
-
-	</style>
-</noscript>
-
-<article>
-
-	<div class="center">
-		<h1>Concurrency Control Strategies for Secret Agents</h1>
-		<time>August 17, 2015</time>
-	</div>
-
-	<div class="divider"></div>
-
-  <div class="content">
-	<p>In the 1963 movie “Dr. No,” the first in the James Bond series, Bond travels to
+  <section class="content">
+    <p>In the 1963 movie “Dr. No,” the first in the James Bond series, Bond travels to
 Jamaica for a case, and he knows that his enemies are watching his every move.
 He knows his enemies are smart, but he’s smarter. To keep them from prying
 into his plans, he can’t simply lock them out of his room, he needs to be a
@@ -81,7 +58,7 @@ to securely lock down his room as he moves from place to place.</p>
 <p>How would this scenario look in code? Well, let’s introduce a secret mission,
 in Ruby:</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SecretMission</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SecretMission</span>
   <span class="k">def</span> <span class="nf">initialize</span>
     <span class="vi">@files</span> <span class="o">=</span> <span class="no">Array</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="s2">"File </span><span class="si">#{</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2">"</span> <span class="p">}</span>
   <span class="k">end</span>
@@ -89,7 +66,7 @@ in Ruby:</p>
   <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
     <span class="k">while</span> <span class="n">file</span> <span class="o">=</span> <span class="vi">@files</span><span class="p">.</span><span class="nf">shift</span>
       <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2"> is reading </span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2">"</span>
-      <span class="nb">sleep</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="p">)</span>
+      <span class="nb">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
     <span class="k">end</span>
   <span class="k">end</span>
 
@@ -97,14 +74,13 @@ in Ruby:</p>
     <span class="nb">puts</span> <span class="s2">"Mission Accepted"</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The mission will contain some files that need to be read. Bond
 will accept the mission once he reads the files. But, there are also some
 villains out there trying to read the files.</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">mission</span> <span class="o">=</span> <span class="no">SecretMission</span><span class="p">.</span><span class="nf">new</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mission</span> <span class="o">=</span> <span class="no">SecretMission</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">villains</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Odd Job"</span><span class="p">,</span> <span class="s2">"Jaws"</span><span class="p">,</span> <span class="s2">"May Day"</span><span class="p">]</span>
 <span class="n">threads</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -115,24 +91,22 @@ villains out there trying to read the files.</p>
 
 <span class="n">villains</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">spy</span><span class="o">|</span>
   <span class="n">threads</span> <span class="o">&lt;&lt;</span> <span class="no">Thread</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span>
-    <span class="n">mission</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="n">spy</span><span class="p">)</span> <span class="k">if</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="nf">.</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="n">mission</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="n">spy</span><span class="p">)</span> <span class="k">if</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
   <span class="k">end</span>
 <span class="k">end</span>
 
 <span class="n">threads</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:join</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>With everything running in a separate thread, we get something like this output:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Bond is reading File 1
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bond is reading File 1
 Odd Job is reading File 2
 Jaws is reading File 3
 Bond is reading File 4
 Jaws is reading File 5
 Mission Accepted
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Since there’s no coordination of who is reading the files, a couple
 spies can sneak in. This is bad news. Bond just accepted a doomed mission
@@ -143,7 +117,7 @@ at the same time.</p>
 they’re being read. We could add a mutex to the <code class="highlighter-rouge">SecretMission</code> class
 to use when reading the files:</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SecretMission</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SecretMission</span>
   <span class="k">def</span> <span class="nf">initialize</span>
     <span class="vi">@files</span> <span class="o">=</span> <span class="no">Array</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="s2">"File </span><span class="si">#{</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2">"</span> <span class="p">}</span>
     <span class="vi">@mutex</span> <span class="o">=</span> <span class="no">Mutex</span><span class="p">.</span><span class="nf">new</span>
@@ -152,12 +126,12 @@ to use when reading the files:</p>
   <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
     <span class="k">until</span> <span class="vi">@mutex</span><span class="p">.</span><span class="nf">try_lock</span>
       <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2"> is waiting"</span>
-      <span class="nb">sleep</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">3</span><span class="p">)</span>
+      <span class="nb">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
     <span class="k">end</span>
     <span class="nb">puts</span> <span class="s2">"The files are gone!"</span> <span class="k">if</span> <span class="vi">@files</span><span class="p">.</span><span class="nf">empty?</span>
     <span class="k">while</span> <span class="n">file</span> <span class="o">=</span> <span class="vi">@files</span><span class="p">.</span><span class="nf">shift</span>
       <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2"> is reading </span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2">"</span>
-      <span class="nb">sleep</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="p">)</span>
+      <span class="nb">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
     <span class="k">end</span>
     <span class="vi">@mutex</span><span class="p">.</span><span class="nf">unlock</span>
   <span class="k">end</span>
@@ -166,13 +140,12 @@ to use when reading the files:</p>
     <span class="nb">puts</span> <span class="s2">"Mission Accepted"</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Now when we run our spies in separate threads, we consistently see something
 like this (assuming Bond’s thread is the first to read):</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Bond is reading File 1
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bond is reading File 1
 May Day is waiting
 Bond is reading File 2
 Bond is reading File 3
@@ -181,8 +154,7 @@ Bond is reading File 4
 Bond is reading File 5
 Mission Accepted
 The files are gone!
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Bond gets to the files, acquires the lock, and the other threads are locked
 out for the duration of his reading. But, let’s assume that using this lock is
@@ -197,7 +169,7 @@ and throw them off of his tracks.</p>
 <p>First, let’s change our <code class="highlighter-rouge">read</code> method to return how many files are read, and change
 the <code class="highlighter-rouge">accept</code> method to take a parameter for how many files a spy was able to read.</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SecretMission</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SecretMission</span>
   <span class="k">def</span> <span class="nf">initialize</span>
     <span class="vi">@files</span> <span class="o">=</span> <span class="no">Array</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="s2">"File </span><span class="si">#{</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2">"</span> <span class="p">}</span>
   <span class="k">end</span>
@@ -207,7 +179,7 @@ the <code class="highlighter-rouge">accept</code> method to take a parameter for
     <span class="n">read</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="n">file</span> <span class="o">=</span> <span class="vi">@files</span><span class="p">.</span><span class="nf">shift</span>
       <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2"> is reading </span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2">"</span>
-      <span class="nb">sleep</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="p">)</span>
+      <span class="nb">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
       <span class="n">read</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">end</span>
     <span class="n">read</span>
@@ -221,30 +193,27 @@ the <code class="highlighter-rouge">accept</code> method to take a parameter for
     <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Then, let’s change Bond’s behavior so that he can signal how many files
 he got to:</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">threads</span> <span class="o">&lt;&lt;</span> <span class="no">Thread</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">threads</span> <span class="o">&lt;&lt;</span> <span class="no">Thread</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span>
   <span class="n">files_read</span> <span class="o">=</span> <span class="n">mission</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="s2">"Bond"</span><span class="p">)</span>
   <span class="n">mission</span><span class="p">.</span><span class="nf">accept</span><span class="p">(</span><span class="n">files_read</span><span class="p">)</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Now, we could see Bond read all of the files successfully if none of the
 villains find them, or we could see something like this:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Bond is reading File 1
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bond is reading File 1
 Odd Job is reading File 2
 Odd Job is reading File 4
 Bond is reading File 3
 Odd Job is reading File 5
 Abort Mission!
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>This is a nice, lightweight option that allows us to always know whether
 the mission is compromised, without any waiting by any of the spies.</p>
@@ -265,14 +234,13 @@ But we have lots of updates happening concurrently, so we need some way to maint
 integrity of our concurrent state transitions. We could start with a
 pessimistic lock. We’ll assume we’re using ActiveRecord for this example.</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">order</span> <span class="o">=</span> <span class="no">Order</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">order_id</span><span class="p">)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">order</span> <span class="o">=</span> <span class="no">Order</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">order_id</span><span class="p">)</span>
 <span class="n">order</span><span class="p">.</span><span class="nf">with_lock</span> <span class="k">do</span>
   <span class="k">if</span> <span class="n">order</span><span class="p">.</span><span class="nf">status</span> <span class="o">==</span> <span class="s1">'pending'</span>
     <span class="n">order</span><span class="p">.</span><span class="nf">update</span><span class="p">({</span> <span class="ss">status: </span><span class="s1">'cancelled'</span> <span class="p">})</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>If we’re using PostgreSQL as our database, this will perform a <code class="highlighter-rouge">SELECT FOR UPDATE</code>
 on the record prior to yielding to the block to perform. Once this transaction gains
@@ -290,7 +258,7 @@ is indeed the current state. If it is not the current state, we know that
 another transaction was working at the same time. We can do this by using an
 <code class="highlighter-rouge">UPDATE WHERE</code>. In ActiveRecord that would look like this:</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">order</span> <span class="o">=</span> <span class="no">Order</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">order</span> <span class="o">=</span> <span class="no">Order</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">order</span><span class="p">.</span><span class="nf">status</span> <span class="o">==</span> <span class="s1">'pending'</span>
   <span class="n">rows_affected</span> <span class="o">=</span> <span class="no">Order</span><span class="p">.</span><span class="nf">where</span><span class="p">({</span>
@@ -301,8 +269,7 @@ another transaction was working at the same time. We can do this by using an
   <span class="k">raise</span> <span class="no">StaleDataError</span> <span class="k">if</span> <span class="n">rows_affected</span> <span class="o">==</span> <span class="mi">0</span>
 <span class="k">end</span>
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The above query should generate the SQL:</p>
 
@@ -401,7 +368,7 @@ we’ve actually encountered a concurrency issue.</p>
 example would look like. For an in-memory implementation, we can use Clojure, as Clojure’s
 refs are implemented using Software Transactional Memory (STM) with MVCC.</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="nf">ns</span><span class="w"> </span><span class="n">spies.core</span><span class="p">)</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="nf">ns</span><span class="w"> </span><span class="n">spies.core</span><span class="p">)</span><span class="w">
 
 </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">files</span><span class="w">
   </span><span class="p">(</span><span class="nf">-&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">range</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">
@@ -422,7 +389,7 @@ refs are implemented using Software Transactional Memory (STM) with MVCC.</p>
 </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">bond</span><span class="w">
   </span><span class="p">(</span><span class="nf">future</span><span class="w">
     </span><span class="p">(</span><span class="nb">dosync</span><span class="w">
-      </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">file-read</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nf">read-file</span><span class="w"> </span><span class="s">"Bond"</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="n">%</span><span class="p">)</span><span class="w"> </span><span class="err">@</span><span class="n">files</span><span class="p">)]</span><span class="w">
+      </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">file-read</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nf">read-file</span><span class="w"> </span><span class="s">"Bond"</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="n">%</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="n">files</span><span class="p">)]</span><span class="w">
         </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">(</span><span class="nb">count</span><span class="w"> </span><span class="n">files-read</span><span class="p">))</span><span class="w">
           </span><span class="p">(</span><span class="nf">accept-mission</span><span class="w"> </span><span class="n">files</span><span class="p">)</span><span class="w">
           </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"\nAbort Mission"</span><span class="p">))))))</span><span class="w">
@@ -431,7 +398,7 @@ refs are implemented using Software Transactional Memory (STM) with MVCC.</p>
   </span><span class="p">(</span><span class="nf">future</span><span class="w">
     </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="nb">zero?</span><span class="w"> </span><span class="p">(</span><span class="nb">rand-int</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w">
       </span><span class="p">(</span><span class="nb">dosync</span><span class="w">
-        </span><span class="p">(</span><span class="nb">if-let</span><span class="w"> </span><span class="p">[</span><span class="n">file</span><span class="w"> </span><span class="p">(</span><span class="nb">first</span><span class="w"> </span><span class="err">@</span><span class="n">files</span><span class="p">)]</span><span class="w">
+        </span><span class="p">(</span><span class="nb">if-let</span><span class="w"> </span><span class="p">[</span><span class="n">file</span><span class="w"> </span><span class="p">(</span><span class="nb">first</span><span class="w"> </span><span class="o">@</span><span class="n">files</span><span class="p">)]</span><span class="w">
           </span><span class="p">(</span><span class="nf">read-file</span><span class="w"> </span><span class="n">villain</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="n">file</span><span class="p">)</span><span class="w">
           </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">"%s, the files are gone"</span><span class="w"> </span><span class="n">villain</span><span class="p">)))))))</span><span class="w">
 
@@ -442,8 +409,7 @@ refs are implemented using Software Transactional Memory (STM) with MVCC.</p>
   </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">futures</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="n">villains</span><span class="w"> </span><span class="n">bond</span><span class="p">)]</span><span class="w">
     </span><span class="p">(</span><span class="nb">doall</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">deref</span><span class="w"> </span><span class="n">futures</span><span class="p">)))</span><span class="w">
   </span><span class="p">(</span><span class="nf">shutdown-agents</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>In this code, we create a group of threads to read the files using <code class="highlighter-rouge">future</code>.
 Bond’s thread will try to read all the files and then leave a note for
@@ -453,7 +419,7 @@ using <code class="highlighter-rouge">dosync</code>. While in the transaction, w
 <code class="highlighter-rouge">alter</code>, which takes as arguments a ref and a function to call to alter the
 ref. When we run this, we see something like this:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Bond is attempting to read File 1
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bond is attempting to read File 1
 Bond is reading File 1
 Jaws is attempting to read File 1
 Odd Job is attempting to read File 1
@@ -475,8 +441,7 @@ Odd Job is attempting to read A bad pun from Bond
 Jaws is reading A bad pun from Bond
 Odd Job, the files are gone
 Jaws, the files are gone
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>You’ll notice that the threads trying to read for Jaws and Odd Job retried a
 number of times while Bond’s thread was reading the files. This is caused by
@@ -507,9 +472,11 @@ you get with each:</p>
 
 <h4 id="pessimisticlocking">Pessimistic/Locking</h4>
 
-<p><strong>Benefits:</strong>
-- Exclusive access
-- Possible stronger guarantee of integrity</p>
+<p><strong>Benefits:</strong></p>
+<ul>
+  <li>Exclusive access</li>
+  <li>Possible stronger guarantee of integrity</li>
+</ul>
 
 <p><strong>Drawbacks:</strong></p>
 
@@ -571,21 +538,14 @@ would-be concurrent invasions into your process just like a secret agent.</p>
   <li><a href="http://blog.jayfields.com/2011/04/clojure-state-management.html">Jay Fields on Clojure Refs</a></li>
 </ul>
 
-  </div>
-
+  </section>
 </article>
 
-<div class="back">
-	<a href="/">Back</a>
-</div>
+<footer>
+  <a href="/">Back</a>
+</footer>
 
     </main>
-
-    
-
-      
-
-    
 
   </body>
 

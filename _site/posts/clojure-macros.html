@@ -7,67 +7,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-	<title>Clojure Macros</title>
+  <title>Clojure Macros | KB</title>
 
-
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:site" content="@kevinbuch_" />
-<meta name="twitter:title" content="Clojure Macros" />
-<meta name="twitter:description" content="The project I’ve been pairing on lately uses quite a few macros. Sometimes Iunderstand what these macros do, and sometimes I don’t. I decided that Ibasically just need to delve deeper into understa...">
 
 <meta name="description" content="The project I’ve been pairing on lately uses quite a few macros. Sometimes Iunderstand what these macros do, and sometimes I don’t. I decided that Ibasically...">
 
-
-
-<link rel="icon" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/touch-icon.png">
-<link href='https://fonts.googleapis.com/css?family=Fira+Sans' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Libre+Franklin" rel="stylesheet">
 <link rel="stylesheet" href="/assets/core.css">
 <link rel="canonical" href="/posts/clojure-macros">
-<link rel="alternate" type="application/atom+xml" title="Kevin Buchanan" href="/feed.xml" />
-
-
+<link rel="alternate" type="application/atom+xml" title="Blog" href="/feed.xml" />
 
   </head>
 
   <body>
 
-    <aside class="logo">
+    <header>
+  
 
-	
+  <img src="/assets/photo.jpg">
 
-	<a href="/">
-		<img src="http://www.gravatar.com/avatar/6cc41965c8245134140fc2af7e6b250e.png?s=80" class="gravatar">
-	</a>
-  <p class="name">Kevin Buchanan</p>
-	<span class="logo-prompt">Back to Home</span>
+  <h4>Kevin Buchanan</h4>
 
-</aside>
+  <a href="/">
+    Posts
+  </a>
+
+</header>
 
 
     <main>
-      <noscript>
-	<style>
+      <article>
+  <section class="title">
+    <h1>Clojure Macros</h1>
+    <time>December 10, 2013</time>
+  </section>
 
-		article .footnotes {
-			display: block;
-		}
-
-	</style>
-</noscript>
-
-<article>
-
-	<div class="center">
-		<h1>Clojure Macros</h1>
-		<time>December 10, 2013</time>
-	</div>
-
-	<div class="divider"></div>
-
-  <div class="content">
-	<p>The project I’ve been pairing on lately uses quite a few macros. Sometimes I
+  <section class="content">
+    <p>The project I’ve been pairing on lately uses quite a few macros. Sometimes I
 understand what these macros do, and sometimes I don’t. I decided that I
 basically just need to delve deeper into understanding macros in Clojure so
 that I don’t run with any assumptions when I’m trying to understand a macro.
@@ -119,7 +96,7 @@ I’ve described here. I think the key thing to keep in mind when trying to
 understand macros is that a macros rearrange code and produce code at compile
 time. Here’s my attempt at rearranging some code:</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defmacro</span><span class="w"> </span><span class="n">maybe...?</span><span class="w"> </span><span class="p">[</span><span class="n">body</span><span class="p">]</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defmacro</span><span class="w"> </span><span class="n">maybe...?</span><span class="w"> </span><span class="p">[</span><span class="n">body</span><span class="p">]</span><span class="w">
   </span><span class="o">`</span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="o">~</span><span class="p">(</span><span class="nf">even?</span><span class="w"> </span><span class="p">(</span><span class="nb">rand-int</span><span class="w"> </span><span class="mi">100</span><span class="p">))</span><span class="w">
     </span><span class="o">~</span><span class="n">body</span><span class="w">
     </span><span class="s">"nope"</span><span class="p">))</span><span class="w">
@@ -133,24 +110,16 @@ time. Here’s my attempt at rearranging some code:</p>
 </span><span class="p">(</span><span class="nb">prn</span><span class="w"> </span><span class="p">(</span><span class="nb">macroexpand</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">define-a-function</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="p">[</span><span class="n">num1</span><span class="w"> </span><span class="n">num2</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="n">num1</span><span class="w"> </span><span class="n">num2</span><span class="p">))))</span><span class="w">
 </span><span class="p">(</span><span class="nf">define-a-function</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="p">[</span><span class="n">num1</span><span class="w"> </span><span class="n">num2</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="n">num1</span><span class="w"> </span><span class="n">num2</span><span class="p">))</span><span class="w">
 </span><span class="p">(</span><span class="nb">prn</span><span class="w"> </span><span class="p">(</span><span class="nf">add</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
-  </div>
-
+  </section>
 </article>
 
-<div class="back">
-	<a href="/">Back</a>
-</div>
+<footer>
+  <a href="/">Back</a>
+</footer>
 
     </main>
-
-    
-
-      
-
-    
 
   </body>
 

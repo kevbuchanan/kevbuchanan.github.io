@@ -7,67 +7,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-	<title>Mistaking Encapsulation for Abstraction</title>
+  <title>Mistaking Encapsulation for Abstraction | KB</title>
 
-
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:site" content="@kevinbuch_" />
-<meta name="twitter:title" content="Mistaking Encapsulation for Abstraction" />
-<meta name="twitter:description" content="“Abstract” is a commonly used word in software. I hear it a few times every day.“Can we make an abstraction around this?” “Let’s move this method out to abstract it away.”But, what are we really do...">
 
 <meta name="description" content="“Abstract” is a commonly used word in software. I hear it a few times every day.“Can we make an abstraction around this?” “Let’s move this method out to abst...">
 
-
-
-<link rel="icon" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/touch-icon.png">
-<link href='https://fonts.googleapis.com/css?family=Fira+Sans' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Libre+Franklin" rel="stylesheet">
 <link rel="stylesheet" href="/assets/core.css">
 <link rel="canonical" href="/posts/mistaking-encapsulation-for-abstraction">
-<link rel="alternate" type="application/atom+xml" title="Kevin Buchanan" href="/feed.xml" />
-
-
+<link rel="alternate" type="application/atom+xml" title="Blog" href="/feed.xml" />
 
   </head>
 
   <body>
 
-    <aside class="logo">
+    <header>
+  
 
-	
+  <img src="/assets/photo.jpg">
 
-	<a href="/">
-		<img src="http://www.gravatar.com/avatar/6cc41965c8245134140fc2af7e6b250e.png?s=80" class="gravatar">
-	</a>
-  <p class="name">Kevin Buchanan</p>
-	<span class="logo-prompt">Back to Home</span>
+  <h4>Kevin Buchanan</h4>
 
-</aside>
+  <a href="/">
+    Posts
+  </a>
+
+</header>
 
 
     <main>
-      <noscript>
-	<style>
+      <article>
+  <section class="title">
+    <h1>Mistaking Encapsulation for Abstraction</h1>
+    <time>November 4, 2014</time>
+  </section>
 
-		article .footnotes {
-			display: block;
-		}
-
-	</style>
-</noscript>
-
-<article>
-
-	<div class="center">
-		<h1>Mistaking Encapsulation for Abstraction</h1>
-		<time>November 4, 2014</time>
-	</div>
-
-	<div class="divider"></div>
-
-  <div class="content">
-	<p>“Abstract” is a commonly used word in software. I hear it a few times every day.
+  <section class="content">
+    <p>“Abstract” is a commonly used word in software. I hear it a few times every day.
 <em>“Can we make an abstraction around this?” “Let’s move this method out to abstract it away.”</em>
 But, what are we really doing when we create an “abstraction” or when we “abstract”?
 Are we actually doing what we think we’re doing? What do these terms actually
@@ -89,7 +66,7 @@ contributing to its simplicity.</p>
 
 <p>For example, consider a simple method in a Rails app:</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">PostController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">PostController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
   <span class="k">def</span> <span class="nf">top_comments</span>
     <span class="n">comments</span> <span class="o">=</span> <span class="no">Post</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">post_id</span><span class="p">).</span><span class="nf">comments</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span>
       <span class="c1"># complex sql</span>
@@ -97,13 +74,12 @@ contributing to its simplicity.</p>
     <span class="n">render</span> <span class="ss">:show_comments</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">comments: </span><span class="n">comments</span> <span class="p">}</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>One might stumble upon this in an existing codebase and say, “Let’s abstract away that query
 logic from the controller.” So you may end up with something like this:</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
   <span class="k">def</span> <span class="nf">most_recent_upvoted_comments</span>
     <span class="n">comments</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span>
       <span class="c1"># complex sql</span>
@@ -117,14 +93,13 @@ logic from the controller.” So you may end up with something like this:</p>
     <span class="n">render</span> <span class="ss">:show_comments</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">comments: </span><span class="n">comments</span> <span class="p">}</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Voila! We’ve abstracted our query to the <code class="highlighter-rouge">most_recent_upvoted_comments</code> method. Or, so we think.
 Later, someone else comes along and says, “Why does the model have so many queries? Let’s abstract the
 query logic away from the model.” So our query now moves somewhere else:</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CommentQuery</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CommentQuery</span>
   <span class="k">def</span> <span class="nf">most_recent_upvoted_comments_for_post</span><span class="p">(</span><span class="n">post_id</span><span class="p">)</span>
     <span class="no">Comment</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span>
       <span class="c1"># complex sql</span>
@@ -139,8 +114,7 @@ query logic away from the model.” So our query now moves somewhere else:</p>
     <span class="n">render</span> <span class="ss">:show_comments</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">comments: </span><span class="n">comments</span> <span class="p">}</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>So much abstraction going on! This codebase must be awesome!
 Well, let’s take a look at whether what we’re doing is actually abstraction. Have either of these refactorings
@@ -157,8 +131,8 @@ do one simple thing. We want to “decomplect” our codebase by abstracting com
 more composable pieces. In our example, we can start by separating how a Comment is represented in our code
 from how it is stored:</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Comment</span>
-  <span class="kp">attr_reader</span> <span class="ss">:post_id</span> <span class="ss">:text</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Comment</span>
+  <span class="nb">attr_reader</span> <span class="ss">:post_id</span> <span class="ss">:text</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
     <span class="vi">@post_id</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="ss">:post_id</span><span class="p">]</span>
@@ -184,8 +158,7 @@ from how it is stored:</p>
     <span class="n">render</span> <span class="ss">:show_comments</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">comments: </span><span class="n">comments</span> <span class="p">}</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Now, we’ve eliminated the back and forth debate of, “Should this query go in the controller, or the model,
 or a query object?” The answer is now, clearly, none of the above. SQL and database logic for a Comment should
@@ -204,8 +177,8 @@ knotted threads of a controller and model into three straight threads of control
 <p>To further demonstrate some abstraction of the PostController, what if it also had a <code class="highlighter-rouge">create_comment</code>
 method that used the CommentRepository:</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Comment</span>
-  <span class="kp">attr_reader</span> <span class="ss">:post_id</span> <span class="ss">:text</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Comment</span>
+  <span class="nb">attr_reader</span> <span class="ss">:post_id</span> <span class="ss">:text</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
     <span class="vi">@post_id</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="ss">:post_id</span><span class="p">]</span>
@@ -229,35 +202,33 @@ method that used the CommentRepository:</p>
     <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>We may want to move our specific validation logic into some validation modules to hide the specifics
 of any validations on the Comment and to reduce the duplication between other models that use
 the same validations.</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Comment</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Comment</span>
   <span class="kp">include</span> <span class="no">Validatable</span>
   <span class="kp">extend</span> <span class="no">Validations</span>
   <span class="n">validate_length</span> <span class="ss">:text</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span>
 
-  <span class="kp">attr_reader</span> <span class="ss">:post_id</span> <span class="ss">:text</span>
+  <span class="nb">attr_reader</span> <span class="ss">:post_id</span> <span class="ss">:text</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
     <span class="vi">@post_id</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="ss">:post_id</span><span class="p">]</span>
     <span class="vi">@text</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="ss">:text</span><span class="p">]</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>This is a great way to encapsulate our common validations. It’s really easy to share this
 logic between any other models in our code. But, we should be asking ourselves how we
 can abstract <em>why</em> a Comment may not be valid from the model itself. Again, this requires
 more pieces:</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Comment</span>
-  <span class="kp">attr_reader</span> <span class="ss">:post_id</span> <span class="ss">:text</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Comment</span>
+  <span class="nb">attr_reader</span> <span class="ss">:post_id</span> <span class="ss">:text</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
     <span class="vi">@post_id</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="ss">:post_id</span><span class="p">]</span>
@@ -295,8 +266,7 @@ more pieces:</p>
     <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Now neither the Comment nor the PostController knows <em>why</em> a comment is valid or invalid.
 The <em>why</em> is the responsibility of the form object.
@@ -326,21 +296,14 @@ to make incidental complexity easier to manage. As Brooks wrote, we don’t have
 messes, so let’s take care to use both of our tools—abstraction and encapsulation—appropriately for reducing
 complexity when we can, and making things easier while we can’t.</p>
 
-  </div>
-
+  </section>
 </article>
 
-<div class="back">
-	<a href="/">Back</a>
-</div>
+<footer>
+  <a href="/">Back</a>
+</footer>
 
     </main>
-
-    
-
-      
-
-    
 
   </body>
 

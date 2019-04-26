@@ -3,17 +3,15 @@ layout: default
 ---
 
 <article>
+  <section class="title">
+    <h1>{{ page.title }}</h1>
+  </section>
 
-	<h1 class="title">{{ page.title }}</h1>
-
-	<div class="divider"></div>
-
-  <div class="content">
-	{{ content }}
-  </div>
-
+  <section class="content">
+    {{ content }}
+  </section>
 </article>
 
-<div class="back">
-	<a href="{{site.baseurl}}/">Back</a>
-</div>
+<footer>
+  <a href="{{site.baseurl}}/">Back</a>
+</footer>

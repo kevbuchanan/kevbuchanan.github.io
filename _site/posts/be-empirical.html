@@ -7,67 +7,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-	<title>Be Empirical</title>
+  <title>Be Empirical | KB</title>
 
 
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:site" content="@kevinbuch_" />
-<meta name="twitter:title" content="Be Empirical" />
-<meta name="twitter:description" content="  One must learn by doing the thing; for though you think you know it you have no certainty, until you try.— Sophocles">
+<meta name="description" content="  One must learn by doing the thing; for though you think you know it you have no certainty, until you try.— SophoclesIt was well past the time we thought we...">
 
-<meta name="description" content="  One must learn by doing the thing; for though you think you know it you have no certainty, until you try.— Sophocles">
-
-
-
-<link rel="icon" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/touch-icon.png">
-<link href='https://fonts.googleapis.com/css?family=Fira+Sans' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Libre+Franklin" rel="stylesheet">
 <link rel="stylesheet" href="/assets/core.css">
 <link rel="canonical" href="/posts/be-empirical">
-<link rel="alternate" type="application/atom+xml" title="Kevin Buchanan" href="/feed.xml" />
-
-
+<link rel="alternate" type="application/atom+xml" title="Blog" href="/feed.xml" />
 
   </head>
 
   <body>
 
-    <aside class="logo">
+    <header>
+  
 
-	
+  <img src="/assets/photo.jpg">
 
-	<a href="/">
-		<img src="http://www.gravatar.com/avatar/6cc41965c8245134140fc2af7e6b250e.png?s=80" class="gravatar">
-	</a>
-  <p class="name">Kevin Buchanan</p>
-	<span class="logo-prompt">Back to Home</span>
+  <h4>Kevin Buchanan</h4>
 
-</aside>
+  <a href="/">
+    Posts
+  </a>
+
+</header>
 
 
     <main>
-      <noscript>
-	<style>
+      <article>
+  <section class="title">
+    <h1>Be Empirical</h1>
+    <time>May 20, 2014</time>
+  </section>
 
-		article .footnotes {
-			display: block;
-		}
-
-	</style>
-</noscript>
-
-<article>
-
-	<div class="center">
-		<h1>Be Empirical</h1>
-		<time>May 20, 2014</time>
-	</div>
-
-	<div class="divider"></div>
-
-  <div class="content">
-	<blockquote>
+  <section class="content">
+    <blockquote>
   <p><em>One must learn by doing the thing; for though you think you know it you have no certainty, until you try.</em>
 <em>— Sophocles</em></p>
 </blockquote>
@@ -82,21 +59,19 @@
 
 <p>You may be familiar with this concept if you’ve read any of Zed Shaw’s <a href="http://learncodethehardway.org/">Learn Code the Hard Way series</a>. He commonly gives you ways to break the code you just learned, and see what happens. Why? Well, if all you do is follow the directions, you may be able to remember how to do something similar in a future project, but chances are you’ll start off with something that’s broken, or a failing test, and you’ll need to fix it. You can trust that he told you the one and only way to do something, or you can break it and find out yourself. You shouldn’t hesitate to take code that you normally execute like this:</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">numbers</span><span class="p">.</span><span class="nf">each_with_index</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="o">|</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numbers</span><span class="p">.</span><span class="nf">each_with_index</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="o">|</span>
   <span class="n">collection</span> <span class="o">&lt;&lt;</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
 <span class="k">end</span>
 
 <span class="k">return</span> <span class="n">collection</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>and try something different, that you think might work, like this:</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">numbers</span><span class="p">.</span><span class="nf">map_with_index</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="o">|</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numbers</span><span class="p">.</span><span class="nf">map_with_index</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="o">|</span>
   <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Because you’ll immediately find out if it works or not (I’m close, but I’ll need to try again on that last one). This is being empirical at its finest.</p>
 
@@ -106,21 +81,20 @@
 
 <p>Part of being empirical involves not just seeing what doesn’t work, but paying attention to the why when it presents itself. When I work with novice programmers, the biggest weakness I usually see is a lack of care in reading error messages. Your code is trying to tell you where you went wrong, even telling you what line and method invocation. For instance, if I think about what this error means:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>src/player.c:5:9: error: conflicting types <span class="k">for</span> <span class="s1">'create_player'</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/player.c:5:9: error: conflicting types <span class="k">for</span> <span class="s1">'create_player'</span>
 Player<span class="k">*</span> create_player<span class="o">(</span>char<span class="k">*</span> piece, MoveHandler move_fn<span class="o">)</span> <span class="o">{</span>
         ^
 include/src/player.h:13:9: note: previous declaration is here
-Player<span class="k">*</span> create_player<span class="o">(</span>char piece, MoveHandler move_fn<span class="o">)</span>;
+Player<span class="k">*</span> create_player<span class="o">(</span>char piece, MoveHandler move_fn<span class="o">)</span><span class="p">;</span>
         ^
 src/player.c:7:17: warning: incompatible pointer to integer conversion
-                   assigning to <span class="s1">'char'</span> from <span class="s1">'char *'</span>;
-                   dereference with <span class="k">*</span> <span class="o">[</span>-Wint-conversion]
-  player-&gt;piece <span class="o">=</span> piece;
+                   assigning to <span class="s1">'char'</span> from <span class="s1">'char *'</span><span class="p">;</span>
+                   dereference with <span class="k">*</span> <span class="o">[</span><span class="nt">-Wint-conversion</span><span class="o">]</span>
+  player-&gt;piece <span class="o">=</span> piece<span class="p">;</span>
                 ^ ~~~~~
                   <span class="k">*</span>
 1 warning and 1 error generated.
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>I should now know a little bit more about the language I’m using, namely that pointers to chars and chars are not the same thing, that you dereference with *, and that the compiler checks the types declared in my header file with definitions in my source.</p>
 
@@ -150,21 +124,14 @@ src/player.c:7:17: warning: incompatible pointer to integer conversion
 <p>When learning, let’s not forget about how much our code and tools can teach us. It’s nice to have references like Stack Overflow when stuck, and mentors to help us critique our design, but the quickest feedback loop you have, and the best way to learn, empirically, is through your code. You’ll learn more, faster, if you remove that voice inside your head that doesn’t want to be wrong, that panics or gets frustrated when you read an error, and that doesn’t want to break things. The more often you’re wrong, and read errors, and break things, the better you get, and you’ll be more confident in what you know, because you saw it happen.</p>
 
 
-  </div>
-
+  </section>
 </article>
 
-<div class="back">
-	<a href="/">Back</a>
-</div>
+<footer>
+  <a href="/">Back</a>
+</footer>
 
     </main>
-
-    
-
-      
-
-    
 
   </body>
 

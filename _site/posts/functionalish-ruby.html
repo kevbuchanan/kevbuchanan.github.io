@@ -7,71 +7,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-	<title>Functional-ish Ruby</title>
+  <title>Functional-ish Ruby | KB</title>
 
-
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:site" content="@kevinbuch_" />
-<meta name="twitter:title" content="Functional-ish Ruby" />
-<meta name="twitter:description" content="In a recent Apprentice Blog of the Week, Alex Hill detailed one way that we can apply common Ruby patterns to our Clojure code. I’ve noticed a similar effect while making the opposite transition, t...">
 
 <meta name="description" content="In a recent Apprentice Blog of the Week, Alex Hill detailed one way that we can apply common Ruby patterns to our Clojure code. I’ve noticed a similar effect...">
 
-
-
-<link rel="icon" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/touch-icon.png">
-<link href='https://fonts.googleapis.com/css?family=Fira+Sans' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Libre+Franklin" rel="stylesheet">
 <link rel="stylesheet" href="/assets/core.css">
 <link rel="canonical" href="/posts/functionalish-ruby">
-<link rel="alternate" type="application/atom+xml" title="Kevin Buchanan" href="/feed.xml" />
-
-
+<link rel="alternate" type="application/atom+xml" title="Blog" href="/feed.xml" />
 
   </head>
 
   <body>
 
-    <aside class="logo">
+    <header>
+  
 
-	
+  <img src="/assets/photo.jpg">
 
-	<a href="/">
-		<img src="http://www.gravatar.com/avatar/6cc41965c8245134140fc2af7e6b250e.png?s=80" class="gravatar">
-	</a>
-  <p class="name">Kevin Buchanan</p>
-	<span class="logo-prompt">Back to Home</span>
+  <h4>Kevin Buchanan</h4>
 
-</aside>
+  <a href="/">
+    Posts
+  </a>
+
+</header>
 
 
     <main>
-      <noscript>
-	<style>
+      <article>
+  <section class="title">
+    <h1>Functional-ish Ruby</h1>
+    <time>August 20, 2014</time>
+  </section>
 
-		article .footnotes {
-			display: block;
-		}
-
-	</style>
-</noscript>
-
-<article>
-
-	<div class="center">
-		<h1>Functional-ish Ruby</h1>
-		<time>August 20, 2014</time>
-	</div>
-
-	<div class="divider"></div>
-
-  <div class="content">
-	<p>In a <a href="http://blog.8thlight.com/alex-hill/2014/07/10/useful-clojure-macros-for-the-object-oriented-programmer.html">recent Apprentice Blog of the Week</a>, Alex Hill detailed one way that we can apply common Ruby patterns to our Clojure code. I’ve noticed a similar effect while making the opposite transition, too. Having spent a few months writing mostly Clojure and then transitioning back into writing mostly Ruby, it was interesting to see the way my experience with common patterns in Clojure influenced the way I approached writing Ruby.</p>
+  <section class="content">
+    <p>In a <a href="http://blog.8thlight.com/alex-hill/2014/07/10/useful-clojure-macros-for-the-object-oriented-programmer.html">recent Apprentice Blog of the Week</a>, Alex Hill detailed one way that we can apply common Ruby patterns to our Clojure code. I’ve noticed a similar effect while making the opposite transition, too. Having spent a few months writing mostly Clojure and then transitioning back into writing mostly Ruby, it was interesting to see the way my experience with common patterns in Clojure influenced the way I approached writing Ruby.</p>
 
 <p>Specifically, a couple of patterns I really enjoy using in Clojure are <code class="highlighter-rouge">with</code> and <code class="highlighter-rouge">when</code> macros. Usually, a macro starting with <code class="highlighter-rouge">with-</code> means that something is happening around the code you pass to it, and a macro starting with <code class="highlighter-rouge">when-</code> means that your code will be executed if a certain condition is met. For instance, we could write a macro called <code class="highlighter-rouge">with-timing</code> that times our code by setting a start time, evaluating the code, then logging the difference between the start and end times before returning our return value.</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defmacro</span><span class="w"> </span><span class="n">with-timing</span><span class="w"> </span><span class="p">[</span><span class="n">body</span><span class="p">]</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defmacro</span><span class="w"> </span><span class="n">with-timing</span><span class="w"> </span><span class="p">[</span><span class="n">body</span><span class="p">]</span><span class="w">
   </span><span class="o">`</span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">start</span><span class="o">#</span><span class="w"> </span><span class="p">(</span><span class="nf">now</span><span class="p">)</span><span class="w">
          </span><span class="n">ret</span><span class="o">#</span><span class="w"> </span><span class="o">~</span><span class="n">body</span><span class="p">]</span><span class="w">
      </span><span class="p">(</span><span class="nf">logger/log</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nf">now</span><span class="p">)</span><span class="w"> </span><span class="n">start</span><span class="o">#</span><span class="p">))</span><span class="w">
@@ -80,12 +57,11 @@
 </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">timed-operation</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w">
   </span><span class="p">(</span><span class="nf">with-timing</span><span class="w">
     </span><span class="p">(</span><span class="nf">calculate-some-things</span><span class="w"> </span><span class="n">x</span><span class="p">)))</span><span class="w">
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>We might also write a macro called <code class="highlighter-rouge">when-valid</code>, which takes a record that we created from some user input, and then only evaluates our code if the record is valid, otherwise using the generic handler for invalid records.</p>
 
-<div class="language-clojure highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">defmacro</span><span class="w"> </span><span class="n">when-valid</span><span class="w"> </span><span class="p">[</span><span class="n">record</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">body</span><span class="p">]</span><span class="w">
+<div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defmacro</span><span class="w"> </span><span class="n">when-valid</span><span class="w"> </span><span class="p">[</span><span class="n">record</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">body</span><span class="p">]</span><span class="w">
   </span><span class="o">`</span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">valid?</span><span class="w"> </span><span class="o">~</span><span class="n">record</span><span class="p">)</span><span class="w">
      </span><span class="p">(</span><span class="nf">render-invalid</span><span class="w"> </span><span class="o">~</span><span class="n">record</span><span class="p">)</span><span class="w">
      </span><span class="o">~@</span><span class="n">body</span><span class="p">))</span><span class="w">
@@ -94,12 +70,11 @@
   </span><span class="p">(</span><span class="nf">when-valid</span><span class="w"> </span><span class="n">thing</span><span class="w">
     </span><span class="p">(</span><span class="nf">render-created</span><span class="w"> </span><span class="n">thing</span><span class="p">)))</span><span class="w">
 
-</span></code></pre>
-</div>
+</span></code></pre></div></div>
 
 <p>We can implement our timing macro similarly in Ruby, by simply writing a method that takes a block to be called and timed.</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">with_timing</span><span class="p">(</span><span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">with_timing</span><span class="p">(</span><span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
   <span class="n">start_time</span> <span class="o">=</span> <span class="no">Time</span><span class="p">.</span><span class="nf">now</span>
   <span class="n">return_value</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="nf">call</span>
   <span class="n">log</span><span class="p">(</span><span class="no">Time</span><span class="p">.</span><span class="nf">now</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
@@ -111,12 +86,11 @@
     <span class="n">calculate_some_stuff</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>We can also reduce the duplication of a common Rails controller pattern by writing something similar to our <code class="highlighter-rouge">when-valid</code> macro in Ruby.</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">when_valid</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">when_valid</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
   <span class="k">if</span> <span class="n">record</span><span class="p">.</span><span class="nf">valid?</span>
     <span class="n">block</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
   <span class="k">else</span>
@@ -130,12 +104,11 @@
     <span class="n">redirect_to</span> <span class="n">thing</span>
   <span class="k">end</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Here’s another useful <code class="highlighter-rouge">when</code> method for handling HTTP responses in Ruby that <a href="http://www.8thlight.com/team/myles-megyesi">Myles Megyesi</a> shared with me.</p>
 
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">when_status</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">responders</span><span class="p">)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">when_status</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">responders</span><span class="p">)</span>
   <span class="k">if</span> <span class="n">responder</span> <span class="o">=</span> <span class="n">responders</span><span class="p">[</span><span class="n">response</span><span class="p">[</span><span class="ss">:status</span><span class="p">]]</span>
     <span class="n">responder</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
   <span class="k">else</span>
@@ -153,26 +126,18 @@
     <span class="k">end</span>
   <span class="p">}</span>
 <span class="k">end</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>After transitioning back to writing Ruby after Clojure, I found myself naturally thinking of ways to use blocks and lambdas, among other functional-ish idioms, much more than before writing Clojure—and usually with positive results. It’s interesting to see how learning new languages expands the way you write the languages you already know. Perhaps there are patterns from certain languages you know just waiting to be applied somewhere else.</p>
 
-  </div>
-
+  </section>
 </article>
 
-<div class="back">
-	<a href="/">Back</a>
-</div>
+<footer>
+  <a href="/">Back</a>
+</footer>
 
     </main>
-
-    
-
-      
-
-    
 
   </body>
 

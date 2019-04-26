@@ -6,7 +6,7 @@ Hello.
 
 I'm Kevin.
 I'm a software developer at [8th Light](https://8thlight.com).
-I live in Chicago. I like writing code, reading books, and riding bikes.
+I live in California. I like writing code, reading books, and riding bikes.
 This is my blog and sometimes I write things [here](/).
 
 You can also find me at these places:

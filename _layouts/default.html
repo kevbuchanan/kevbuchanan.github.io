@@ -13,15 +13,6 @@
       {{ content }}
     </main>
 
-    {% if page.path contains '_posts' %}
-
-      {% if content contains 'reversefootnote' %}
-        <aside class="note"></aside>
-        <script async src="{{site.baseurl}}/assets/footnotes.js"></script>
-      {% endif %}
-
-    {% endif %}
-
   </body>
 
 </html>
