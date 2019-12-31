@@ -8,13 +8,34 @@ header {
   margin: auto;
   margin-bottom: 0;
   padding: 2ch;
-  padding-bottom: 0;
+  padding-bottom: 2em;
   text-align: center;
+  border-bottom: 1px solid black;
 
-  img {
-    max-width: 5rem;
-    border-radius: 50%;
+  a.page-title {
+    display: block;
+    font-size: 1.5rem;
+    text-decoration: none;
+    border-bottom: none;
+    margin-bottom: 0.5em;
   }
+
+  nav {
+    a {
+      margin-left: 1em;
+    }
+
+    a:first-of-type {
+      margin-left: 0;
+    }
+  }
+}
+
+img.photo {
+  max-width: 8rem;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
 }
 
 main {
@@ -25,6 +46,7 @@ main {
 
 h1 {
   font-size: 2rem;
+  margin-top: 0;
   margin-bottom: .5rem;
 }
 

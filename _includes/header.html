@@ -1,18 +1,14 @@
 <header>
-  {% if page.url == '/index.html' or page.url == '/' %}
-    {% assign link = '/about' %}
-    {% assign prompt = 'About me' %}
-  {% else %}
-    {% assign link = '/' %}
-    {% assign prompt = 'Posts' %}
-  {% endif %}
-
-  <img src="{{ site.baseurl }}/assets/photo.jpg">
-
-  <h4>Kevin Buchanan</h4>
-
-  <a href="{{ link | prepend: site.baseurl }}">
-    {{ prompt }}
+  <a class="page-title" href="{{ '/' | prepend: site.baseurl }}">
+    Kevin Buchanan
   </a>
 
+  <nav>
+    <a href="{{ '/' | prepend: site.baseurl }}">
+      Posts
+    </a>
+    <a href="{{ '/about' | prepend: site.baseurl }}">
+      About me
+    </a>
+  </nav>
 </header>

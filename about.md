@@ -2,6 +2,8 @@
 title: About me
 ---
 
+<img class="photo" src="{{ site.baseurl }}/assets/photo.jpg">
+
 Hello.
 
 I'm Kevin.
