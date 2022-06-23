@@ -63,24 +63,24 @@ manipulate code at compile time, into new functions that get called at runtime.<
 <h3 id="quote-and-unquote">Quote and Unquote</h3>
 
 <p>How do we manipulate code in Clojure? Well, given that a function call is
-essentially a list, eg. <code class="highlighter-rouge">(+ 1 2 3)</code>, we can manipulate that code by treating it
+essentially a list, eg. <code class="language-plaintext highlighter-rouge">(+ 1 2 3)</code>, we can manipulate that code by treating it
 as data after applying a quote to it. We can do this through the explicit
-<code class="highlighter-rouge">(quote (+ 1 2 3))</code>, or through using shorthand ’ (that’s a single apostrophe if
+<code class="language-plaintext highlighter-rouge">(quote (+ 1 2 3))</code>, or through using shorthand ’ (that’s a single apostrophe if
 you can’t see it). A quoted function stays unevaluated and can be manipulated
 like data.</p>
 
 <p>When we need to evaluate certain things within the quoted code, we use the `
 (that’s a backtick) in place of quote. The backtick, known as a syntax quote,
 allows us to evaluate things within the quoted expression by applying the ~ to
-any expressions in the expression. For example, ``(+ 1 2 ~(+ 1 2))<code class="highlighter-rouge"> would
+any expressions in the expression. For example, ``(+ 1 2 ~(+ 1 2))<code class="language-plaintext highlighter-rouge"> would
 evaluate to </code>’(+ 1 2 3)`, which can then be manipulated as data.</p>
 
 <h3 id="creating-a-macro">Creating a Macro</h3>
 
 <p>We define a macro using defmacro. In its simplest form, a macro takes in an
 expression, changes it, and returns the new expression. We could define a
-simple macro called “fix” that takes some out of order code like <code class="highlighter-rouge">(1 + 1)</code> and
-rearranges it to be <code class="highlighter-rouge">(+ 1 1)</code>.</p>
+simple macro called “fix” that takes some out of order code like <code class="language-plaintext highlighter-rouge">(1 + 1)</code> and
+rearranges it to be <code class="language-plaintext highlighter-rouge">(+ 1 1)</code>.</p>
 
 <h3 id="macroexpand">Macroexpand</h3>
 

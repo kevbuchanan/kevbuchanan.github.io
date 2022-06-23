@@ -48,7 +48,7 @@
   <section class="content">
     <p>In a <a href="http://blog.8thlight.com/alex-hill/2014/07/10/useful-clojure-macros-for-the-object-oriented-programmer.html">recent Apprentice Blog of the Week</a>, Alex Hill detailed one way that we can apply common Ruby patterns to our Clojure code. I’ve noticed a similar effect while making the opposite transition, too. Having spent a few months writing mostly Clojure and then transitioning back into writing mostly Ruby, it was interesting to see the way my experience with common patterns in Clojure influenced the way I approached writing Ruby.</p>
 
-<p>Specifically, a couple of patterns I really enjoy using in Clojure are <code class="highlighter-rouge">with</code> and <code class="highlighter-rouge">when</code> macros. Usually, a macro starting with <code class="highlighter-rouge">with-</code> means that something is happening around the code you pass to it, and a macro starting with <code class="highlighter-rouge">when-</code> means that your code will be executed if a certain condition is met. For instance, we could write a macro called <code class="highlighter-rouge">with-timing</code> that times our code by setting a start time, evaluating the code, then logging the difference between the start and end times before returning our return value.</p>
+<p>Specifically, a couple of patterns I really enjoy using in Clojure are <code class="language-plaintext highlighter-rouge">with</code> and <code class="language-plaintext highlighter-rouge">when</code> macros. Usually, a macro starting with <code class="language-plaintext highlighter-rouge">with-</code> means that something is happening around the code you pass to it, and a macro starting with <code class="language-plaintext highlighter-rouge">when-</code> means that your code will be executed if a certain condition is met. For instance, we could write a macro called <code class="language-plaintext highlighter-rouge">with-timing</code> that times our code by setting a start time, evaluating the code, then logging the difference between the start and end times before returning our return value.</p>
 
 <div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defmacro</span><span class="w"> </span><span class="n">with-timing</span><span class="w"> </span><span class="p">[</span><span class="n">body</span><span class="p">]</span><span class="w">
   </span><span class="o">`</span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">start</span><span class="o">#</span><span class="w"> </span><span class="p">(</span><span class="nf">now</span><span class="p">)</span><span class="w">
@@ -61,7 +61,7 @@
     </span><span class="p">(</span><span class="nf">calculate-some-things</span><span class="w"> </span><span class="n">x</span><span class="p">)))</span><span class="w">
 </span></code></pre></div></div>
 
-<p>We might also write a macro called <code class="highlighter-rouge">when-valid</code>, which takes a record that we created from some user input, and then only evaluates our code if the record is valid, otherwise using the generic handler for invalid records.</p>
+<p>We might also write a macro called <code class="language-plaintext highlighter-rouge">when-valid</code>, which takes a record that we created from some user input, and then only evaluates our code if the record is valid, otherwise using the generic handler for invalid records.</p>
 
 <div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defmacro</span><span class="w"> </span><span class="n">when-valid</span><span class="w"> </span><span class="p">[</span><span class="n">record</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">body</span><span class="p">]</span><span class="w">
   </span><span class="o">`</span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">valid?</span><span class="w"> </span><span class="o">~</span><span class="n">record</span><span class="p">)</span><span class="w">
@@ -90,7 +90,7 @@
 <span class="k">end</span>
 </code></pre></div></div>
 
-<p>We can also reduce the duplication of a common Rails controller pattern by writing something similar to our <code class="highlighter-rouge">when-valid</code> macro in Ruby.</p>
+<p>We can also reduce the duplication of a common Rails controller pattern by writing something similar to our <code class="language-plaintext highlighter-rouge">when-valid</code> macro in Ruby.</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">when_valid</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
   <span class="k">if</span> <span class="n">record</span><span class="p">.</span><span class="nf">valid?</span>
@@ -108,7 +108,7 @@
 <span class="k">end</span>
 </code></pre></div></div>
 
-<p>Here’s another useful <code class="highlighter-rouge">when</code> method for handling HTTP responses in Ruby that <a href="http://www.8thlight.com/team/myles-megyesi">Myles Megyesi</a> shared with me.</p>
+<p>Here’s another useful <code class="language-plaintext highlighter-rouge">when</code> method for handling HTTP responses in Ruby that <a href="http://www.8thlight.com/team/myles-megyesi">Myles Megyesi</a> shared with me.</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">when_status</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">responders</span><span class="p">)</span>
   <span class="k">if</span> <span class="n">responder</span> <span class="o">=</span> <span class="n">responders</span><span class="p">[</span><span class="n">response</span><span class="p">[</span><span class="ss">:status</span><span class="p">]]</span>

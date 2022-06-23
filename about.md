@@ -4,8 +4,6 @@ title: About me
 
 <img class="photo" src="{{ site.baseurl }}/assets/photo.jpg">
 
-Hello.
-
 I'm Kevin.
 I'm a software developer at [8th Light](https://8thlight.com).
 I live in California. I like writing code, reading books, and riding bikes.

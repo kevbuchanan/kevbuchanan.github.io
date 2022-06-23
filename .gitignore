@@ -44,3 +44,5 @@ Temporary Items
 
 .sass-cache/
 .ruby-version
+.jekyll-cache/
+_drafts/

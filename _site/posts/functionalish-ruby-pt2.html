@@ -86,9 +86,9 @@ fine while adhering to our favorite functional principles. Here are some example
 <span class="n">object</span><span class="p">.</span><span class="nf">mutable_attrs</span><span class="p">[</span><span class="ss">:some_key</span><span class="p">]</span> <span class="o">=</span> <span class="ss">:new_value</span>
 </code></pre></div></div>
 
-<p>In this class, not only does the <code class="highlighter-rouge">update</code> method change the state
-of the object, but we’ve exposed our <code class="highlighter-rouge">attrs</code> hash through a public
-<code class="highlighter-rouge">attr_accessor</code>, leaving it easily exposed for
+<p>In this class, not only does the <code class="language-plaintext highlighter-rouge">update</code> method change the state
+of the object, but we’ve exposed our <code class="language-plaintext highlighter-rouge">attrs</code> hash through a public
+<code class="language-plaintext highlighter-rouge">attr_accessor</code>, leaving it easily exposed for
 mutation in place. What’s the problem? Well, maybe nothing if the
 scope of this object is localized enough so that everything using the object
 knows that it could change. But once the mutations leave a defined
@@ -148,7 +148,7 @@ behind method calls rather than exposing public accessors.</p>
 
 <h3 id="referential-transparency-in-enumerables">Referential Transparency in Enumerables</h3>
 
-<p>One pattern to be aware of with Ruby’s enumberables is that the <code class="highlighter-rouge">each</code> method on its own
+<p>One pattern to be aware of with Ruby’s enumberables is that the <code class="language-plaintext highlighter-rouge">each</code> method on its own
 only returns an enumerable for the original collection. So, it can only have an
 effect by changing state somewhere else and cannot be referentially transparent.</p>
 
@@ -167,7 +167,7 @@ effect by changing state somewhere else and cannot be referentially transparent.
 <span class="k">end</span>
 </code></pre></div></div>
 
-<p>Consider using <code class="highlighter-rouge">map</code> or <code class="highlighter-rouge">reduce</code>, and if you can’t, it’s a sign that the operation
+<p>Consider using <code class="language-plaintext highlighter-rouge">map</code> or <code class="language-plaintext highlighter-rouge">reduce</code>, and if you can’t, it’s a sign that the operation
 is mutating state, and is not referentially transparent or a pure function.</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">call</span>
@@ -190,7 +190,7 @@ is mutating state, and is not referentially transparent or a pure function.</p>
 <h2 id="currying-closure-and-function-instantiation">Currying, Closure, and Function Instantiation</h2>
 
 <p>The important thing to remember about objects is that they are just functions that have
-been instantiated with local bindings. <code class="highlighter-rouge">MyObject.new(5)</code> is just a function that
+been instantiated with local bindings. <code class="language-plaintext highlighter-rouge">MyObject.new(5)</code> is just a function that
 returns a new function to be called later with a local binding to 5.
 To start, consider a class method that takes three arguments, and does
 something immediately with the three arguments. It’s clearly just a function
@@ -226,7 +226,7 @@ which returns a new function to be called with one argument later on.</p>
 
 <p>In functional languages we do this through just returning a function, from a function.
 Or, in Clojure, if we want to just return a function that takes one argument, we can use
-the <code class="highlighter-rouge">partial</code> function.</p>
+the <code class="language-plaintext highlighter-rouge">partial</code> function.</p>
 
 <div class="language-clojure highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="p">]</span><span class="w">
   </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="w">
@@ -241,7 +241,7 @@ the <code class="highlighter-rouge">partial</code> function.</p>
 </span></code></pre></div></div>
 
 <p>To underscore the fact that functions are just objects with one method, Clojure’s
-functions are implemented in Java as an interface with one function, <code class="highlighter-rouge">invoke</code>.</p>
+functions are implemented in Java as an interface with one function, <code class="language-plaintext highlighter-rouge">invoke</code>.</p>
 
 <h2 id="higher-order-functions">Higher Order Functions</h2>
 
@@ -265,9 +265,9 @@ functions are implemented in Java as an interface with one function, <code class
 <span class="n">presenter</span><span class="p">.</span><span class="nf">show_result</span><span class="p">(</span><span class="vg">$stdout</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Here, we can look at the class <code class="highlighter-rouge">OperationManager</code> as a function that takes a <code class="highlighter-rouge">thing_doer</code> function,
-then returns a new function that takes a <code class="highlighter-rouge">thing</code> argument. When <code class="highlighter-rouge">get_presenter</code> is called
-with a <code class="highlighter-rouge">thing</code>, it returns a function that can be called with an output stream to finally show
+<p>Here, we can look at the class <code class="language-plaintext highlighter-rouge">OperationManager</code> as a function that takes a <code class="language-plaintext highlighter-rouge">thing_doer</code> function,
+then returns a new function that takes a <code class="language-plaintext highlighter-rouge">thing</code> argument. When <code class="language-plaintext highlighter-rouge">get_presenter</code> is called
+with a <code class="language-plaintext highlighter-rouge">thing</code>, it returns a function that can be called with an output stream to finally show
 the result. In Erlang, this pattern might look like this:</p>
 
 <div class="language-erlang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">manage</span><span class="p">(</span><span class="nv">Doer</span><span class="p">)</span> <span class="o">-&gt;</span>
@@ -284,7 +284,7 @@ the result. In Erlang, this pattern might look like this:</p>
 
 <p>What’s the benefit of this over one function that does everything at once? One, we’ve
 made the object more composable by allowing how the thing gets done to be passed to it.
-Two, perhaps the three arguments — the <code class="highlighter-rouge">thing_doer</code>, the <code class="highlighter-rouge">thing</code>, and the output
+Two, perhaps the three arguments — the <code class="language-plaintext highlighter-rouge">thing_doer</code>, the <code class="language-plaintext highlighter-rouge">thing</code>, and the output
 stream — are known at different places in our program, and are responsiblities of
 different objects. We’ve now hidden the details of the two other arguments that
 those objects don’t care about.</p>
@@ -318,7 +318,7 @@ operations on a value that may or may not be present.</p>
 </code></pre></div></div>
 
 <p>The value here would be nil, but notice that there would not be an exception when trying to perform
-<code class="highlighter-rouge">x + 1</code> when x is nil.</p>
+<code class="language-plaintext highlighter-rouge">x + 1</code> when x is nil.</p>
 
 <p>In languages like Haskell or <a href="http://blog.8thlight.com/felipe-sere/2015/03/02/porting-selecta.html">Rust</a>,
 we get something like this for free. In Clojure, a rudimentary maybe monad might look like this:</p>

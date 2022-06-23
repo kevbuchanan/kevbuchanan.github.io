@@ -97,7 +97,7 @@ logic from the controller.” So you may end up with something like this:</p>
 <span class="k">end</span>
 </code></pre></div></div>
 
-<p>Voila! We’ve abstracted our query to the <code class="highlighter-rouge">most_recent_upvoted_comments</code> method. Or, so we think.
+<p>Voila! We’ve abstracted our query to the <code class="language-plaintext highlighter-rouge">most_recent_upvoted_comments</code> method. Or, so we think.
 Later, someone else comes along and says, “Why does the model have so many queries? Let’s abstract the
 query logic away from the model.” So our query now moves somewhere else:</p>
 
@@ -176,7 +176,7 @@ repository, and the <em>how</em> is simply the method defined on the repository.
 without anything else caring about not being able to get Comments. We’ve disentangled the two
 knotted threads of a controller and model into three straight threads of controller, model, and data storage.</p>
 
-<p>To further demonstrate some abstraction of the PostController, what if it also had a <code class="highlighter-rouge">create_comment</code>
+<p>To further demonstrate some abstraction of the PostController, what if it also had a <code class="language-plaintext highlighter-rouge">create_comment</code>
 method that used the CommentRepository:</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Comment</span>
@@ -273,7 +273,7 @@ more pieces:</p>
 <p>Now neither the Comment nor the PostController knows <em>why</em> a comment is valid or invalid.
 The <em>why</em> is the responsibility of the form object.
 Is this as easy to use as the first example? Probably not—we have more objects now.
-But each piece is much simpler and can be composed in our <code class="highlighter-rouge">create_comment</code> method
+But each piece is much simpler and can be composed in our <code class="language-plaintext highlighter-rouge">create_comment</code> method
 in a way that does the same thing in a much less complected way. We could still encapsulate
 some shared validations to use in the CommentForm to make validation in other form objects
 easier, but it won’t be abstracting the <em>why</em> any further from the form object.</p>

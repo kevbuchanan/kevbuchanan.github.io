@@ -102,7 +102,7 @@ villains out there trying to read the files.</p>
 
 <p>With everything running in a separate thread, we get something like this output:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bond is reading File 1
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bond is reading File 1
 Odd Job is reading File 2
 Jaws is reading File 3
 Bond is reading File 4
@@ -116,7 +116,7 @@ because he didn’t realize that his plans were being read by the villains
 at the same time.</p>
 
 <p>Maybe we can make him a little safer if we lock down the files when
-they’re being read. We could add a mutex to the <code class="highlighter-rouge">SecretMission</code> class
+they’re being read. We could add a mutex to the <code class="language-plaintext highlighter-rouge">SecretMission</code> class
 to use when reading the files:</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SecretMission</span>
@@ -147,7 +147,7 @@ to use when reading the files:</p>
 <p>Now when we run our spies in separate threads, we consistently see something
 like this (assuming Bond’s thread is the first to read):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bond is reading File 1
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bond is reading File 1
 May Day is waiting
 Bond is reading File 2
 Bond is reading File 3
@@ -168,8 +168,8 @@ they just cause trouble.</p>
 whether any villains have caught up to him so that we can then abort the mission
 and throw them off of his tracks.</p>
 
-<p>First, let’s change our <code class="highlighter-rouge">read</code> method to return how many files are read, and change
-the <code class="highlighter-rouge">accept</code> method to take a parameter for how many files a spy was able to read.</p>
+<p>First, let’s change our <code class="language-plaintext highlighter-rouge">read</code> method to return how many files are read, and change
+the <code class="language-plaintext highlighter-rouge">accept</code> method to take a parameter for how many files a spy was able to read.</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SecretMission</span>
   <span class="k">def</span> <span class="nf">initialize</span>
@@ -209,7 +209,7 @@ he got to:</p>
 <p>Now, we could see Bond read all of the files successfully if none of the
 villains find them, or we could see something like this:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bond is reading File 1
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bond is reading File 1
 Odd Job is reading File 2
 Odd Job is reading File 4
 Bond is reading File 3
@@ -244,9 +244,9 @@ pessimistic lock. We’ll assume we’re using ActiveRecord for this example.</p
 <span class="k">end</span>
 </code></pre></div></div>
 
-<p>If we’re using PostgreSQL as our database, this will perform a <code class="highlighter-rouge">SELECT FOR UPDATE</code>
+<p>If we’re using PostgreSQL as our database, this will perform a <code class="language-plaintext highlighter-rouge">SELECT FOR UPDATE</code>
 on the record prior to yielding to the block to perform. Once this transaction gains
-the lock through the <code class="highlighter-rouge">SELECT FOR UPDATE</code>, the database will not allow other
+the lock through the <code class="language-plaintext highlighter-rouge">SELECT FOR UPDATE</code>, the database will not allow other
 transactions to modify the row until our transaction is committed, after the block
 finishes. This gives us assurance that nothing else will change the order while the current
 thread is using it. But sometimes this is a heavy tool for the job. For one,
@@ -258,7 +258,7 @@ this procedure to an optimistic lock. All we need to do is tell the database
 the state of the object that we have, and let it confirm that that
 is indeed the current state. If it is not the current state, we know that
 another transaction was working at the same time. We can do this by using an
-<code class="highlighter-rouge">UPDATE WHERE</code>. In ActiveRecord that would look like this:</p>
+<code class="language-plaintext highlighter-rouge">UPDATE WHERE</code>. In ActiveRecord that would look like this:</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">order</span> <span class="o">=</span> <span class="no">Order</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
 
@@ -275,11 +275,11 @@ another transaction was working at the same time. We can do this by using an
 
 <p>The above query should generate the SQL:</p>
 
-<p><code class="highlighter-rouge">UPDATE orders SET orders.status='cancelled' WHERE orders.id=25 AND orders.status='pending';</code></p>
+<p><code class="language-plaintext highlighter-rouge">UPDATE orders SET orders.status='cancelled' WHERE orders.id=25 AND orders.status='pending';</code></p>
 
 <p>A SQL update returns the number of rows that were updated, so we can check the return
 value from our update and know that we’ve run into concurrent updates if our update
-returns <code class="highlighter-rouge">0</code>.</p>
+returns <code class="language-plaintext highlighter-rouge">0</code>.</p>
 
 <p><em>Note: If you’re using ActiveRecord, or another ORM to do a similar optimistic lock,
 you should confirm that this is actually the SQL that gets generated. I’ve seen
@@ -296,7 +296,7 @@ still block other transactions. Certain databases might block both reads and wri
 while we are performing the update. PostgreSQL will only block other writes.
 When using an optimistic locking strategy in PostgreSQL, it’s important to
 know why this works, and how it affects other transactions. In order to perform
-our <code class="highlighter-rouge">UPDATE WHERE</code> while maintaining our data consistency and also not blocking
+our <code class="language-plaintext highlighter-rouge">UPDATE WHERE</code> while maintaining our data consistency and also not blocking
 other threads from reading data, PostgreSQL uses a technique called Multi-Version
 Concurrency Control (MVCC). Other databases also use this pattern, but I’ll
 focus on PostgreSQL here.</p>
@@ -316,35 +316,35 @@ but let’s use this simplification). PostgreSQL eventually goes back and cleans
 up the unavailable rows through the
 <a href="http://www.postgresql.org/docs/9.4/static/routine-vacuuming.html#AUTOVACUUM"><em>autovacuum</em></a> process.</p>
 
-<p>So, back to our example, say we execute our query at time <code class="highlighter-rouge">T1</code>:</p>
+<p>So, back to our example, say we execute our query at time <code class="language-plaintext highlighter-rouge">T1</code>:</p>
 
-<p><code class="highlighter-rouge">BEGIN; UPDATE orders SET orders.status='cancelled' WHERE orders.id=25 AND orders.status='pending'; COMMIT;</code></p>
+<p><code class="language-plaintext highlighter-rouge">BEGIN; UPDATE orders SET orders.status='cancelled' WHERE orders.id=25 AND orders.status='pending'; COMMIT;</code></p>
 
 <p>PostgreSQL begins a transaction in <em>Read Committed</em> isolation, and for the
 duration of this transaction it will only see data committed and marked as
-available prior to <code class="highlighter-rouge">T1</code>. Then, say we execute a concurrent query at time <code class="highlighter-rouge">T2</code>
+available prior to <code class="language-plaintext highlighter-rouge">T1</code>. Then, say we execute a concurrent query at time <code class="language-plaintext highlighter-rouge">T2</code>
 to:</p>
 
-<p><code class="highlighter-rouge">BEGIN; SELECT status FROM orders WHERE orders.id=25; COMMIT;</code></p>
+<p><code class="language-plaintext highlighter-rouge">BEGIN; SELECT status FROM orders WHERE orders.id=25; COMMIT;</code></p>
 
-<p>This <code class="highlighter-rouge">SELECT</code> will only see row versions that were committed and available
-prior to <code class="highlighter-rouge">T2</code>. Assuming we only have these two queries running, the <code class="highlighter-rouge">SELECT</code>
-will see the same version of the row that our first <code class="highlighter-rouge">UPDATE</code> is
-seeing—that which was committed prior to <code class="highlighter-rouge">T1</code>, with the status as
-“pending”. So this query will return “pending”. (Side note: a <code class="highlighter-rouge">SELECT</code> will
-also see data changed by an <code class="highlighter-rouge">UPDATE</code> within its own transaction).</p>
+<p>This <code class="language-plaintext highlighter-rouge">SELECT</code> will only see row versions that were committed and available
+prior to <code class="language-plaintext highlighter-rouge">T2</code>. Assuming we only have these two queries running, the <code class="language-plaintext highlighter-rouge">SELECT</code>
+will see the same version of the row that our first <code class="language-plaintext highlighter-rouge">UPDATE</code> is
+seeing—that which was committed prior to <code class="language-plaintext highlighter-rouge">T1</code>, with the status as
+“pending”. So this query will return “pending”. (Side note: a <code class="language-plaintext highlighter-rouge">SELECT</code> will
+also see data changed by an <code class="language-plaintext highlighter-rouge">UPDATE</code> within its own transaction).</p>
 
-<p>Let’s throw in another update and see what happens. Assume our <code class="highlighter-rouge">SELECT</code> completed
-at time <code class="highlighter-rouge">T3</code> and returned “pending”, but our <code class="highlighter-rouge">UPDATE</code> is still running. Another
-transaction might start at time <code class="highlighter-rouge">T4</code> to actually start the order:</p>
+<p>Let’s throw in another update and see what happens. Assume our <code class="language-plaintext highlighter-rouge">SELECT</code> completed
+at time <code class="language-plaintext highlighter-rouge">T3</code> and returned “pending”, but our <code class="language-plaintext highlighter-rouge">UPDATE</code> is still running. Another
+transaction might start at time <code class="language-plaintext highlighter-rouge">T4</code> to actually start the order:</p>
 
-<p><code class="highlighter-rouge">BEGIN; UPDATE orders SET orders.status='started' WHERE orders.id=25 AND orders.status='pending'; COMMIT;</code></p>
+<p><code class="language-plaintext highlighter-rouge">BEGIN; UPDATE orders SET orders.status='started' WHERE orders.id=25 AND orders.status='pending'; COMMIT;</code></p>
 
-<p>This transaction will see the version of the data committed prior to <code class="highlighter-rouge">T1</code> and our first
+<p>This transaction will see the version of the data committed prior to <code class="language-plaintext highlighter-rouge">T1</code> and our first
 update, so it will find a row with ID 25 and status “pending”. But it will see that the
 row is currently held by a <em>ROW EXCLUSIVE</em> lock in our first transaction, so it will
-need to wait. Let’s assume the first update commits at <code class="highlighter-rouge">T5</code>. Our second update now
-gets to re-apply its query to the row version as of <code class="highlighter-rouge">T5</code>, so it will see that the status
+need to wait. Let’s assume the first update commits at <code class="language-plaintext highlighter-rouge">T5</code>. Our second update now
+gets to re-apply its query to the row version as of <code class="language-plaintext highlighter-rouge">T5</code>, so it will see that the status
 is now not equal to “pending”, and it will not update the status to “started”.</p>
 
 <p>So, we’re still eventually locking a row in our database, but the benefit of
@@ -358,7 +358,7 @@ sending a notification that the order is started, then we’ve actually been
 notified about the concurrent update too late. On the other hand, if we do the
 update before the business logic, then we know right away whether we can
 proceed and avoid blocking while another thread performs its business logic.
-When we use <code class="highlighter-rouge">SELECT FOR UPDATE</code> by using <code class="highlighter-rouge">order.with_lock</code> in ActiveRecord,
+When we use <code class="language-plaintext highlighter-rouge">SELECT FOR UPDATE</code> by using <code class="language-plaintext highlighter-rouge">order.with_lock</code> in ActiveRecord,
 other threads will halt on trying to acquire the lock while the first executes
 the in-memory logic and the database update. In many situations, but not all,
 it’s more effecient to be optimistic and let things proceed until we know that
@@ -413,15 +413,15 @@ refs are implemented using Software Transactional Memory (STM) with MVCC.</p>
   </span><span class="p">(</span><span class="nf">shutdown-agents</span><span class="p">))</span><span class="w">
 </span></code></pre></div></div>
 
-<p>In this code, we create a group of threads to read the files using <code class="highlighter-rouge">future</code>.
+<p>In this code, we create a group of threads to read the files using <code class="language-plaintext highlighter-rouge">future</code>.
 Bond’s thread will try to read all the files and then leave a note for
 the villains, whereas the villains will only try to read one file. The files
-are kept in a <code class="highlighter-rouge">ref</code>, which will only allow mutation while inside a transaction
-using <code class="highlighter-rouge">dosync</code>. While in the transaction, we can change the ref by using
-<code class="highlighter-rouge">alter</code>, which takes as arguments a ref and a function to call to alter the
+are kept in a <code class="language-plaintext highlighter-rouge">ref</code>, which will only allow mutation while inside a transaction
+using <code class="language-plaintext highlighter-rouge">dosync</code>. While in the transaction, we can change the ref by using
+<code class="language-plaintext highlighter-rouge">alter</code>, which takes as arguments a ref and a function to call to alter the
 ref. When we run this, we see something like this:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bond is attempting to read File 1
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bond is attempting to read File 1
 Bond is reading File 1
 Jaws is attempting to read File 1
 Odd Job is attempting to read File 1
@@ -447,18 +447,18 @@ Jaws, the files are gone
 
 <p>You’ll notice that the threads trying to read for Jaws and Odd Job retried a
 number of times while Bond’s thread was reading the files. This is caused by
-Clojure’s LockingTransaction implementation retrying the call to <code class="highlighter-rouge">alter</code> if the
+Clojure’s LockingTransaction implementation retrying the call to <code class="language-plaintext highlighter-rouge">alter</code> if the
 transaction can’t obtain a write lock or if it finds that the ref has been
 altered since its read point. No threads are blocked from reading the files, but
-once a thread makes a call to <code class="highlighter-rouge">alter</code>, it tries to acquire a write lock, and if
+once a thread makes a call to <code class="language-plaintext highlighter-rouge">alter</code>, it tries to acquire a write lock, and if
 it can’t, it will retry from the beginning of the transaction starting from
-<code class="highlighter-rouge">dosync</code>.</p>
+<code class="language-plaintext highlighter-rouge">dosync</code>.</p>
 
 <p>Each thread sees the last committed version of the files when the transaction started.
 So to start, each villain thread will see that there are five files in the ref,
-and will try to remove one to be read by the spy by calling <code class="highlighter-rouge">alter</code>. However,
+and will try to remove one to be read by the spy by calling <code class="language-plaintext highlighter-rouge">alter</code>. However,
 Bond’s transaction has the write lock, so the other transactions will retry the
-<code class="highlighter-rouge">alter</code> of the first file a number of times, until Bond’s transaction commits and
+<code class="language-plaintext highlighter-rouge">alter</code> of the first file a number of times, until Bond’s transaction commits and
 releases the write lock. Then the villain threads will retry again because
 Clojure’s STM detects that the ref has changed. This time they see the version
 of the ref that Bond committed, with only his note left.</p>
