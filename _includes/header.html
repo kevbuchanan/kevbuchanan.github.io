@@ -1,14 +1,11 @@
-<header>
-  <a class="page-title" href="{{ '/' | prepend: site.baseurl }}">
-    Kevin Buchanan
-  </a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="site-title" href="{{ '/' | relative_url }}">Kevin Buchanan</a>
 
-  <nav>
-    <a href="{{ '/' | prepend: site.baseurl }}">
-      Posts
-    </a>
-    <a href="{{ '/about' | prepend: site.baseurl }}">
-      About me
-    </a>
-  </nav>
+    <nav class="site-nav">
+      <a href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>Posts</a>
+      <a href="{{ '/about/' | relative_url }}"{% if page.url == '/about/' %} aria-current="page"{% endif %}>About</a>
+      <a href="{{ '/feed.xml' | relative_url }}">Feed</a>
+    </nav>
+  </div>
 </header>

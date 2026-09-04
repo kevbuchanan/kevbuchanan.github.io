@@ -1,8 +1,9 @@
 ---
-title: About me
+title: About
+permalink: /about/
 ---
 
-<img class="photo" src="{{ site.baseurl }}/assets/photo.jpg">
+<img class="avatar" src="{{ '/assets/photo.jpg' | relative_url }}" alt="Kevin Buchanan" width="600" height="600">
 
 I'm Kevin.
 I'm a software developer at [8th Light](https://8thlight.com).
