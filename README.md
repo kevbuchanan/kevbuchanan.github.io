@@ -1,7 +1,7 @@
 # kevbuchanan.github.io
 
 Jekyll source for the site at <https://kevbuchanan.github.io>. Pushing to
-`master` triggers `.github/workflows/pages.yml`, which builds with the
+`main` triggers `.github/workflows/pages.yml`, which builds with the
 Gemfile's Jekyll and deploys to GitHub Pages.
 
 ## Local development
