@@ -122,18 +122,9 @@ main {
   flex-shrink: 0;
 }
 
-.avatar {
-  display: block;
-  width: 8rem;
-  height: 8rem;
-  margin: 0 auto var(--space-6);
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 // Diagrams and screenshots in prose get a frame so they read as figures
 // rather than as bleeding into the page background.
-.entry-content img:not(.avatar) {
+.entry-content img {
   display: block;
   border: 1px solid var(--rule);
   border-radius: var(--radius);
