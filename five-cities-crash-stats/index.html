@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Five Cities Crash Report &middot; Kevin Buchanan</title>
+    <meta name="description" content="Five years of crash records from Arroyo Grande, Grover Beach, and Pismo Beach. 94% of crashes involved only motor vehicles, and none involved an e-bike.">
+    <meta property="og:title" content="Five Cities Crash Report">
+    <meta property="og:description" content="Five years of crash records from Arroyo Grande, Grover Beach, and Pismo Beach. 94% of crashes involved only motor vehicles, and none involved an e-bike.">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://kevbuchanan.github.io/five-cities-crash-stats/">
+    <style>
+      :root { color-scheme: light; }
+      body { margin: 0; }
+      img { max-width: 100%; }
+      [hidden] { display: none !important; }
+    </style>
+  </head>
+  <body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Overpass+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+
+<style>
+:root{
+  --paper:#e6e9ec; --surface:#fbfcfc; --surface-2:#f0f3f5;
+  --ink:#12191f; --ink-2:#3f4d59; --muted:#67757f;
+  --rule:#d5dbe0; --rule-strong:#a4b0b9;
+  --bike:#0870a8; --ped:#a4551b; --other:#6a4bb8;
+  --signal:#c9dd00; --signal-ink:#12191f;
+  --veh:#6a7883; --solo:#b6c0c8; --on-veh:#ffffff;
+  --grid:#e0e5e9;
+  --sans:"Overpass","Helvetica Neue",Arial,sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"Overpass Mono","SFMono-Regular",Consolas,monospace;
+  --maxw:1080px; --prose:66ch;
+  color-scheme:light;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--serif); font-size:16.5px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px 96px}
+p{max-width:var(--prose); margin:0}
+a{color:var(--bike)}
+:focus-visible{outline:2px solid var(--bike); outline-offset:3px}
+
+/* ---------- masthead ---------- */
+.masthead{
+  border-bottom:2px solid var(--ink);
+  padding:44px 0 18px; margin-bottom:0;
+  display:flex; gap:22px; align-items:flex-start; flex-wrap:wrap;
+}
+.sign{flex:0 0 auto; width:58px; height:58px; margin-top:4px}
+.eyebrow{
+  font-family:var(--sans); font-weight:600; font-size:11px;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--muted);
+  margin:0 0 8px;
+}
+h1{
+  font-family:var(--sans); font-weight:700; font-size:clamp(30px,4.4vw,44px);
+  line-height:1.04; letter-spacing:-.021em; margin:0; text-wrap:balance;
+  max-width:16ch;
+}
+.dek{
+  font-size:17.5px; color:var(--ink-2); margin-top:12px; max-width:56ch;
+}
+
+/* ---------- provenance strip (CHP 555 form header cue) ---------- */
+.provenance{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  border-bottom:1px solid var(--rule-strong);
+  font-family:var(--mono); font-size:11.5px;
+}
+.provenance div{padding:11px 14px 11px 0; border-right:1px solid var(--rule)}
+.provenance div:last-child{border-right:0}
+.provenance dt{
+  font-family:var(--sans); font-weight:600; font-size:9.5px; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:3px;
+}
+.provenance dd{margin:0; color:var(--ink-2); word-break:break-word}
+
+/* ---------- sections ---------- */
+section{padding-top:52px}
+h2{
+  font-family:var(--sans); font-weight:700; font-size:21px; letter-spacing:-.01em;
+  margin:0 0 4px; text-wrap:balance;
+}
+h2 .num{
+  font-family:var(--mono); font-size:12px; font-weight:400; color:var(--muted);
+  margin-right:10px; vertical-align:.15em;
+}
+.sub{font-family:var(--sans); font-size:13.5px; color:var(--muted); margin:0 0 22px; max-width:60ch}
+h3{font-family:var(--sans); font-weight:600; font-size:13px; letter-spacing:.02em; margin:0 0 10px}
+
+/* ---------- headline figures ---------- */
+.figures{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(158px,1fr));
+  gap:1px; background:var(--rule); border:1px solid var(--rule);
+  margin-bottom:26px;
+}
+.fig{background:var(--surface); padding:18px 18px 16px}
+.fig .n{
+  font-family:var(--sans); font-weight:700; font-size:46px; line-height:.94;
+  letter-spacing:-.035em; font-variant-numeric:tabular-nums; display:block;
+}
+.fig .lbl{
+  font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--muted); margin-top:10px; display:block;
+}
+.fig .note{font-family:var(--sans); font-size:12.5px; color:var(--ink-2); margin-top:5px; display:block; line-height:1.4}
+.fig.zero .n{color:var(--muted)}
+
+/* ---------- generic figure block ---------- */
+.plot{
+  background:var(--surface); border:1px solid var(--rule);
+  padding:20px 20px 14px; overflow-x:auto;
+}
+.plot + .caption, .tablewrap + .caption{
+  font-family:var(--sans); font-size:12.5px; color:var(--muted);
+  margin-top:9px; max-width:72ch;
+}
+figure{margin:0}
+svg{display:block}
+svg text{font-family:var(--sans)}
+
+/* ---------- legend ---------- */
+.legend{display:flex; gap:20px; flex-wrap:wrap; margin-bottom:16px; font-family:var(--sans); font-size:12.5px}
+.legend span{display:inline-flex; align-items:center; gap:7px; color:var(--ink-2)}
+.swatch{width:11px; height:11px; flex:0 0 auto}
+.swatch.bike{background:var(--bike); border-radius:50%}
+.swatch.ped{background:var(--ped); clip-path:polygon(50% 0,100% 100%,0 100%)}
+.swatch.other{background:var(--other); transform:rotate(45deg); width:9px; height:9px}
+.swatch.veh{background:var(--veh)}
+.swatch.solo{background:var(--solo)}
+.swatch.bikeblock{background:var(--bike)}
+.swatch.pedblock{background:var(--ped)}
+.swatch.death{background:var(--paper); border:2px solid var(--ink); transform:rotate(45deg); width:9px; height:9px}
+
+/* ---------- severity bar ---------- */
+.sevgrid{display:grid; gap:14px; max-width:640px}
+.sevrow{display:grid; grid-template-columns:112px 1fr; align-items:center; gap:14px}
+.sevrow .who{font-family:var(--sans); font-size:13px; font-weight:600; text-align:right; color:var(--ink-2)}
+.sevbar{display:flex; gap:2px; height:30px}
+.seg{
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--sans); font-size:12px; font-weight:600; color:#fff;
+  min-width:26px;
+}
+.seg.minor{color:#fff}
+.seg.possible{color:var(--ink)}
+.sevkey{display:flex; gap:18px; font-family:var(--sans); font-size:12.5px; color:var(--muted); margin-top:4px; flex-wrap:wrap}
+.sevkey b{font-weight:600; color:var(--ink-2)}
+
+/* ---------- at-fault proportion bar ---------- */
+.faultbar{display:flex; gap:2px; height:44px; border:1px solid var(--rule); background:var(--surface); padding:0}
+.fseg{min-width:3px; display:flex; align-items:center}
+.fseg span{
+  font-family:var(--sans); font-size:12.5px; font-weight:700; color:var(--on-veh);
+  padding-left:14px; white-space:nowrap;
+}
+.fseg.driver{background:var(--veh)}
+.fseg.bikec{background:var(--bike)}
+.fseg.pedc{background:var(--ped)}
+.fseg.parkc{background:var(--solo)}
+.swatch.parkc{background:var(--solo)}
+.faultkey{display:flex; gap:20px; flex-wrap:wrap; margin-top:11px; font-family:var(--sans); font-size:12.5px}
+.faultkey span{display:inline-flex; align-items:center; gap:7px; color:var(--ink-2)}
+.mini td.codecell{font-family:var(--mono); font-size:11px; text-align:left; color:var(--muted)}
+.mini tr.nil td{color:var(--muted)}
+.mini tr.nil td:first-child{font-weight:600; color:var(--ink)}
+
+/* ---------- table ---------- */
+.tablewrap{overflow-x:auto; border:1px solid var(--rule); background:var(--surface)}
+table{border-collapse:collapse; width:100%; min-width:920px; font-family:var(--sans); font-size:13px}
+thead th{
+  text-align:left; font-size:10px; font-weight:700; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--muted); padding:12px 12px 10px;
+  border-bottom:1px solid var(--rule-strong); white-space:nowrap; vertical-align:bottom;
+}
+tbody td{padding:11px 12px; border-bottom:1px solid var(--rule); vertical-align:top; color:var(--ink-2)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--surface-2)}
+td.idx{font-family:var(--mono); font-size:12px; color:var(--muted); width:1%; padding-right:0}
+td.loc{color:var(--ink); min-width:210px}
+td.num{font-family:var(--mono); font-variant-numeric:tabular-nums; text-align:right; width:1%}
+td.vc{font-family:var(--mono); font-size:11.5px; white-space:nowrap}
+.mode{display:inline-flex; align-items:center; gap:6px; white-space:nowrap; font-weight:600}
+.mode .dot{width:9px; height:9px; flex:0 0 auto}
+.mode.bike .dot{background:var(--bike); border-radius:50%}
+.mode.ped .dot{background:var(--ped); clip-path:polygon(50% 0,100% 100%,0 100%)}
+.mode.other .dot{background:var(--other); transform:rotate(45deg); width:8px; height:8px}
+.fault{font-family:var(--sans); font-size:12px}
+.fault.driver{color:var(--ink)}
+.sevpill{
+  display:inline-block; font-size:11px; font-weight:600; padding:2px 7px;
+  border:1px solid var(--rule-strong); white-space:nowrap; color:var(--ink-2);
+}
+.sevpill.none{color:var(--muted); border-style:dashed}
+.dark-row td.loc::after{
+  content:"night"; font-family:var(--sans); font-size:9.5px; font-weight:700;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--muted);
+  border:1px solid var(--rule-strong); padding:0 4px; margin-left:8px;
+  position:relative; top:-1px;
+}
+
+/* ---------- findings list ---------- */
+.findings{display:grid; gap:0; border-top:1px solid var(--rule); max-width:760px}
+.finding{
+  display:grid; grid-template-columns:88px 1fr; gap:20px;
+  padding:16px 0; border-bottom:1px solid var(--rule); align-items:start;
+}
+.finding .k{
+  font-family:var(--sans); font-weight:700; font-size:26px; letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums; line-height:1.1; text-align:right;
+}
+.finding .k small{display:block; font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-top:3px}
+.finding p{font-size:15.5px; margin:0}
+.finding p b{font-weight:600}
+
+/* ---------- context table ---------- */
+.mini{width:100%; min-width:0; font-size:13px; border-collapse:collapse; font-family:var(--sans)}
+.mini th{text-align:right; font-size:10px; letter-spacing:.11em; text-transform:uppercase; color:var(--muted); font-weight:700; padding:10px 10px 8px; border-bottom:1px solid var(--rule-strong)}
+.mini th:first-child{text-align:left}
+.mini td{padding:9px 10px; border-bottom:1px solid var(--rule); text-align:right; font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--ink-2)}
+.mini td:first-child{text-align:left; font-family:var(--sans); color:var(--ink)}
+.mini tr.now td{background:var(--surface-2); color:var(--ink); font-weight:600}
+.mini tr:last-child td{border-bottom:0}
+
+/* ---------- caveats ---------- */
+.caveats{border-top:2px solid var(--ink); padding-top:20px; max-width:var(--prose)}
+.caveats ol{margin:0; padding-left:1.3em; display:grid; gap:12px}
+.caveats li{font-size:15px; color:var(--ink-2)}
+.caveats li b{color:var(--ink); font-weight:600}
+.flag{
+  border-left:3px solid var(--ped); background:var(--surface);
+  padding:14px 18px; margin:0 0 22px; max-width:var(--prose);
+}
+.flag p{font-size:15px; margin:0}
+.flag strong{font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--ped); display:block; margin-bottom:5px}
+
+/* ---------- tooltip ---------- */
+#tip{
+  position:fixed; z-index:20; pointer-events:none; opacity:0; transition:opacity .1s;
+  background:var(--ink); color:var(--paper); font-family:var(--sans); font-size:12px;
+  line-height:1.45; padding:8px 11px; max-width:250px; box-shadow:0 4px 14px rgba(0,0,0,.22);
+}
+#tip b{font-weight:700; display:block; margin-bottom:2px}
+#tip span{color:var(--rule-strong)}
+
+@media (prefers-reduced-motion: reduce){*{transition:none!important; animation:none!important}}
+@media (max-width:640px){
+  .finding{grid-template-columns:64px 1fr; gap:14px}
+  .finding .k{font-size:21px}
+  .sevrow{grid-template-columns:84px 1fr}
+}
+</style>
+
+<style>
+.lead{font-size:21px; line-height:1.5; color:var(--ink); max-width:34ch; font-weight:400; margin:0}
+.lead b{font-weight:600}
+.big3{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1px;
+  background:var(--rule); border:1px solid var(--rule); margin:30px 0 0}
+.big3 div{background:var(--surface); padding:20px}
+.big3 .n{font-family:var(--sans); font-weight:700; font-size:52px; line-height:.92;
+  letter-spacing:-.035em; display:block; font-variant-numeric:tabular-nums}
+.big3 .l{font-family:var(--sans); font-size:12.5px; color:var(--ink-2); margin-top:11px; display:block; line-height:1.45}
+.big3 .zero .n{color:var(--muted)}
+section{padding-top:46px}
+h2{font-size:20px}
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:14px}
+a.card{display:flex; flex-direction:column; text-decoration:none; color:inherit; background:var(--surface);
+  border:1px solid var(--rule); border-top:3px solid var(--veh); padding:18px 18px 16px; transition:border-color .12s}
+a.card:hover{border-top-color:var(--bike); border-color:var(--rule-strong)}
+a.card:focus-visible{outline:2px solid var(--bike); outline-offset:3px}
+a.card h3{font-size:17px; font-weight:700; margin:0 0 10px}
+a.card p{font-size:14px; color:var(--ink-2); margin:0 0 14px; max-width:none; line-height:1.5; flex:1}
+a.card .go{font-family:var(--sans); font-size:12.5px; font-weight:700; color:var(--bike); margin-top:auto}
+a.card .go::after{content:" \2192"}
+.note{border-left:3px solid var(--bike); background:var(--surface); padding:16px 20px; max-width:var(--prose)}
+.note p{font-size:15.5px; margin:0}
+.note strong{font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--bike); display:block; margin-bottom:6px}
+.src{border-top:1px solid var(--rule-strong); margin-top:52px; padding-top:16px}
+.src p{font-family:var(--sans); font-size:12.5px; color:var(--muted); max-width:74ch; line-height:1.6}
+.note.data{border-left-color:var(--ped)}
+.note.data strong{color:var(--ped)}
+table{min-width:640px}
+</style>
+
+<style>
+.escwrap{margin-top:4px}
+.home{font-family:var(--sans); font-size:12.5px; margin-top:52px}
+.home a{color:var(--muted); text-decoration:none}
+.home a:hover{color:var(--bike)}
+.src{margin-top:14px}
+</style>
+<div class="wrap">
+
+<header class="masthead">
+  <svg class="sign" viewBox="0 0 100 100" role="img" aria-label="Bicycle and pedestrian warning sign">
+    <rect x="50" y="4" width="65" height="65" rx="6" transform="rotate(45 50 4)" fill="var(--signal)" stroke="var(--signal-ink)" stroke-width="3"/>
+    <circle cx="34" cy="60" r="9" fill="none" stroke="var(--signal-ink)" stroke-width="3.5"/>
+    <circle cx="58" cy="60" r="9" fill="none" stroke="var(--signal-ink)" stroke-width="3.5"/>
+    <path d="M34 60 L44 46 L54 46 M46 60 L58 60 M44 46 L38 46" fill="none" stroke="var(--signal-ink)" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="70" cy="35" r="5.5" fill="var(--signal-ink)"/>
+    <path d="M70 43 L70 56 M70 56 L64 68 M70 56 L77 67 M62 48 L79 46" fill="none" stroke="var(--signal-ink)" stroke-width="3.5" stroke-linecap="round"/>
+  </svg>
+  <div>
+    <p class="eyebrow">Crash records &middot; Arroyo Grande, Grover Beach, Pismo Beach &middot; 2021&ndash;2025</p>
+    <h1>2,543 crashes in the Five&nbsp;Cities</h1>
+  </div>
+</header>
+
+<section style="padding-top:34px">
+  <p class="lead">Over five years the three cities recorded <b>2,543 crashes</b>. 888 people were hurt and 10 were killed. <b>146 of those crashes, one in eighteen, involved someone on a bike or on foot.</b> Not one involved an electric bike.</p>
+  <div class="big3">
+    <div><span class="n">94%</span><span class="l">of crashes involved only motor vehicles, no bike and nobody on foot</span></div>
+    <div><span class="n">97%</span><span class="l">of the people found at fault were driving a car</span></div>
+    <div class="zero"><span class="n">0</span><span class="l">crashes involved an electric bike, in a county that recorded 18 last year</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Five years of crashes, drawn to scale</h2>
+  <div class="plot"><div id="prop"></div></div>
+  <p class="caption">Every crash in Arroyo Grande, Grover Beach, and Pismo Beach since 2021, drawn end to end. The slivers at the right are the 96 involving a bicycle and the 50 involving someone walking. Everything to their left is motor vehicles hitting each other, hitting parked cars, hitting fixed objects, or running off the road.</p>
+</section>
+
+<section>
+  <h2>But when a car does hit someone, they are the ones who die</h2>
+  <p class="sub">The same 146 crashes, measured three ways. Each bar is the whole of that measure for the three cities combined.</p>
+  <div class="legend">
+    <span><i class="swatch veh"></i>No bicyclist or pedestrian involved</span>
+    <span><i class="swatch bikeblock"></i>Bicycle</span>
+    <span><i class="swatch pedblock"></i>On foot</span>
+  </div>
+  <div class="plot escwrap"><div id="esc"></div></div>
+  <p class="caption">One crash in eighteen, one injury in seven, <b>one death in two</b>. This is not an argument that bikes are dangerous. It is the opposite. Four of those five deaths were people on foot struck by a driver, and the fifth was a cyclist who hit a fixed object with no vehicle involved. A person outside a car has no bumper and no airbag, so the same collision that costs two drivers an insurance claim costs a pedestrian their life. The danger in both halves of this page is the same: motor vehicles, driven by people, at speed.</p>
+</section>
+
+<section>
+  <h2>The three cities</h2>
+  <div class="cards">
+    <a class="card" href="./arroyo-grande.html">
+      <h3>Arroyo Grande</h3>
+      <p>276 crashes in 2025, 99 people hurt. Ten involved a bike or someone on foot, and none of the nine injuries was worse than minor.</p>
+      <span class="go">Read the report</span>
+    </a>
+    <a class="card" href="./grover-beach.html">
+      <h3>Grover Beach</h3>
+      <p>140 crashes, 34 people hurt. Six involved a bike or someone on foot. Twelve involved a driver who hit something and drove away.</p>
+      <span class="go">Read the report</span>
+    </a>
+    <a class="card" href="./pismo-beach.html">
+      <h3>Pismo Beach</h3>
+      <p>199 crashes, 73 people hurt. Thirteen involved a bike or someone on foot, five of them on Dolliver Street.</p>
+      <span class="go">Read the report</span>
+    </a>
+  </div>
+</section>
+
+<section>
+  <h2>Every number in one table</h2>
+  <p class="sub">2025 unless noted. Deaths are the five-year total.</p>
+  <div class="tablewrap" style="border:1px solid var(--rule)">
+    <table class="mini" style="min-width:640px">
+      <thead><tr><th>City</th><th>Crashes</th><th>Injured</th><th>Bike</th><th>On foot</th><th>E&#8209;bike</th><th>Driver at fault</th><th>Deaths 5yr</th></tr></thead>
+      <tbody>
+        <tr><td>Arroyo Grande</td><td>276</td><td>99</td><td>6</td><td>4</td><td>0</td><td>97.1%</td><td>2</td></tr>
+        <tr><td>Grover Beach</td><td>140</td><td>34</td><td>4</td><td>2</td><td>0</td><td>96.8%</td><td>2</td></tr>
+        <tr><td>Pismo Beach</td><td>199</td><td>73</td><td>12</td><td>1</td><td>0</td><td>95.8%</td><td>6</td></tr>
+        <tr class="now"><td>All three</td><td>615</td><td>206</td><td>22</td><td>7</td><td>0</td><td>96.6%</td><td>10</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="note">
+    <p><strong>Why Oceano and the Dunes are not here</strong>Oceano is unincorporated, so the state files its crashes under the county rather than as a city and they cannot be cleanly separated. A rough estimate by map coordinates gives 67 crashes and 17 injuries in 2025, one of them a bicycle. Separately, the Oceano Dunes state park district recorded <b>142 crashes with 153 people injured and 2 killed</b> in 2025, more injuries than Grover Beach and Oceano put together. Those are off-road vehicle crashes in the recreation area, a different problem with different answers, and they are excluded from every figure here.</p>
+  </div>
+</section>
+
+<section>
+  <div class="note data">
+    <p><strong>One gap worth knowing about</strong>Grover Beach police filed <b>54 crash reports in 2023 and 57 in 2024</b>, against roughly 140 in each of 2021, 2022, and 2025. Nothing in the surrounding county moved that way, and that department is the only agency filing for the city. Those two years are a gap in the paperwork rather than two safer years, and the five-year totals on this page are short by whatever went unrecorded.</p>
+  </div>
+</section>
+
+<p class="home"><a href="/">&larr; kevbuchanan.github.io</a></p>
+<footer class="src">
+  <p>Source: the California Crash Reporting System, published by the California Highway Patrol at data.ca.gov, 2021 through 2025 files, updated 3 September 2026.</p>
+</footer>
+
+</div>
+<div id="tip" role="status" aria-live="polite"></div>
+<script>
+(function(){
+
+  var NS='http://www.w3.org/2000/svg';
+  function mk(t,a){ var e=document.createElementNS(NS,t); for (var k in a) e.setAttribute(k,a[k]); return e; }
+  var tip=document.getElementById('tip');
+  function bind(el,html){
+    function show(e){ tip.innerHTML=html; tip.style.opacity=1;
+      var x=e.clientX+14,y=e.clientY+14,r=tip.getBoundingClientRect();
+      if(x+r.width>window.innerWidth-8) x=e.clientX-r.width-14;
+      if(y+r.height>window.innerHeight-8) y=e.clientY-r.height-14;
+      tip.style.left=x+'px'; tip.style.top=y+'px'; }
+    el.addEventListener('mousemove',show); el.addEventListener('click',show);
+    el.addEventListener('mouseleave',function(){ tip.style.opacity=0; });
+  }
+  /* one bar: the whole year, with the bike and pedestrian slice marked at the end */
+  function proportionBar(mount, d){
+    var W=940,H=104,GL=8,GR=8,barY=26,barH=46;
+    var svg=mk('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',height:H,style:'min-width:600px'});
+    var track=W-GL-GR, run=0;
+    [['car',d.car,'var(--veh)','crashes with no bicyclist or pedestrian'],
+     ['bike',d.bike,'var(--bike)','crashes involving a bicyclist'],
+     ['ped',d.ped,'var(--ped)','crashes involving a pedestrian']].forEach(function(s){
+      var x0=GL+(run/d.tot)*track, x1=GL+((run+s[1])/d.tot)*track;
+      var r=mk('rect',{x:x0,y:barY,width:Math.max(2,x1-x0-2),height:barH,fill:s[2]});
+      r.style.cursor='pointer'; svg.appendChild(r);
+      bind(r,'<b>'+s[1]+' crashes</b><span>'+s[3]+'</span><br>'+(Math.round(1000*s[1]/d.tot)/10)+'% of '+d.tot);
+      run+=s[1];
+    });
+    var inlbl=mk('text',{x:GL+16,y:barY+barH/2+6,fill:'var(--on-veh)','font-size':16,'font-weight':700});
+    inlbl.textContent=d.car.toLocaleString()+' crashes involved only motor vehicles';
+    svg.appendChild(inlbl);
+    var sx=GL+(d.car/d.tot)*track;
+    svg.appendChild(mk('path',{d:'M'+sx+' '+(barY+barH+6)+'V'+(barY+barH+13)+'H'+(W-GR)+'V'+(barY+barH+6),
+      fill:'none',stroke:'var(--rule-strong)','stroke-width':1.5}));
+    var out=mk('text',{x:W-GR,y:barY+barH+30,fill:'var(--ink)','font-size':13,'font-weight':700,'text-anchor':'end'});
+    out.textContent=(d.bike+d.ped).toLocaleString()+' involved someone on a bike or on foot';
+    svg.appendChild(out);
+    var top=mk('text',{x:GL,y:16,fill:'var(--muted)','font-size':11,'font-weight':700,'letter-spacing':'.09em'});
+    top.textContent=d.caption; svg.appendChild(top);
+    document.getElementById(mount).appendChild(svg);
+  }
+  /* five years of crashes, split by what was involved */
+  var CATS=[['vv','var(--veh)','vehicle against vehicle'],['solo','var(--solo)','a single vehicle, object, or animal'],
+            ['bike','var(--bike)','a bicyclist'],['ped','var(--ped)','a pedestrian']];
+  function years(mount, rows, o){
+    var MW=940,GL=46,GR=80,rowH=28,rowGap=14,TOP=28,BOT=16;
+    var track=MW-GL-GR,H=TOP+rows.length*rowH+(rows.length-1)*rowGap+BOT;
+    var svg=mk('svg',{viewBox:'0 0 '+MW+' '+H,width:'100%',height:H,style:'min-width:640px'});
+    var X=function(v){ return GL+(v/o.max)*track; };
+    var bottom=TOP+rows.length*rowH+(rows.length-1)*rowGap;
+    o.ticks.forEach(function(v){
+      svg.appendChild(mk('line',{x1:X(v),x2:X(v),y1:TOP-8,y2:bottom+4,stroke:'var(--grid)','stroke-width':1}));
+      var t=mk('text',{x:X(v),y:TOP-13,fill:'var(--muted)','font-size':10.5,'text-anchor':'middle'});
+      t.textContent=v; svg.appendChild(t);
+    });
+    rows.forEach(function(d,i){
+      var ry=TOP+i*(rowH+rowGap), run=0, spans={};
+      var yl=mk('text',{x:GL-10,y:ry+rowH/2+4,fill:'var(--ink-2)','font-size':12,'font-weight':600,'text-anchor':'end'});
+      yl.textContent=d.y; svg.appendChild(yl);
+      CATS.forEach(function(c){
+        var v=d[c[0]],x0=X(run),x1=X(run+v); spans[c[0]]=[x0,x1];
+        var r=mk('rect',{x:x0,y:ry,width:Math.max(1.5,x1-x0-2),height:rowH,fill:c[1]});
+        r.style.cursor='pointer'; svg.appendChild(r);
+        bind(r,'<b>'+d.y+' &middot; '+v+' crashes</b><span>involving '+c[2]+'</span><br>'+(Math.round(1000*v/d.tot)/10)+'% of the '+d.tot+' that year');
+        run+=v;
+      });
+      var groups={},edge=X(d.tot);
+      (d.deaths||[]).forEach(function(x){ (groups[x.cat]=groups[x.cat]||[]).push(x); });
+      Object.keys(groups).forEach(function(cat){
+        var list=groups[cat],sp=spans[cat],narrow=(sp[1]-sp[0])<16;
+        var mid=narrow?X(d.tot)-9:(sp[0]+sp[1])/2;
+        list.forEach(function(dth,j){
+          var cx=mid+(j-(list.length-1)/2)*(narrow?15:14),cy=ry+rowH/2;
+          var m=mk('rect',{x:cx-5,y:cy-5,width:10,height:10,fill:'var(--surface)',stroke:'var(--ink)','stroke-width':2,transform:'rotate(45 '+cx+' '+cy+')'});
+          m.style.cursor='pointer'; svg.appendChild(m);
+          bind(m,'<b>'+d.y+' &middot; one person killed</b><span>'+dth.who+'</span>');
+          edge=Math.max(edge,cx+8);
+        });
+      });
+      var tl=mk('text',{x:edge+9,y:ry+rowH/2+4,fill:'var(--ink)','font-size':12,'font-weight':700});
+      tl.textContent=d.tot; svg.appendChild(tl);
+    });
+    document.getElementById(mount).appendChild(svg);
+  }
+
+  proportionBar('prop', {"car": 2397, "bike": 96, "ped": 50, "tot": 2543, "caption": "2,543 CRASHES, THREE CITIES, 2021-2025"});
+
+  /* the escalation: each row normalised to its own total */
+  (function(){
+    var ROWS=[{k:'Crashes',other:2397,bike:96,ped:50,tot:2543,unit:'crashes'},
+              {k:'People injured',other:761,bike:82,ped:45,tot:888,unit:'people injured'},
+              {k:'People killed',other:5,bike:1,ped:4,tot:10,unit:'people killed'}];
+    var W=940,GL=150,GR=112,rowH=44,rowGap=18,TOP=14,BOT=14;
+    var track=W-GL-GR,H=TOP+ROWS.length*rowH+(ROWS.length-1)*rowGap+BOT;
+    var svg=mk('svg',{viewBox:'0 0 '+W+' '+H,width:'100%',height:H,style:'min-width:640px'});
+    ROWS.forEach(function(d,i){
+      var ry=TOP+i*(rowH+rowGap),run=0;
+      var lab=mk('text',{x:GL-14,y:ry+rowH/2-2,fill:'var(--ink)','font-size':14,'font-weight':700,'text-anchor':'end'});
+      lab.textContent=d.k; svg.appendChild(lab);
+      var sub=mk('text',{x:GL-14,y:ry+rowH/2+15,fill:'var(--muted)','font-size':11.5,'text-anchor':'end'});
+      sub.textContent=d.tot.toLocaleString(); svg.appendChild(sub);
+      [['other','var(--veh)','no bicyclist or pedestrian'],['bike','var(--bike)','a bicyclist'],
+       ['ped','var(--ped)','someone on foot']].forEach(function(s){
+        var v=d[s[0]],x0=GL+(run/d.tot)*track,x1=GL+((run+v)/d.tot)*track;
+        var r=mk('rect',{x:x0,y:ry,width:Math.max(2,x1-x0-2),height:rowH,fill:s[1]});
+        r.style.cursor='pointer'; svg.appendChild(r);
+        bind(r,'<b>'+v.toLocaleString()+' '+d.unit+'</b><span>involving '+s[2]+'</span><br>'+(Math.round(1000*v/d.tot)/10)+'% of '+d.tot.toLocaleString());
+        run+=v;
+      });
+      var share=(d.bike+d.ped)/d.tot;
+      var pct=mk('text',{x:W-GR+16,y:ry+rowH/2-1,fill:'var(--ink)','font-size':19,'font-weight':700});
+      pct.textContent=(Math.round(1000*share)/10).toFixed(1)+'%'; svg.appendChild(pct);
+      var pl=mk('text',{x:W-GR+16,y:ry+rowH/2+15,fill:'var(--muted)','font-size':11});
+      pl.textContent='bike or on foot'; svg.appendChild(pl);
+    });
+    document.getElementById('esc').appendChild(svg);
+  })();
+})();
+</script>
+
+  </body>
+</html>
