@@ -46,3 +46,7 @@ Temporary Items
 .ruby-version
 .jekyll-cache/
 _drafts/
+
+_site/
+vendor/
+.bundle/

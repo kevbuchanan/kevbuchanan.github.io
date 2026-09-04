@@ -1,0 +1,137 @@
+.wrap {
+  width: 100%;
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+.site-header {
+  padding-block: var(--space-6) var(--space-5);
+  border-bottom: 1px solid var(--rule);
+  text-align: center;
+}
+
+.site-title {
+  display: inline-block;
+  margin-bottom: var(--space-3);
+  color: var(--ink);
+  font-size: var(--text-lg);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.site-title:hover {
+  color: var(--accent);
+}
+
+.site-nav {
+  display: flex;
+  gap: var(--space-5);
+  justify-content: center;
+  font-size: var(--text-sm);
+}
+
+.site-nav a {
+  color: var(--ink-muted);
+  text-decoration: none;
+}
+
+.site-nav a:hover {
+  color: var(--ink);
+}
+
+// The current section stays legible without an underline competing with the
+// prose links below it.
+.site-nav a[aria-current='page'] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+main {
+  padding-block: var(--space-7) var(--space-8);
+}
+
+.entry-header {
+  margin-bottom: var(--space-6);
+  text-align: center;
+}
+
+.entry-header time {
+  display: block;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.entry-content > :last-child {
+  margin-bottom: 0;
+}
+
+.entry-footer {
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--rule);
+  font-size: var(--text-sm);
+}
+
+.post-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post-list li + li {
+  margin-top: 0;
+}
+
+// The anchor fills the row so the whole line is a tap target, and the date
+// drops below the title once the two no longer fit side by side.
+.post-list a {
+  display: flex;
+  gap: var(--space-1) var(--space-4);
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-inline: calc(var(--space-3) * -1);
+  padding: var(--space-3) var(--space-3);
+  border-radius: var(--radius);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.post-list a:hover {
+  background: var(--bg-subtle);
+}
+
+.post-list a:hover .post-title {
+  color: var(--accent);
+  text-decoration-color: currentcolor;
+}
+
+// A quiet underline keeps each title reading as a link without stacking up
+// twenty loud rules down the page.
+.post-title {
+  font-weight: 550;
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.post-list time {
+  flex-shrink: 0;
+}
+
+// Diagrams and screenshots in prose get a frame so they read as figures
+// rather than as bleeding into the page background.
+.entry-content img {
+  display: block;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+// Wrapper for post images that link to the full-size file.
+.image {
+  display: block;
+  margin-bottom: var(--space-5);
+}

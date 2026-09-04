@@ -1,52 +1,69 @@
-# Site Info
-title:              "Blog"
-description:        "Kevin's Blog"
-google_verify:      ~ # Put your Google Verification here
-google_analytics:   ~ # Put your Google Analytics code
+# Site
+title:              "Kevin Buchanan"
+description:        "Kevin Buchanan writes about software design, functional programming, and cities."
+tagline:            "Notes on software and cities"
+url:                "https://kevbuchanan.github.io"
+baseurl:            "" # must end WITHOUT a slash
+lang:               en
 
-# Author Info
-author_name:        "Kevin Buchanan"
-author_email:       kevaustinbuch@gmail.com
+author:
+  name:             "Kevin Buchanan"
+  email:            kevaustinbuch@gmail.com
+  twitter:          kevinbuch_
 
-twitter_username:   kevinbuch_
+twitter:
+  username:         kevinbuch_
+  card:             summary
 
-# Site Settings
-baseurl:            "" # Base URL must end WITHOUT a slash, default: ""
-permalink:          /posts/:title # Post permalink
-timezone:           America/Chicago # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+social:
+  name:             "Kevin Buchanan"
+  links:
+    - https://github.com/kevbuchanan
+    - https://www.linkedin.com/in/buchanankevin
+    - https://twitter.com/kevinbuch_
 
-# Site Build
-highlighter:        rouge
+# Build
+permalink:          /posts/:title
+timezone:           America/Chicago
 markdown:           kramdown
 kramdown:
-  input: GFM
+  input:            GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
 sass:
-    style:          :compressed
+  style:            compressed
+  sourcemap:        never
 
-# Other Params
-include:            [ "robots.txt" ]
-exclude:            [ "LICENSE", "README.md", "CNAME", "vendor", "Gemfile", "bin" ]
 plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
   - jekyll-sitemap
 
-compress_html:
-    clippings:      all
-    ingore:
-        envs:       [ "test" ]
+feed:
+  path:             feed.xml
+
+include:            [ "robots.txt" ]
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README.md
+  - vendor
+  # OmniGraffle sources for the post diagrams; the exported images ship instead.
+  - "assets/**/*.graffle"
 
 defaults:
-  -
-    scope:
+  - scope:
       path:         ""
     values:
       layout:       "null"
-  -
-    scope:
+  - scope:
       type:         "pages"
     values:
       layout:       "page"
-  -
-    scope:
+  - scope:
       type:         "posts"
     values:
       layout:       "post"
