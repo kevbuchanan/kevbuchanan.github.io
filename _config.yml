@@ -50,7 +50,6 @@ exclude:
   - Gemfile.lock
   - LICENSE
   - README.md
-  - bin
   - vendor
   # OmniGraffle sources for the post diagrams; the exported images ship instead.
   - "assets/**/*.graffle"

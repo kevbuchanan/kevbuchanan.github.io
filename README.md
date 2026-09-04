@@ -22,12 +22,6 @@ bundle exec jekyll serve --drafts
 Posts live in `_posts/` as `YYYY-MM-DD-slug.md` and need only a `title` in
 their front matter. Everything else comes from the defaults in `_config.yml`.
 
-Start a reading-list post for the current week:
-
-```
-bin/reading
-```
-
 ## Styles
 
 `assets/core.scss` pulls in four partials from `_sass/`:
